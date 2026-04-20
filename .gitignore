@@ -1,0 +1,13 @@
+node_modules/
+dist/
+Instagram_files/
+*.log
+/*.jpg
+/*.jpeg
+/*.png
+/*.mp4
+/*.mov
+/*.webm
+/*.gif
+/*.webp
+Instagram.html
