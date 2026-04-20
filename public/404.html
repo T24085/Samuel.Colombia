@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="refresh" content="0; url=/Samuel.Studio/" />
+    <script>
+      (function () {
+        var base = '/Samuel.Studio/'
+        var path = window.location.pathname
+        if (path.indexOf(base) === 0) {
+          path = path.slice(base.length)
+        } else {
+          path = path.replace(/^\/+/, '')
+        }
+        var target = base + '?redirect=' + encodeURIComponent('/' + path + window.location.search + window.location.hash)
+        window.location.replace(target)
+      })()
+    </script>
+    <title>Redirecting…</title>
+  </head>
+  <body>
+    <p>Redirecting…</p>
+  </body>
+</html>
