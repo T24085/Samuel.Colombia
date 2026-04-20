@@ -5,6 +5,9 @@ Instagram_files/
 /*.jpg
 /*.jpeg
 /*.png
+!/Left2.png
+!/Right.png
+!/Sam.png
 /*.mp4
 /*.mov
 /*.webm
