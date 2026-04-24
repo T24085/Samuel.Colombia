@@ -23,6 +23,7 @@
 html {
   scroll-behavior: smooth;
   scroll-snap-type: y proximity;
+  scroll-padding-top: 108px;
   background: var(--black);
 }
 
@@ -1493,20 +1494,53 @@ main {
 }
 
 @media (max-width: 760px) {
+  html {
+    scroll-snap-type: none;
+    scroll-padding-top: 82px;
+  }
+
   .site-header {
     padding: 14px 16px;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      'brand scene'
+      'nav nav';
+    row-gap: 8px;
   }
 
   .scene-nav {
-    display: none;
+    grid-area: nav;
+    display: flex;
+    justify-content: flex-start;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    margin: 0 -2px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
   }
 
   .scene-indicator {
+    grid-area: scene;
     justify-self: end;
+  }
+
+  .scene-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scene-nav a {
+    flex: 0 0 auto;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.06);
   }
 
   .panel-inner {
     width: min(calc(100vw - 24px), 1320px);
+    padding-top: 92px;
+    padding-bottom: 32px;
   }
 
   .hero-frame {
@@ -1569,12 +1603,25 @@ main {
     aspect-ratio: 16 / 10;
   }
 
+  .posters-section .panel-inner {
+    min-height: auto;
+    padding-top: 88px;
+    padding-bottom: 28px;
+  }
+
   .posters-layout {
-    min-height: calc(100svh - 158px);
+    display: grid;
+    gap: 16px;
+    min-height: auto;
   }
 
   .poster-copy-block {
-    max-width: min(320px, calc(100vw - 48px));
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    max-width: none;
+    transform: none;
     padding: 18px;
   }
 
@@ -1593,23 +1640,17 @@ main {
   }
 
   .poster-tile-stage {
+    position: relative;
+    inset: auto;
+    min-height: 72svh;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-template-rows: repeat(3, minmax(0, 1fr));
     gap: 8px;
-    padding: 12px;
+    padding: 0;
   }
 
   .poster-preview {
-    width: min(88vw, 540px);
-    padding: 10px;
-  }
-
-  .poster-copy-block {
-    top: 14px;
-    left: 14px;
-    transform: none;
-    width: calc(100vw - 28px);
-    max-width: none;
+    display: none;
   }
 
   .poster-word {
@@ -1621,11 +1662,40 @@ main {
   }
 
   .progress-rail {
-    right: 6px;
+    display: none;
   }
 
   .scroll-cue {
-    left: 14px;
+    display: none;
+  }
+
+  .hero-stage,
+  .manifesto-art,
+  .project-image-wrap,
+  .cta-block {
+    width: 100%;
+  }
+
+  .hero-card,
+  .hero-note {
+    font-size: 10px;
+  }
+
+  .hero-card {
+    top: 12px;
+    right: 12px;
+    padding: 12px 14px;
+    gap: 6px;
+  }
+
+  .hero-note {
+    left: 12px;
+    bottom: 12px;
+    padding: 8px 10px;
+  }
+
+  .button {
+    width: 100%;
   }
 }
 
