@@ -227,7 +227,7 @@ export function PortfolioPage() {
     <>
       <SEO
         title="Portfolio"
-        description="Samuel Studio as the parent house for Defiant Models, Defiant Boudoir, AllStreet Apparel, and Samuel Studio Columbia."
+        description="Samuel Studio as the parent house for Defiant Models, Defiant Boudoir, AllStreet Apparel, and Samuel Studio Colombia."
         path="/portfolio"
       />
 

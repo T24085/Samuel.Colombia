@@ -56,7 +56,7 @@ const allStreetIds = [
   'modern-black-white',
 ]
 
-const columbiaIds = [
+const colombiaIds = [
   'artist',
   'bridge-women',
   'candid',
@@ -124,21 +124,21 @@ export const portfolioCollections = [
     coverAlt: 'AllStreet Apparel magazine cover.',
   },
   {
-    slug: 'columbia',
-    eyebrow: 'Within the Studio / Columbia',
-    title: 'Samuel Studio Columbia',
+    slug: 'colombia',
+    eyebrow: 'Within the Studio / Colombia',
+    title: 'Samuel Studio Colombia',
     description:
-      'The Columbia chapter of the parent studio, grounded in portraiture and local narrative.',
+      'The Colombia chapter of the parent studio, grounded in portraiture and local narrative.',
     body:
-      'This is the studio-side overview for Columbia work and the place where the local portrait and story archives will live.',
-    previewItems: pickItems(galleryLookup, columbiaIds),
+      'This is the studio-side overview for Colombia work and the place where the local portrait and story archives will live.',
+    previewItems: pickItems(galleryLookup, colombiaIds),
     linkLabel: 'View full collection',
-    href: '/portfolio/columbia',
+    href: '/portfolio/colombia',
     external: false,
-    collectionLink: '/portfolio/columbia',
+    collectionLink: '/portfolio/colombia',
     albumSlugs: ['personal-identity', 'private-lifestyle', 'editorial-campaign'],
-    coverSrc: withBase('portfolio-assets/cover-columbia.png'),
-    coverAlt: 'Samuel Studio Columbia magazine cover.',
+    coverSrc: withBase('portfolio-assets/cover-colombia.png'),
+    coverAlt: 'Samuel Studio Colombia magazine cover.',
   },
 ]
 
@@ -160,8 +160,8 @@ export const portfolioMagazineIssues = portfolioCollections.map((collection, ind
         ? 'This chapter keeps the tone cinematic and personal.'
         : index === 2
           ? 'The culture pages sit between fashion energy and brand storytelling.'
-          : 'The Columbia chapter closes the magazine with a local story archive.',
-}))
+          : 'The Colombia chapter closes the magazine with a local story archive.',
+})) 
 
 const editorialCampaignIds = [
   'artist',
@@ -241,7 +241,7 @@ export const portfolioAlbums = [
     body:
       'This album house brings together the studio work that feels the most narrative-forward: polished styling, controlled light, and imagery that can carry a launch or campaign rollout.',
     previewItems: pickItems(galleryLookup, editorialCampaignIds),
-    sourceCollections: ['defiant-models', 'allstreet-apparel', 'columbia'],
+    sourceCollections: ['defiant-models', 'allstreet-apparel', 'colombia'],
   },
   {
     slug: 'fashion-commercial',
@@ -263,7 +263,7 @@ export const portfolioAlbums = [
     body:
       'This is where the studio leans into nuanced portraiture, making space for self-expression without losing the deliberate visual language that ties the work together.',
     previewItems: pickItems(galleryLookup, personalIdentityIds),
-    sourceCollections: ['defiant-boudoir', 'columbia'],
+    sourceCollections: ['defiant-boudoir', 'colombia'],
   },
   {
     slug: 'private-lifestyle',
@@ -274,7 +274,7 @@ export const portfolioAlbums = [
     body:
       'A softer, more observational archive that still carries the studio standard in tone, composition, and finish.',
     previewItems: pickItems(galleryLookup, privateLifestyleIds),
-    sourceCollections: ['defiant-boudoir', 'columbia'],
+    sourceCollections: ['defiant-boudoir', 'colombia'],
   },
 ]
 
