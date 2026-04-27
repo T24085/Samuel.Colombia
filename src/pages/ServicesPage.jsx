@@ -348,8 +348,9 @@ export function ServicesPage() {
                 </div>
 
                 <p className="max-w-xl text-sm leading-8 text-parchment/72 md:text-base">
-                  Each service page expands the offer into a dedicated commission flow so clients can understand the
-                  positioning, the process, and the final result before they inquire.
+                  Campaign work, identity sessions, story projects, and private portraits each need a different rhythm.
+                  The service pages show how Samuel plans the shoot, directs the room, and delivers polished images ready
+                  for brand use, publication, or personal archive.
                 </p>
               </div>
 
@@ -374,8 +375,8 @@ export function ServicesPage() {
                   Ready to choose the right commission path?
                 </h2>
                 <p className="mt-6 max-w-2xl text-sm leading-8 text-parchment/72 md:text-base">
-                  Explore the full service pages for details, then move into booking or direct contact when the
-                  direction feels right.
+                  Share the project type, timeline, intended use, and any reference direction. Samuel will respond with
+                  the best-fit service path and next steps for planning the shoot.
                 </p>
               </div>
 

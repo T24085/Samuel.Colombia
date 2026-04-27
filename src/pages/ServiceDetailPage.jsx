@@ -204,7 +204,7 @@ export function ServiceDetailPage() {
           <RevealSection reduceMotion={reduceMotion} className="studio-shell pb-18 lg:pb-24">
             <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
               <div>
-                <p className="text-[0.68rem] font-semibold uppercase tracking-[0.42em] text-gold/70">Intro</p>
+                <p className="text-[0.68rem] font-semibold uppercase tracking-[0.42em] text-gold/70">Service overview</p>
                 <h2 className="mt-4 max-w-xl font-display text-4xl leading-[0.92] tracking-[-0.05em] text-ivory md:text-5xl xl:text-[4.6rem]">
                   {service.subheader}
                 </h2>
@@ -291,14 +291,14 @@ export function ServiceDetailPage() {
             <div className="grid gap-6">
               <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
                 <div>
-                  <p className="text-[0.68rem] font-semibold uppercase tracking-[0.42em] text-gold/70">Process</p>
+                  <p className="text-[0.68rem] font-semibold uppercase tracking-[0.42em] text-gold/70">Planning process</p>
                   <h2 className="mt-4 font-display text-4xl leading-[0.92] tracking-[-0.05em] text-ivory md:text-5xl">
                     Four steps, one clear direction.
                   </h2>
                 </div>
                 <p className="max-w-xl text-sm leading-8 text-parchment/72 md:text-base">
-                  The process is designed to stay calm and intentional while still moving efficiently from concept to
-                  final delivery.
+                  Every booking moves through the same practical checkpoints: direction, production planning, guided
+                  shooting, and a polished final gallery.
                 </p>
               </div>
 
@@ -328,14 +328,14 @@ export function ServiceDetailPage() {
             <div className="rounded-[2.45rem] border border-white/10 bg-[#040404] p-7 shadow-[0_28px_100px_rgba(0,0,0,0.34)] sm:p-10 lg:p-12">
               <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
                 <div>
-                  <p className="text-[0.68rem] font-semibold uppercase tracking-[0.42em] text-gold/70">Gallery</p>
+                  <p className="text-[0.68rem] font-semibold uppercase tracking-[0.42em] text-gold/70">Visual references</p>
                   <h2 className="mt-4 font-display text-4xl leading-[0.92] tracking-[-0.05em] text-ivory md:text-5xl">
                     Image studies for the final direction.
                   </h2>
                 </div>
                 <p className="max-w-xl text-sm leading-8 text-parchment/72 md:text-base">
-                  The page now uses real portfolio imagery as tonal references, so every service has a visual point of
-                  view before a client reaches the inquiry step.
+                  These frames show the lighting, pacing, and mood range that can guide the final direction for this
+                  type of commission.
                 </p>
               </div>
 
@@ -356,7 +356,7 @@ export function ServiceDetailPage() {
           <RevealSection reduceMotion={reduceMotion} className="studio-shell pb-24 lg:pb-28">
             <div className="grid gap-8 rounded-[2.5rem] border border-gold/14 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(17,17,17,0.92))] p-7 shadow-[0_28px_100px_rgba(0,0,0,0.34)] sm:p-10 lg:grid-cols-[1.08fr_0.92fr] lg:p-12">
               <div>
-                <p className="text-[0.68rem] font-semibold uppercase tracking-[0.42em] text-gold/70">Final CTA</p>
+                <p className="text-[0.68rem] font-semibold uppercase tracking-[0.42em] text-gold/70">Start planning</p>
                 <h2 className="mt-4 max-w-3xl font-display text-4xl leading-[0.92] tracking-[-0.04em] text-ivory md:text-5xl xl:text-[4.5rem]">
                   {service.cta}
                 </h2>
