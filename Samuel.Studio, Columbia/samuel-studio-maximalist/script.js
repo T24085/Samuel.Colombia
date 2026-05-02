@@ -29,9 +29,9 @@ const contactForm = document.querySelector('#contact-form');
 const contactStatus = document.querySelector('.contact-status');
 const contactSubmit = contactForm?.querySelector('[data-contact-submit]');
 const emailServiceId = 'service_p55qfka';
-const emailTemplateId = 'template_gxa8uvc';
+const emailTemplateId = 'c080wba';
 const emailPublicKey = 'IFJYlgeXzSgqsFRBS';
-const contactEmail = 'hello@samuelstudio.com';
+const contactEmail = 'studiodefiant@gmail.com';
 const servicePreviewData = {
   branding: {
     title: 'Branding',
@@ -405,8 +405,8 @@ if (contactForm) {
     const phone = String(formData.get('phone') || '').trim();
     const service = String(formData.get('service') || '').trim();
     const message = String(formData.get('message') || '').trim();
-    const mailtoSubject = encodeURIComponent('Samuel Studio project inquiry');
-    const subject = 'Samuel Studio project inquiry';
+    const subject = `New Inquiry — ${name} (${service || 'Service'})`;
+    const mailtoSubject = encodeURIComponent(subject);
     const mailtoBody = encodeURIComponent([
       `Name: ${name}`,
       `Email: ${email}`,
@@ -433,6 +433,7 @@ if (contactForm) {
         service,
         from_name: name,
         reply_to: email,
+        to_email: contactEmail,
         title: subject,
         subject,
         message,
