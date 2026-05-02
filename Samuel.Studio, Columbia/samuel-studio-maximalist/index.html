@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -32,50 +32,52 @@
 
     <nav class="scene-nav" aria-label="Section navigation">
       <a href="#manifesto" data-scene="Manifesto">Manifesto</a>
-      <a href="#still" data-scene="Photography">Photography</a>
-      <a href="#motion" data-scene="Motion">Motion</a>
-      <a href="#colombia" data-scene="Foundation">Foundation</a>
       <a href="#services" data-scene="Services">Services</a>
-      <a href="#project" data-scene="Project">Selected Work</a>
+      <a href="#branding" data-scene="Branding">Branding</a>
+      <a href="#lifestyle" data-scene="Lifestyle">Lifestyle</a>
+      <a href="#headshots" data-scene="Headshots">Headshots</a>
+      <a href="#events" data-scene="Events">Events</a>
+      <a href="#websites" data-scene="Websites">Websites</a>
+      <a href="#travel" data-scene="Travel">Travel</a>
       <a href="#contact" data-scene="Contact">Contact</a>
     </nav>
   </header>
 
   <main>
     <section id="hero" class="panel hero dark" data-accent="gold" data-scene="Hero">
-      <video class="hero-bg-video" autoplay muted loop playsinline poster="assets/hero-colombia.png">
-        <source src="assets/hero-background.mp4" type="video/mp4">
-      </video>
-      <div class="hero-bg-overlay" aria-hidden="true"></div>
+      <div class="hero-bg-stack" aria-hidden="true">
+        <video class="hero-bg-video is-active" autoplay muted playsinline loop preload="auto" poster="assets/hero-colombia.png" data-hero-video>
+          <source src="assets/hero1.mp4" type="video/mp4">
+        </video>
+        <video class="hero-bg-video" muted playsinline loop preload="auto" data-hero-video>
+          <source src="assets/hero2.mp4" type="video/mp4">
+        </video>
+        <video class="hero-bg-video" muted playsinline loop preload="auto" data-hero-video>
+          <source src="assets/hero3.mp4" type="video/mp4">
+        </video>
+        <div class="hero-bg-overlay"></div>
+      </div>
       <div class="panel-inner hero-layout">
         <div class="hero-copy split-reveal">
-          <p class="eyebrow">Samuel Studio / Colombia</p>
-          <h1 class="display">COLOMBIAN ENERGY. CINEMATIC EXECUTION. LUXURY RESULTS.</h1>
+          <p class="eyebrow">Samuel Studio / <span class="hero-highlight">Colombia</span></p>
+          <h1 class="display hero-display">
+            <span class="hero-display__line hero-display__line--accent">COLOMBIAN</span>
+            <span class="hero-display__line">ENERGY.</span>
+            <span class="hero-display__line">CINEMATIC EXECUTION.</span>
+            <span class="hero-display__line">LUXURY RESULTS.</span>
+          </h1>
           <p class="lede">
-            Luxury photography rooted in Colombia—capturing the culture, the movement, and the lifestyle that draws people here.
+            Luxury photography rooted in <span class="hero-highlight">Colombia</span>—capturing the culture, the movement, and the lifestyle that draws people here.
           </p>
-          <div class="hero-meta">
-            <span>Photography</span>
-            <span>Film</span>
-            <span>Editorial</span>
-            <span>Campaigns</span>
-          </div>
         </div>
 
-        <div class="hero-stage reveal">
-          <div class="hero-frame">
-            <img src="assets/hero-colombia.png" alt="Colorful Colombian street scene with mountain backdrop and colonial architecture" class="fallback-visual" />
-            <div class="hero-frame__glow"></div>
-          </div>
-          <div class="hero-note">BARRANQUILLA / BOGOTA / MEDELLIN / COLOMBIA</div>
-          <div class="hero-card">
-            <span>Editorial systems</span>
-            <span>Film direction</span>
-            <span>Visual rhythm</span>
-          </div>
-        </div>
       </div>
-      <div class="scroll-cue">Scroll to enter</div>
+      <div class="hero-logo-row" aria-label="Samuel Studio logos">
+        <img src="assets/Samuel.Studio Colombia.png" alt="Samuel Studio Colombia logo" loading="lazy" />
+        <img src="assets/Samuel.StudioLogo.png" alt="Samuel Studio logo" loading="lazy" />
+        <img src="assets/Transparent_Logo 02 Gold.png" alt="Transparent gold logo 02" loading="lazy" />
+        <img src="assets/Transparent_Logo 03 Gold.png" alt="Transparent gold logo 03" loading="lazy" />
+      </div>
     </section>
 
     <section id="manifesto" class="panel cream" data-accent="terracotta" data-scene="Manifesto">
@@ -96,177 +98,291 @@
       </div>
     </section>
 
-    <section id="still" class="panel terracotta photography-section" data-accent="cream" data-scene="Photography">
-      <div class="panel-inner photo-layout">
-        <div class="photo-copy reveal">
-          <p class="eyebrow">02 / Photography</p>
-          <h2 class="section-title photo-title">
-            <span>PORTRAIT</span>
-            <span>CAMPAIGN</span>
-            <span>FASHION</span>
-          </h2>
-          <p class="photo-intro">
-            Editorial stills built around sculpted light, strong silhouettes, and a warm studio haze.
-          </p>
-          <div class="photo-tags" aria-label="Photography categories">
-            <span>Studio</span>
-            <span>Movement</span>
-            <span>Shape</span>
-          </div>
-        </div>
+    <section id="services" class="panel dark cash-flow-section services-section" data-accent="gold" data-scene="Services">
+      <img class="cash-flow-person cash-flow-person--left" src="assets/LeftFemale-cutout.png" alt="Female profile portrait facing the services menu" loading="lazy" />
+      <img class="cash-flow-person cash-flow-person--right" src="assets/RightMale-cutout.png" alt="Male profile portrait facing the services menu" loading="lazy" />
 
-        <div class="photo-showcase reveal">
-          <figure class="photo-card photo-card--chair">
-            <img src="assets/photo-chair.png" alt="Editorial portrait of a model seated in a colorful sweater and orange skirt" loading="lazy" />
-            <figcaption>Chair study / color / posture</figcaption>
-          </figure>
-          <figure class="photo-card photo-card--power">
-            <img src="assets/photo-power.png" alt="Editorial portrait of a model standing in a black top and striped skirt" loading="lazy" />
-            <figcaption>Power study / contrast / balance</figcaption>
-          </figure>
-          <figure class="photo-card photo-card--profile">
-            <img src="assets/photo-profile.png" alt="Editorial portrait of a model in profile holding a brown handbag" loading="lazy" />
-            <figcaption>Profile study / motion / line</figcaption>
-          </figure>
+      <div class="cash-flow-center reveal">
+        <p class="eyebrow">02 / Services</p>
+        <div class="poster-copy-block cash-flow-word-panel">
+          <div class="poster-word-stack cash-flow-word-stack" aria-label="Samuel Studio services">
+            <button class="poster-word is-active" type="button" aria-pressed="true" data-service-key="branding">BRANDING</button>
+            <button class="poster-word" type="button" aria-pressed="false" data-service-key="lifestyle">LIFESTYLE</button>
+            <button class="poster-word" type="button" aria-pressed="false" data-service-key="headshots">HEADSHOTS</button>
+            <button class="poster-word" type="button" aria-pressed="false" data-service-key="travel">TRAVEL</button>
+            <button class="poster-word" type="button" aria-pressed="false" data-service-key="events">EVENTS</button>
+            <button class="poster-word" type="button" aria-pressed="false" data-service-key="websites">WEBSITES</button>
+          </div>
+          <p class="poster-caption cash-flow-caption">Select a service to see matching examples.</p>
+          <div class="cash-flow-price" aria-label="Typical services offer range">
+            <span>Pricing</span>
+            <strong>$350-$700</strong>
+          </div>
         </div>
       </div>
-    </section>
 
-    <section id="motion" class="panel cobalt dark" data-accent="coral" data-scene="Motion">
-      <div class="panel-inner motion-layout">
-        <div class="motion-copy reveal">
-          <p class="eyebrow">03 / Motion</p>
-          <h2 class="section-title motion-title">FILMS THAT MOVE LIKE MEMORY AND HIT LIKE A CAMPAIGN.</h2>
-          <p class="lede narrow">
-            Layered loops, sharp cuts, editorial pacing, and visual atmosphere designed for brands that need more than content.
-          </p>
-          <div class="motion-points">
-            <span>Short form campaigns</span>
-            <span>Launch films</span>
-            <span>Social systems</span>
-            <span>Looped reels</span>
+      <div class="poster-preview cash-flow-preview" aria-hidden="true">
+        <div class="poster-preview__frame cash-flow-preview__frame">
+          <div class="cash-flow-preview__copy">
+            <p class="cash-flow-preview__eyebrow">Selected service</p>
+            <h3 class="cash-flow-preview__title">Branding</h3>
+            <p class="cash-flow-preview__text">
+              Personal branding, founders, creators, and expats photographed with editorial direction.
+            </p>
           </div>
-        </div>
-
-        <div class="motion-gallery reveal" aria-label="Motion video collage">
-          <figure class="motion-card motion-card--ambient">
-            <video class="motion-video" autoplay muted loop playsinline preload="metadata">
-              <source src="assets/hero-background.mp4" type="video/mp4" />
-            </video>
-            <figcaption>Ambient loop / atmosphere</figcaption>
-          </figure>
-          <figure class="motion-card motion-card--screen">
-            <video class="motion-video" autoplay muted loop playsinline preload="metadata">
-              <source src="assets/motion-screen.mp4" type="video/mp4" />
-            </video>
-            <figcaption>Screen study / pacing</figcaption>
-          </figure>
-          <figure class="motion-card motion-card--portrait">
-            <video class="motion-video" autoplay muted loop playsinline preload="metadata">
-              <source src="assets/motion-face.mp4" type="video/mp4" />
-            </video>
-            <figcaption>Portrait loop / presence</figcaption>
-          </figure>
-          <div class="motion-ticker" aria-hidden="true">
-            <span>Direction</span>
-            <span>Looping</span>
-            <span>Cut rhythm</span>
-            <span>Beauty detail</span>
+          <div class="cash-flow-preview__grid" aria-label="Example photos from this service">
+            <figure class="cash-flow-preview__tile">
+              <img src="assets/poster-business-headshot.png" alt="Branding example photo" loading="lazy" />
+            </figure>
+            <figure class="cash-flow-preview__tile">
+              <img src="assets/BusinessHeadShot1.png" alt="Branding example photo" loading="lazy" />
+            </figure>
+            <figure class="cash-flow-preview__tile">
+              <img src="assets/photo-power.png" alt="Branding example photo" loading="lazy" />
+            </figure>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="colombia" class="panel cream" data-accent="cobalt" data-scene="Foundation">
+    <section id="branding" class="panel cream" data-accent="terracotta" data-scene="Branding">
       <div class="panel-inner colombia-layout">
         <div class="section-copy">
-          <p class="eyebrow">04 / Foundation</p>
-          <h2 class="section-title">BORN FROM COLOR, CONTRAST, AND HEAT.</h2>
+          <p class="eyebrow">03 / Branding</p>
+          <h2 class="section-title">BRANDS THAT FEEL PERSONAL, POLISHED, AND ALIVE.</h2>
           <p class="lede narrow">
-            Colombia shows up here through architecture, shadow, movement, street texture, mountain density, tropical color, and a polished refusal to feel generic.
+            Founder portraits, creator campaigns, and editorial identity images designed to make a business look human.
           </p>
+          <div class="section-price" aria-label="Branding pricing">
+            <span>Pricing</span>
+            <strong>$350-$700</strong>
+          </div>
+          <div class="photo-tags" aria-label="Branding categories">
+            <span>Founders</span>
+            <span>Creators</span>
+            <span>Campaigns</span>
+          </div>
         </div>
 
         <div class="collage reveal">
           <div class="collage-card texture">
-            <img src="assets/texture-wall.svg" alt="Wall texture placeholder" />
-            <span>Wall texture</span>
+            <img src="assets/Branding/branding_001.jpg" alt="Branding example photo of a fashion editorial portrait" loading="lazy" />
+            <span>Editorial portrait</span>
           </div>
           <div class="collage-card city">
-            <img src="assets/colombia-city.svg" alt="City collage placeholder" />
-            <span>City rhythm</span>
+            <img src="assets/Branding/branding_002.jpg" alt="Branding example photo of a dynamic editorial pose" loading="lazy" />
+            <span>Movement study</span>
           </div>
           <div class="collage-card arch">
-            <img src="assets/colombia-arch.svg" alt="Arch collage placeholder" />
-            <span>Architectural shape</span>
+            <img src="assets/Branding/branding_003.jpg" alt="Branding example photo of a confident editorial portrait" loading="lazy" />
+            <span>Identity frame</span>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="services" class="panel green dark posters-section" data-accent="gold" data-scene="Posters">
-      <div class="panel-inner posters-layout">
-        <div class="poster-copy-block reveal">
-          <p class="eyebrow">05 / Posters</p>
-          <div class="poster-word-stack" aria-label="Poster categories">
-            <button type="button" class="poster-word is-active" data-poster="poster-business-headshot.png" data-poster-alt="Business headshots poster" data-poster-copy="First impressions deserve more than an average photo.">
-              Business
-            </button>
-            <button type="button" class="poster-word" data-poster="poster-fashion-poster.png" data-poster-alt="Fashion poster" data-poster-copy="Light. expression. story.">
-              Fashion
-            </button>
-            <button type="button" class="poster-word" data-poster="poster-family.png" data-poster-alt="Family poster" data-poster-copy="Real moments. real connection. timeless images.">
-              Family
-            </button>
-            <button type="button" class="poster-word" data-poster="poster-senior.png" data-poster-alt="Senior shoots poster" data-poster-copy="Senior shoots with cinematic edge and editorial polish.">
-              Seniors
-            </button>
-          </div>
-          <p class="poster-caption">
-            A tiled campaign wall built from portrait studies, branding studies, and collectible story posters.
-          </p>
-        </div>
-        <div class="poster-tile-stage" aria-hidden="true">
-          <figure class="poster-tile reveal">
-            <img src="assets/poster-business-headshot.png" alt="" />
-          </figure>
-          <figure class="poster-tile reveal">
-            <img src="assets/poster-fashion-poster.png" alt="" />
-          </figure>
-          <figure class="poster-tile reveal">
-            <img src="assets/poster-family.png" alt="" />
-          </figure>
-          <figure class="poster-tile reveal">
-            <img src="assets/poster-fashion-senior.png" alt="" />
-          </figure>
-          <figure class="poster-tile reveal">
-            <img src="assets/poster-wedding.png" alt="" />
-          </figure>
-          <figure class="poster-tile reveal">
-            <img src="assets/poster-senior.png" alt="" />
-          </figure>
-        </div>
-        <div class="poster-preview" aria-hidden="true">
-          <div class="poster-preview__frame">
-            <img src="assets/poster-business-headshot.png" alt="" class="poster-preview__img" />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="project" class="panel coral" data-accent="cream" data-scene="Project">
-      <div class="panel-inner project-layout">
-        <figure class="project-image-wrap reveal">
-          <img src="assets/featured-project.svg" alt="Featured project placeholder" class="project-image" />
-          <figcaption>Selected work / identity / movement / cultural tension</figcaption>
-        </figure>
-        <div class="project-copy">
-          <p class="eyebrow">06 / Selected Work</p>
-          <h2 class="section-title">A VISUAL CAMPAIGN BUILT AROUND IDENTITY, MOVEMENT, AND CULTURAL TENSION.</h2>
+    <section id="lifestyle" class="panel cobalt dark" data-accent="coral" data-scene="Lifestyle">
+      <div class="panel-inner colombia-layout">
+        <div class="section-copy">
+          <p class="eyebrow">04 / Lifestyle</p>
+          <h2 class="section-title">LIFESTYLE IMAGERY WITH EASE, STYLE, AND PACE.</h2>
           <p class="lede narrow">
-            A concept-led campaign that blends stills, motion, and visual identity into a single editorial system.
+            Dating profile imagery, social content, and personal brand visuals that look relaxed without losing intention.
           </p>
-          <a class="button" href="#contact">View project</a>
+          <div class="section-price" aria-label="Lifestyle pricing">
+            <span>Pricing</span>
+            <strong>$350-$700</strong>
+          </div>
+          <div class="photo-tags" aria-label="Lifestyle categories">
+            <span>Dating profiles</span>
+            <span>Social content</span>
+            <span>Personal brands</span>
+          </div>
+        </div>
+
+        <div class="collage reveal">
+          <div class="collage-card texture">
+            <img src="assets/Lifestyle/lifestyle_001.jpg" alt="Lifestyle example photo with two women walking outdoors" loading="lazy" />
+            <span>Walk and talk</span>
+          </div>
+          <div class="collage-card city">
+            <img src="assets/Lifestyle/lifestyle_012.jpg" alt="Lifestyle example photo with two women on an indoor staircase" loading="lazy" />
+            <span>Interior motion</span>
+          </div>
+          <div class="collage-card arch">
+            <img src="assets/Lifestyle/lifestyle_013.jpg" alt="Lifestyle example photo with two women standing by a brick wall" loading="lazy" />
+            <span>Editorial pairing</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="headshots" class="panel cream" data-accent="cobalt" data-scene="Headshots">
+      <div class="panel-inner colombia-layout">
+        <div class="section-copy">
+          <p class="eyebrow">05 / Headshots</p>
+          <h2 class="section-title">HEADSHOTS THAT LOOK PROFESSIONAL WITHOUT FEELING STIFF.</h2>
+          <p class="lede narrow">
+            Clean portraits for LinkedIn, startup teams, speakers, and anyone who needs a strong first impression.
+          </p>
+          <div class="section-price" aria-label="Headshots pricing">
+            <span>Pricing</span>
+            <strong>$350-$700</strong>
+          </div>
+          <div class="photo-tags" aria-label="Headshot categories">
+            <span>LinkedIn</span>
+            <span>Startup teams</span>
+            <span>Speaker profiles</span>
+          </div>
+        </div>
+
+        <div class="collage reveal">
+          <div class="collage-card texture">
+            <img src="assets/Headshots Personal Branding/headshots_personal_branding_006.jpg" alt="Headshot example photo of a woman against a dark studio background" loading="lazy" />
+            <span>Profile portrait</span>
+          </div>
+          <div class="collage-card city">
+            <img src="assets/Headshots Personal Branding/headshots_personal_branding_007.jpg" alt="Headshot example photo of a man in a dark blazer against a dark studio background" loading="lazy" />
+            <span>Studio clarity</span>
+          </div>
+          <div class="collage-card arch">
+            <img src="assets/Headshots Personal Branding/headshots_personal_branding_008.jpg" alt="Headshot example photo of a smiling man in a blue blazer against a dark studio background" loading="lazy" />
+            <span>Warm expression</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="events" class="panel cobalt dark" data-accent="gold" data-scene="Events">
+      <div class="panel-inner colombia-layout">
+        <div class="section-copy">
+          <p class="eyebrow">06 / Events</p>
+          <h2 class="section-title">EVENT COVERAGE WITH RESTRAINT AND SPEED.</h2>
+          <p class="lede narrow">
+            Launch nights, fashion gatherings, and brand activations photographed with a steady eye and quick delivery.
+          </p>
+          <div class="section-price" aria-label="Events pricing">
+            <span>Pricing</span>
+            <strong>$350-$700</strong>
+          </div>
+          <div class="photo-tags" aria-label="Events categories">
+            <span>Launch nights</span>
+            <span>Fashion events</span>
+            <span>Brand activations</span>
+          </div>
+        </div>
+
+        <div class="collage reveal">
+          <div class="collage-card texture">
+            <img src="assets/Events/events_001.jpg" alt="Event example photo with a fashion-forward purple-lit look" loading="lazy" />
+            <span>Front row energy</span>
+          </div>
+          <div class="collage-card city">
+            <img src="assets/Events/events_002.jpg" alt="Event example photo with a dark look and structured outfit" loading="lazy" />
+            <span>Night coverage</span>
+          </div>
+          <div class="collage-card arch collage-card--note">
+            <div class="collage-note">
+              <strong>Fast, quiet coverage</strong>
+              <p>Clean selects for launch nights, private dinners, and fashion rooms.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="websites" class="panel green dark" data-accent="gold" data-scene="Websites">
+      <div class="panel-inner motion-layout">
+        <div class="motion-copy reveal">
+          <p class="eyebrow">07 / Websites</p>
+          <h2 class="section-title motion-title">WEBSITES</h2>
+          <p class="lede narrow">
+            Portfolio sites, campaign pages, and branded landing pages that give each project a clear next step.
+          </p>
+          <div class="section-price section-price--dark" aria-label="Websites pricing">
+            <span>Pricing</span>
+            <strong>$300-$1000</strong>
+          </div>
+          <div class="motion-points websites-points">
+            <span>Landing pages</span>
+            <span>Portfolio systems</span>
+            <span>Inquiry paths</span>
+            <span>Brand hubs</span>
+          </div>
+        </div>
+
+        <div class="motion-gallery website-gallery reveal" aria-label="Website links">
+          <a class="motion-card website-card website-card--studio" href="https://t24085.github.io/Samuel.Studio/" target="_blank" rel="noopener noreferrer" aria-label="Open Samuel Studio website">
+            <img class="website-card__image" src="assets/Websites/samuel-studio-website2.png" alt="Samuel Studio website preview screenshot" loading="lazy" />
+            <span class="website-card__scrim" aria-hidden="true"></span>
+            <div class="website-card__copy">
+              <span class="website-card__cta">Launch site</span>
+            </div>
+          </a>
+
+          <a class="motion-card website-card website-card--models" href="https://defiantmodels.com/" target="_blank" rel="noopener noreferrer" aria-label="Open Defiant Models website">
+            <img class="website-card__image" src="assets/Websites/samuel-studio-colombia-website.png" alt="Website preview screenshot" loading="lazy" />
+            <span class="website-card__scrim" aria-hidden="true"></span>
+            <div class="website-card__copy">
+              <span class="website-card__cta">Launch site</span>
+            </div>
+          </a>
+
+          <a class="motion-card website-card website-card--boudoir" href="https://defiantboudoir.com/" target="_blank" rel="noopener noreferrer" aria-label="Open Defiant Boudoir website">
+            <img class="website-card__image" src="assets/Websites/defiant-boudoir-website.png" alt="Defiant Boudoir website preview screenshot" loading="lazy" />
+            <span class="website-card__scrim" aria-hidden="true"></span>
+            <div class="website-card__copy">
+              <span class="website-card__cta">Launch site</span>
+            </div>
+          </a>
+        </div>
+
+        <div class="website-marquee" aria-label="Samuel Studio logos scrolling">
+          <div class="website-marquee__track">
+            <div class="website-marquee__group">
+              <img src="assets/Samuel.Studio Colombia.png" alt="Samuel Studio Colombia logo" loading="lazy" />
+              <img src="assets/Samuel.StudioLogo.png" alt="Samuel Studio logo" loading="lazy" />
+              <img src="assets/Transparent_Logo 02 Gold.png" alt="Transparent gold logo 02" loading="lazy" />
+              <img src="assets/Transparent_Logo 03 Gold.png" alt="Transparent gold logo 03" loading="lazy" />
+            </div>
+            <div class="website-marquee__group" aria-hidden="true">
+              <img src="assets/Samuel.Studio Colombia.png" alt="" loading="lazy" />
+              <img src="assets/Samuel.StudioLogo.png" alt="" loading="lazy" />
+              <img src="assets/Transparent_Logo 02 Gold.png" alt="" loading="lazy" />
+              <img src="assets/Transparent_Logo 03 Gold.png" alt="" loading="lazy" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="travel" class="panel cream" data-accent="cobalt" data-scene="Travel">
+      <div class="panel-inner colombia-layout">
+        <div class="section-copy">
+          <p class="eyebrow">08 / Travel</p>
+          <h2 class="section-title">LOCATION SHOOTS WITH COLOR, SUN, AND DISTANCE.</h2>
+          <p class="lede narrow">
+            Travel sessions built for people who want image sets that feel lived in, not staged.
+          </p>
+          <div class="section-price" aria-label="Travel pricing">
+            <span>Pricing</span>
+            <strong>$350-$700</strong>
+          </div>
+        </div>
+
+        <div class="collage reveal">
+          <div class="collage-card texture">
+            <img src="assets/Travel/fashion_on_location_lifestyle_campaign_018.jpg" alt="Travel example photo of a model in a pale dress posed against ornate wood doors" loading="lazy" />
+            <span>Editorial</span>
+          </div>
+          <div class="collage-card city">
+            <img src="assets/Travel/fashion_on_location_lifestyle_campaign_020.jpg" alt="Travel example photo of a warm group portrait outdoors" loading="lazy" />
+            <span>Feature frame</span>
+          </div>
+          <div class="collage-card arch">
+            <img src="assets/Travel/fashion_on_location_lifestyle_campaign_038.jpg" alt="Travel example photo of a model in a blue tailored outfit on a porch" loading="lazy" />
+            <span>Movement</span>
+          </div>
         </div>
       </div>
     </section>
@@ -274,7 +390,7 @@
     <section id="contact" class="panel black dark" data-accent="cream" data-scene="Contact">
       <div class="panel-inner cta-layout">
         <div class="section-copy">
-          <p class="eyebrow">07 / Contact</p>
+          <p class="eyebrow">09 / Contact</p>
           <h2 class="display small">LET'S BUILD THE IMAGE YOUR BRAND DESERVES.</h2>
           <p class="lede narrow">
             Based in Colombia. Available for campaigns, portraiture, and motion direction.
@@ -282,16 +398,70 @@
         </div>
 
         <div class="cta-block">
-          <div class="cta-actions">
-            <a class="button light" href="mailto:hello@samuelstudio.com">Start a project</a>
-            <a class="button ghost" href="https://instagram.com" target="_blank" rel="noreferrer">View Instagram</a>
-          </div>
+          <form id="contact-form" class="contact-form">
+            <input type="hidden" name="time" value="">
+            <div class="contact-grid">
+              <label class="field">
+                <span>Name</span>
+                <input type="text" name="name" autocomplete="name" required placeholder="Your name" />
+              </label>
+              <label class="field">
+                <span>Email</span>
+                <input type="email" name="email" autocomplete="email" required placeholder="you@brand.com" />
+              </label>
+              <label class="field">
+                <span>Phone</span>
+                <input type="tel" name="phone" autocomplete="tel" placeholder="+57 300 000 0000" />
+              </label>
+              <label class="field">
+                <span>Service</span>
+                <select name="service" required>
+                  <option value="" selected disabled>Select a service</option>
+                  <option value="Personal Branding Session">Personal Branding Session</option>
+                  <option value="Dating Profile / Lifestyle Shoot">Dating Profile / Lifestyle Shoot</option>
+                  <option value="Business / Environmental Headshots">Business / Environmental Headshots</option>
+                  <option value="Tourist / Experience Shoot">Tourist / Experience Shoot</option>
+                  <option value="Events Coverage">Events Coverage</option>
+                  <option value="Personal Website Package">Personal Website Package</option>
+                </select>
+              </label>
+              <label class="field field--full">
+                <span>Project details</span>
+                <textarea name="message" rows="5" required placeholder="Tell me about the shoot, timeline, and what you need."></textarea>
+              </label>
+            </div>
+            <div class="cta-actions">
+              <button class="button light" type="submit" data-contact-submit>Send inquiry</button>
+              <a class="button ghost" href="https://instagram.com" target="_blank" rel="noreferrer">View Instagram</a>
+              <a class="button ghost" href="mailto:hello@samuelstudio.com?subject=Samuel%20Studio%20project%20inquiry">Email directly</a>
+            </div>
+          </form>
+          <p class="contact-status" aria-live="polite"></p>
           <p class="contact-meta">hello@samuelstudio.com / Colombia / Editorial photography and motion for brands, artists, and stories.</p>
         </div>
       </div>
     </section>
   </main>
 
+  <a class="book-now-fab" href="#contact" aria-label="Book now and jump to contact section">
+    <span class="book-now-fab__icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" role="img" aria-hidden="true" focusable="false">
+        <path d="M7 4h10v2H7V4Zm-1 4h12v12H6V8Zm2 3v2h8v-2H8Z" fill="currentColor"/>
+      </svg>
+    </span>
+    <span class="book-now-fab__text">Book now</span>
+  </a>
+
+  <div class="book-now-pointer" aria-hidden="true">
+    <svg viewBox="0 0 180 120" role="img" aria-hidden="true" focusable="false">
+      <path class="book-now-pointer__path" d="M18 18c22 3 40 12 56 28 15 15 26 30 41 45" />
+      <path class="book-now-pointer__head" d="M115 90l2 17-15-7" />
+    </svg>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
+
+
