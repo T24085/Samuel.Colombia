@@ -13,9 +13,15 @@ const manifestoTypeTargets = [...document.querySelectorAll('#manifesto .manifest
 const serviceCards = [...document.querySelectorAll('.service-card')];
 const motionSection = document.querySelector('#motion');
 const motionVideos = [...document.querySelectorAll('#motion .motion-video')];
+const lightbox = document.querySelector('.lightbox');
+const lightboxImage = lightbox?.querySelector('.lightbox__image');
+const lightboxClose = lightbox?.querySelector('.lightbox__close');
+const lightboxBackdrop = lightbox?.querySelector('.lightbox__backdrop');
+const collageCards = [...document.querySelectorAll('#headshots .collage-card--clickable')];
 
 const panelIndex = new Map(panels.map((panel, index) => [panel, index]));
 const posterSection = document.querySelector('#services');
+const cashFlowPeople = [...document.querySelectorAll('.cash-flow-person')];
 const posterCopyBlock = document.querySelector('.poster-copy-block');
 const posterWordButtons = [...document.querySelectorAll('.poster-word')];
 const posterPreview = document.querySelector('.poster-preview');
@@ -68,9 +74,9 @@ const servicePreviewData = {
     copy: 'Couples, solo travelers, and city-led experience shoots across Medellin and Colombia.',
     price: '$350-$700',
     images: [
-      { src: 'assets/hero-colombia.png', alt: 'Travel example photo of Colombia scenery' },
-      { src: 'assets/poster-family.png', alt: 'Travel example photo with candid outdoor energy' },
-      { src: 'assets/colombia-city.svg', alt: 'Travel example visual of a city scene' },
+      { src: 'assets/Travel/fashion_on_location_lifestyle_campaign_018.jpg', alt: 'Travel example photo of a model in a pale dress posed against ornate wood doors' },
+      { src: 'assets/Travel/fashion_on_location_lifestyle_campaign_020.jpg', alt: 'Travel example photo of a warm group portrait outdoors' },
+      { src: 'assets/Travel/fashion_on_location_lifestyle_campaign_038.jpg', alt: 'Travel example photo of a model in a blue tailored outfit on a porch' },
     ],
   },
   events: {
@@ -87,9 +93,9 @@ const servicePreviewData = {
     copy: 'Simple personal websites and image-led identity systems after the shoot.',
     price: '$300-$1000',
     images: [
-      { src: 'assets/featured-project.svg', alt: 'Website example visual for a project landing page' },
-      { src: 'assets/poster-business-headshot.png', alt: 'Website example image for a hero section' },
-      { src: 'assets/photo-profile.png', alt: 'Website example image for a profile section' },
+      { src: 'assets/Websites/samuel-studio-website2.png', alt: 'Samuel Studio website preview screenshot' },
+      { src: 'assets/Websites/samuel-studio-colombia-website.png', alt: 'Samuel Studio Colombia website preview screenshot' },
+      { src: 'assets/Websites/defiant-boudoir-website.png', alt: 'Defiant Boudoir website preview screenshot' },
     ],
   },
 };
@@ -209,11 +215,47 @@ function startHeroRotation() {
   }, 8000);
 }
 
+function openLightbox(src, alt) {
+  if (!lightbox || !lightboxImage) return;
+  lightboxImage.src = src;
+  lightboxImage.alt = alt || '';
+  lightbox.classList.add('is-open');
+  lightbox.setAttribute('aria-hidden', 'false');
+  body.classList.add('lightbox-open');
+}
+
+function closeLightbox() {
+  if (!lightbox || !lightboxImage) return;
+  lightbox.classList.remove('is-open');
+  lightbox.setAttribute('aria-hidden', 'true');
+  body.classList.remove('lightbox-open');
+  lightboxImage.src = '';
+  lightboxImage.alt = '';
+}
+
+function setServicesParallax() {
+  if (!posterSection || !cashFlowPeople.length) return;
+
+  const rect = posterSection.getBoundingClientRect();
+  const viewport = window.innerHeight || document.documentElement.clientHeight || 1;
+  const travel = rect.height + viewport;
+  const progress = travel > 0 ? (viewport - rect.top) / travel : 0.5;
+  const centeredProgress = Math.max(-1, Math.min(1, (progress - 0.5) * 2));
+  const offset = Math.round(Math.abs(centeredProgress) * 76);
+
+  cashFlowPeople.forEach(person => {
+    person.style.setProperty('--scroll-offset', `${offset}px`);
+  });
+}
+
 function setProgress() {
   const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
   const progress = maxScroll > 0 ? window.scrollY / maxScroll : 0;
   if (progressBar) {
     progressBar.style.height = `${Math.max(14, Math.min(100, progress * 100))}%`;
+  }
+  if (!reducedMotion) {
+    setServicesParallax();
   }
 }
 
@@ -391,6 +433,21 @@ if (posterCopyBlock && posterWordButtons.length) {
     }
   });
 }
+
+collageCards.forEach(card => {
+  card.addEventListener('click', () => {
+    openLightbox(card.dataset.lightboxSrc || '', card.dataset.lightboxAlt || '');
+  });
+});
+
+lightboxClose?.addEventListener('click', closeLightbox);
+lightboxBackdrop?.addEventListener('click', closeLightbox);
+
+window.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && lightbox?.classList.contains('is-open')) {
+    closeLightbox();
+  }
+});
 
 if (contactForm) {
   contactForm.querySelector('input[name="time"]').value = new Date().toISOString();
