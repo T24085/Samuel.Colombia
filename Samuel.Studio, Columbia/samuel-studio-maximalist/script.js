@@ -13,11 +13,13 @@ const manifestoTypeTargets = [...document.querySelectorAll('#manifesto .manifest
 const serviceCards = [...document.querySelectorAll('.service-card')];
 const motionSection = document.querySelector('#motion');
 const motionVideos = [...document.querySelectorAll('#motion .motion-video')];
+const manifestoArt = document.querySelector('#manifesto .manifesto-art');
 const lightbox = document.querySelector('.lightbox');
 const lightboxImage = lightbox?.querySelector('.lightbox__image');
 const lightboxClose = lightbox?.querySelector('.lightbox__close');
 const lightboxBackdrop = lightbox?.querySelector('.lightbox__backdrop');
-const collageCards = [...document.querySelectorAll('#headshots .collage-card--clickable')];
+const collageCards = [...document.querySelectorAll('#headshots .collage-card--clickable, #lifestyle .collage-card--clickable')];
+const brandingCollage = document.querySelector('#branding .collage');
 
 const panelIndex = new Map(panels.map((panel, index) => [panel, index]));
 const posterSection = document.querySelector('#services');
@@ -148,6 +150,14 @@ function setPosterPreview(word) {
   posterPreviewCopy.textContent = service.copy;
   if (posterPrice) {
     posterPrice.textContent = service.price || '$350-$700';
+    const blockRect = posterCopyBlock?.getBoundingClientRect();
+    const wordRect = word.getBoundingClientRect();
+    if (blockRect) {
+      const left = ((wordRect.left - blockRect.left) + wordRect.width * 0.5) / blockRect.width * 100;
+      const top = ((wordRect.top - blockRect.top) + wordRect.height * 0.5) / blockRect.height * 100;
+      posterPrice.style.left = `${Math.max(14, Math.min(86, left))}%`;
+      posterPrice.style.top = `${Math.max(18, Math.min(88, top + 18))}%`;
+    }
   }
   renderServicePreviewImages(service.images);
   posterPreview.classList.add('is-active');
@@ -167,6 +177,8 @@ function clearPosterPreview() {
   posterPreviewCopy.textContent = defaultService.copy;
   if (posterPrice) {
     posterPrice.textContent = defaultService.price || '$350-$700';
+    posterPrice.style.left = '50%';
+    posterPrice.style.top = '100%';
   }
   renderServicePreviewImages(defaultService.images);
 }
@@ -295,6 +307,8 @@ if (!reducedMotion) {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('in-view');
+      } else if (entry.target === brandingCollage) {
+        entry.target.classList.remove('in-view');
       }
     });
   }, { threshold: 0.18 });
@@ -316,10 +330,18 @@ if (!reducedMotion) {
         const visible = entry.isIntersecting && entry.intersectionRatio >= 0.45;
 
         if (visible && !manifestoVisible) {
+          if (manifestoArt) {
+            manifestoArt.classList.remove('in-view');
+            void manifestoArt.offsetWidth;
+          }
           playManifestoType();
+          if (manifestoArt) {
+            manifestoArt.classList.add('in-view');
+          }
           manifestoVisible = true;
         } else if (!visible && manifestoVisible) {
           manifestoTypeTargets.forEach(target => target.classList.remove('in-view'));
+          if (manifestoArt) manifestoArt.classList.remove('in-view');
           manifestoVisible = false;
         }
       });
@@ -418,6 +440,7 @@ if (posterCopyBlock && posterWordButtons.length) {
     button.addEventListener('pointerenter', () => setPosterPreview(button));
     button.addEventListener('focus', () => setPosterPreview(button));
     button.addEventListener('click', () => setPosterPreview(button));
+    button.addEventListener('pointermove', () => setPosterPreview(button));
     button.addEventListener('keydown', event => {
       if (event.key === 'Escape') {
         clearPosterPreview();
