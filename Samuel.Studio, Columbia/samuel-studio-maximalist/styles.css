@@ -1997,7 +1997,7 @@ body.is-websites-active .website-marquee {
   z-index: 0;
   pointer-events: none;
   background-color: var(--cobalt);
-  background-image: url('assets/Transparent_Logo 02 Gold.png');
+  background-image: url('assets/Transparent_Logo 01 Gold.png');
   background-position: center center;
   background-size: min(44vw, 560px) auto;
   background-repeat: repeat;
