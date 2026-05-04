@@ -1148,6 +1148,38 @@ main {
   }
 }
 
+@keyframes events-title-cursor {
+  0%,
+  49% {
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes events-photo-electric-glow {
+  0%,
+  100% {
+    box-shadow:
+      var(--card-shadow),
+      0 0 0 1px rgba(255, 220, 128, 0.28),
+      0 0 12px rgba(244, 163, 0, 0.2),
+      0 0 24px rgba(68, 148, 255, 0.16);
+  }
+
+  50% {
+    box-shadow:
+      var(--card-shadow),
+      0 0 0 1px rgba(255, 225, 143, 0.72),
+      0 0 18px rgba(244, 163, 0, 0.5),
+      0 0 38px rgba(82, 166, 255, 0.42),
+      0 0 60px rgba(82, 166, 255, 0.22);
+  }
+}
+
 .headshots-fade {
   display: block;
   color: inherit;
@@ -1875,6 +1907,14 @@ body.is-websites-active .website-marquee {
   order: 2;
 }
 
+#lifestyle .section-price {
+  margin-bottom: 14px;
+}
+
+#lifestyle .photo-tags {
+  margin-top: 10px;
+}
+
 #lifestyle .collage {
   order: 1;
 }
@@ -1944,6 +1984,100 @@ body.is-websites-active .website-marquee {
   top: 64%;
   bottom: auto;
   z-index: 3;
+}
+
+#events {
+  position: relative;
+  overflow: hidden;
+}
+
+#events .events-logo-tile {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-color: var(--cobalt);
+  background-image: url('assets/Transparent_Logo 02 Gold.png');
+  background-position: center center;
+  background-size: min(44vw, 560px) auto;
+  background-repeat: repeat;
+  opacity: 0.24;
+  mix-blend-mode: screen;
+  filter: saturate(1) contrast(1.04);
+}
+
+#events .panel-inner {
+  position: relative;
+  z-index: 1;
+}
+
+#events .section-copy {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: min(100%, 520px);
+  padding: 1.5rem 1.5rem 1.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 1.5rem;
+  background: rgba(10, 18, 38, 0.28);
+  backdrop-filter: blur(10px);
+}
+
+#events .section-title {
+  position: relative;
+  display: block;
+  max-width: 11ch;
+  min-height: 4.4em;
+  white-space: normal;
+}
+
+#events .section-title::before {
+  content: 'EVENT COVERAGE WITH RESTRAINT AND SPEED.';
+  display: block;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+}
+
+#events .section-title::after {
+  content: '';
+  display: inline-block;
+  width: 0.08em;
+  height: 0.82em;
+  margin-left: 0.05em;
+  vertical-align: -0.03em;
+  background: var(--cream);
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.85), 0 0 28px rgba(244, 163, 0, 0.45);
+  animation: events-title-cursor 900ms steps(1, end) infinite;
+}
+
+#events .section-title.is-typed::after {
+  animation-duration: 1.05s;
+}
+
+#events .section-price {
+  margin-bottom: 16px;
+}
+
+#events .photo-tags {
+  margin-top: 8px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  width: 100%;
+}
+
+#events .photo-tags span {
+  width: 100%;
+  padding: 9px 10px;
+  color: var(--marigold);
+  font-size: 10px;
+  text-align: center;
+}
+
+#events .collage-card.texture,
+#events .collage-card.city {
+  animation: events-photo-electric-glow 2.8s ease-in-out infinite;
 }
 
 #travel .collage-card.texture {
@@ -2210,6 +2344,8 @@ body.is-websites-active .website-marquee {
 }
 
 .cash-flow-section {
+  position: relative;
+  overflow: hidden;
   min-height: 100svh;
   background:
     linear-gradient(rgba(16, 63, 53, 0.03) 1px, transparent 1px),
@@ -2231,6 +2367,21 @@ body.is-websites-active .website-marquee {
 
 .services-section::after {
   display: none;
+}
+
+.services-blob-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0.9;
+  mix-blend-mode: screen;
+}
+
+.services-blob-bg svg {
+  width: 100%;
+  height: 100%;
 }
 
 .cash-flow-section::before {

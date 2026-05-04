@@ -23,6 +23,11 @@ const brandingCollage = document.querySelector('#branding .collage');
 
 const panelIndex = new Map(panels.map((panel, index) => [panel, index]));
 const posterSection = document.querySelector('#services');
+const eventsSection = document.querySelector('#events');
+const eventsTitle = document.querySelector('#events .section-title');
+const eventsTitleText = eventsTitle?.textContent.trim() || '';
+let eventsTitleTimer = null;
+let eventsTitleActive = false;
 const cashFlowPeople = [...document.querySelectorAll('.cash-flow-person')];
 const posterCopyBlock = document.querySelector('.poster-copy-block');
 const posterWordButtons = [...document.querySelectorAll('.poster-word')];
@@ -101,6 +106,50 @@ const servicePreviewData = {
     ],
   },
 };
+
+function stopEventsTitleLoop({ showFullText = true } = {}) {
+  window.clearTimeout(eventsTitleTimer);
+  eventsTitleTimer = null;
+  eventsTitleActive = false;
+
+  if (eventsTitle && showFullText) {
+    eventsTitle.textContent = eventsTitleText;
+    eventsTitle.classList.add('is-typed');
+  }
+}
+
+function startEventsTitleLoop() {
+  if (!eventsTitle || eventsTitleActive || !eventsTitleText) return;
+
+  eventsTitleActive = true;
+  eventsTitle.classList.remove('is-typed');
+
+  let index = 0;
+  let deleting = false;
+  const tick = () => {
+    if (!eventsTitleActive) return;
+
+    eventsTitle.textContent = eventsTitleText.slice(0, index);
+
+    if (!deleting && index < eventsTitleText.length) {
+      index += 1;
+      eventsTitleTimer = window.setTimeout(tick, index % 7 === 0 ? 130 : 78);
+    } else if (!deleting) {
+      eventsTitle.classList.add('is-typed');
+      deleting = true;
+      eventsTitleTimer = window.setTimeout(tick, 1850);
+    } else if (index > 0) {
+      eventsTitle.classList.remove('is-typed');
+      index -= 1;
+      eventsTitleTimer = window.setTimeout(tick, 34);
+    } else {
+      deleting = false;
+      eventsTitleTimer = window.setTimeout(tick, 420);
+    }
+  };
+
+  tick();
+}
 
 function setContactStatus(message, tone = '') {
   if (!contactStatus) return;
@@ -350,10 +399,10 @@ if (!reducedMotion) {
     manifestoObserver.observe(manifestoSection);
   }
 
-  if (posterSection) {
-    const posterObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.35) {
+    if (posterSection) {
+      const posterObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.35) {
           posterSection.classList.add('is-visible', 'is-animated');
         } else if (!entry.isIntersecting || entry.intersectionRatio < 0.2) {
           posterSection.classList.remove('is-visible');
@@ -363,11 +412,26 @@ if (!reducedMotion) {
       });
     }, { threshold: [0.15, 0.35, 0.55, 0.75] });
 
-    posterObserver.observe(posterSection);
-  }
+      posterObserver.observe(posterSection);
+    }
 
-  if (motionSection && motionVideos.length) {
-    let motionVisible = false;
+    if (eventsSection && eventsTitle) {
+      const eventsObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          const visible = entry.isIntersecting && entry.intersectionRatio >= 0.45;
+          if (visible) {
+            startEventsTitleLoop();
+          } else {
+            stopEventsTitleLoop();
+          }
+        });
+      }, { threshold: [0.2, 0.45, 0.7] });
+
+      eventsObserver.observe(eventsSection);
+    }
+
+    if (motionSection && motionVideos.length) {
+      let motionVisible = false;
     const motionObserver = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         const visible = entry.isIntersecting && entry.intersectionRatio >= 0.35;
@@ -387,13 +451,14 @@ if (!reducedMotion) {
 
   setHeroVideo(0);
   startHeroRotation();
-} else {
-  revealTargets.forEach(target => target.classList.add('in-view'));
-  manifestoTypeTargets.forEach(target => target.classList.add('in-view'));
-  if (posterSection) posterSection.classList.add('is-visible', 'is-animated');
-  setMotionPlayback(true);
-  setHeroVideo(0);
-}
+  } else {
+    revealTargets.forEach(target => target.classList.add('in-view'));
+    manifestoTypeTargets.forEach(target => target.classList.add('in-view'));
+    if (posterSection) posterSection.classList.add('is-visible', 'is-animated');
+    stopEventsTitleLoop();
+    setMotionPlayback(true);
+    setHeroVideo(0);
+  }
 
 if (window.emailjs && emailPublicKey) {
   emailjs.init({ publicKey: emailPublicKey });
