@@ -23,7 +23,7 @@
 html {
   scroll-behavior: smooth;
   scroll-snap-type: y proximity;
-  scroll-padding-top: 108px;
+  scroll-padding-top: var(--header-offset, 72px);
   background: var(--black);
 }
 
@@ -4028,7 +4028,7 @@ body.is-websites-active .website-marquee {
 @media (max-width: 760px) {
   html {
     scroll-snap-type: none;
-    scroll-padding-top: 82px;
+    scroll-padding-top: var(--header-offset, 82px);
   }
 
   .site-header {

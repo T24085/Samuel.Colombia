@@ -1,5 +1,6 @@
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const body = document.body;
+const siteHeader = document.querySelector('.site-header');
 const flash = document.querySelector('.flash');
 const progressBar = document.querySelector('.progress-bar');
 const sceneTitle = document.querySelector('.scene-title');
@@ -45,6 +46,33 @@ const emailServiceId = 'service_p55qfka';
 const emailTemplateId = 'template_gxa8uvc';
 const emailPublicKey = 'IFJYlgeXzSgqsFRBS';
 const contactEmail = 'studiodefiant@gmail.com';
+
+function syncHeaderOffset() {
+  if (!siteHeader) return;
+
+  const headerHeight = Math.max(0, Math.round(siteHeader.getBoundingClientRect().height));
+  document.documentElement.style.setProperty('--header-offset', `${headerHeight}px`);
+}
+
+function scrollToSection(hash, { pushState = true } = {}) {
+  if (!hash || hash[0] !== '#') return;
+
+  const target = document.querySelector(hash);
+  if (!target) return;
+
+  const headerHeight = siteHeader?.getBoundingClientRect().height || 0;
+  const targetTop = Math.max(0, Math.round(target.getBoundingClientRect().top + window.scrollY - headerHeight));
+
+  window.scrollTo({
+    top: targetTop,
+    behavior: reducedMotion ? 'auto' : 'smooth',
+  });
+
+  if (pushState) {
+    history.pushState(null, '', hash);
+  }
+}
+
 const servicePreviewData = {
   branding: {
     title: 'Branding',
@@ -484,8 +512,35 @@ panels.forEach(panel => panelObserver.observe(panel));
 
 window.addEventListener('scroll', setProgress, { passive: true });
 window.addEventListener('resize', setProgress);
+window.addEventListener('resize', syncHeaderOffset);
+window.addEventListener('load', syncHeaderOffset);
+window.addEventListener('hashchange', () => {
+  if (location.hash) {
+    scrollToSection(location.hash, { pushState: false });
+  }
+});
+syncHeaderOffset();
 setProgress();
 setScene(panels[0]);
+
+navLinks.forEach(link => {
+  link.addEventListener('click', event => {
+    const hash = link.getAttribute('href');
+    if (!hash || !hash.startsWith('#')) return;
+
+    const target = document.querySelector(hash);
+    if (!target) return;
+
+    event.preventDefault();
+    scrollToSection(hash);
+  });
+});
+
+if (location.hash) {
+  requestAnimationFrame(() => {
+    scrollToSection(location.hash, { pushState: false });
+  });
+}
 
 const serviceStack = document.querySelector('.service-menu, .service-stack');
 function activateServiceCard(card) {
