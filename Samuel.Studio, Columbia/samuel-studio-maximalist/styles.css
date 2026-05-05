@@ -2487,6 +2487,28 @@ body.is-websites-active .website-marquee {
   line-height: 1.75;
 }
 
+.pricing-modal__section-cta {
+  display: inline-flex;
+  margin-top: 0.95rem;
+  padding: 0.72rem 1rem;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--pricing-cta-start), var(--pricing-cta-end));
+  color: var(--pricing-cta-text);
+  font-size: 0.94rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.14);
+  transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+}
+
+.pricing-modal__section-cta:hover,
+.pricing-modal__section-cta:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 28px rgba(0, 0, 0, 0.18);
+  filter: saturate(1.04);
+}
+
 .pricing-modal__closing {
   display: grid;
   gap: 0.5rem;
