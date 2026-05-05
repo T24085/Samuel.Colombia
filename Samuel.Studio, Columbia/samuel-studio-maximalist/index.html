@@ -365,10 +365,10 @@
           <p class="lede narrow">
             Portfolio sites, campaign pages, and branded landing pages that give each project a clear next step.
           </p>
-          <div class="section-price section-price--dark" aria-label="Websites pricing">
+          <button class="section-price section-price--dark section-price--button" type="button" aria-label="Open website pricing details" data-websites-pricing-open>
             <span>Pricing</span>
             <strong>$300-$1000</strong>
-          </div>
+          </button>
           <div class="motion-points websites-points">
             <span>Landing pages</span>
             <span>Portfolio systems</span>
@@ -539,6 +539,78 @@
       <button class="lightbox__close" type="button" aria-label="Close image preview">×</button>
       <img class="lightbox__image" alt="" />
     </figure>
+  </div>
+
+  <div class="pricing-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="websites-pricing-title">
+    <button class="pricing-modal__backdrop" type="button" aria-label="Close website pricing details"></button>
+    <div class="pricing-modal__panel" role="document">
+      <button class="pricing-modal__close" type="button" aria-label="Close website pricing details">×</button>
+      <p class="pricing-modal__kicker">POP-UP TITLE</p>
+      <h2 id="websites-pricing-title" class="pricing-modal__title">Website Development</h2>
+      <p class="pricing-modal__subtitle">Luxury digital presence built for creators, models, and brands that need to convert attention into bookings.</p>
+
+      <div class="pricing-modal__section">
+        <p class="pricing-modal__section-label">SECTION 1 — STARTER</p>
+        <h3>Starter Landing Page</h3>
+        <p class="pricing-modal__price">$300 — $500</p>
+        <p class="pricing-modal__copy">A focused, single-page site designed to make a strong first impression and drive inquiries.</p>
+        <ul>
+          <li>Hero-driven design</li>
+          <li>About + contact section</li>
+          <li>Mobile optimized</li>
+          <li>Fast load, clean structure</li>
+          <li>Launch-ready deployment</li>
+        </ul>
+      </div>
+
+      <div class="pricing-modal__section pricing-modal__section--featured">
+        <p class="pricing-modal__section-label">SECTION 2 — CORE (FEATURED)</p>
+        <h3>Portfolio Website</h3>
+        <p class="pricing-modal__price">$600 — $1,000</p>
+        <p class="pricing-modal__copy">A full digital identity built to showcase your work and guide clients toward booking.</p>
+        <ul>
+          <li>Multi-page layout</li>
+          <li>Image galleries / portfolio system</li>
+          <li>Services or booking section</li>
+          <li>Brand styling + motion</li>
+          <li>Contact / inquiry integration</li>
+        </ul>
+      </div>
+
+      <div class="pricing-modal__section">
+        <p class="pricing-modal__section-label">SECTION 3 — PREMIUM</p>
+        <h3>Brand / Campaign Website</h3>
+        <p class="pricing-modal__price">Starting at $1,000+</p>
+        <p class="pricing-modal__copy">A high-impact, cinematic experience designed for launches, agencies, and elevated brands.</p>
+        <ul>
+          <li>Custom creative direction</li>
+          <li>Advanced layouts & transitions</li>
+          <li>Campaign storytelling structure</li>
+          <li>High-end visual presentation</li>
+          <li>Built to stand out and scale</li>
+        </ul>
+      </div>
+
+      <div class="pricing-modal__section">
+        <p class="pricing-modal__section-label">ADD-ONS</p>
+        <h3>Enhancements</h3>
+        <ul>
+          <li>Logo & brand identity</li>
+          <li>Photo editing / retouching</li>
+          <li>Instagram content packages</li>
+          <li>Booking + inquiry systems</li>
+          <li>Gallery / CMS integrations</li>
+          <li>Ongoing updates & support</li>
+        </ul>
+      </div>
+
+      <div class="pricing-modal__section pricing-modal__closing">
+        <p class="pricing-modal__section-label">CLOSING LINE</p>
+        <p>Every project is built custom — no templates, no shortcuts. Designed to feel premium, perform fast, and convert.</p>
+      </div>
+
+      <a class="pricing-modal__cta" href="#contact">Start Your Website →</a>
+    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>

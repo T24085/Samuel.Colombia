@@ -18,6 +18,10 @@ const lightbox = document.querySelector('.lightbox');
 const lightboxImage = lightbox?.querySelector('.lightbox__image');
 const lightboxClose = lightbox?.querySelector('.lightbox__close');
 const lightboxBackdrop = lightbox?.querySelector('.lightbox__backdrop');
+const pricingModal = document.querySelector('.pricing-modal');
+const pricingModalOpen = document.querySelector('[data-websites-pricing-open]');
+const pricingModalClose = pricingModal?.querySelector('.pricing-modal__close');
+const pricingModalBackdrop = pricingModal?.querySelector('.pricing-modal__backdrop');
 const collageCards = [...document.querySelectorAll('#headshots .collage-card--clickable, #lifestyle .collage-card--clickable')];
 const brandingCollage = document.querySelector('#branding .collage');
 
@@ -294,6 +298,20 @@ function closeLightbox() {
   lightboxImage.alt = '';
 }
 
+function openPricingModal() {
+  if (!pricingModal) return;
+  pricingModal.classList.add('is-open');
+  pricingModal.setAttribute('aria-hidden', 'false');
+  body.classList.add('lightbox-open');
+}
+
+function closePricingModal() {
+  if (!pricingModal) return;
+  pricingModal.classList.remove('is-open');
+  pricingModal.setAttribute('aria-hidden', 'true');
+  body.classList.remove('lightbox-open');
+}
+
 function setServicesParallax() {
   if (!posterSection || !cashFlowPeople.length) return;
 
@@ -531,9 +549,15 @@ collageCards.forEach(card => {
 lightboxClose?.addEventListener('click', closeLightbox);
 lightboxBackdrop?.addEventListener('click', closeLightbox);
 
+pricingModalOpen?.addEventListener('click', openPricingModal);
+pricingModalClose?.addEventListener('click', closePricingModal);
+pricingModalBackdrop?.addEventListener('click', closePricingModal);
+
 window.addEventListener('keydown', event => {
   if (event.key === 'Escape' && lightbox?.classList.contains('is-open')) {
     closeLightbox();
+  } else if (event.key === 'Escape' && pricingModal?.classList.contains('is-open')) {
+    closePricingModal();
   }
 });
 
