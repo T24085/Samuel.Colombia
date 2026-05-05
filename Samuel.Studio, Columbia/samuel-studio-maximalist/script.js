@@ -28,8 +28,6 @@ const posterSection = document.querySelector('#services');
 const eventsSection = document.querySelector('#events');
 const eventsTitle = document.querySelector('#events .section-title');
 const eventsTitleText = eventsTitle?.textContent.trim() || '';
-let eventsTitleTimer = null;
-let eventsTitleActive = false;
 const cashFlowPeople = [...document.querySelectorAll('.cash-flow-person')];
 const posterCopyBlock = document.querySelector('.poster-copy-block');
 const posterWordButtons = [...document.querySelectorAll('.poster-word')];
@@ -109,48 +107,41 @@ const servicePreviewData = {
   },
 };
 
-function stopEventsTitleLoop({ showFullText = true } = {}) {
-  window.clearTimeout(eventsTitleTimer);
-  eventsTitleTimer = null;
-  eventsTitleActive = false;
+function prepareEventsTitle() {
+  if (!eventsTitle || eventsTitle.dataset.eventsReady === 'true' || !eventsTitleText) return;
 
-  if (eventsTitle && showFullText) {
-    eventsTitle.textContent = eventsTitleText;
-    eventsTitle.classList.add('is-typed');
-  }
+  const words = eventsTitleText.split(/\s+/).filter(Boolean);
+  eventsTitle.setAttribute('aria-label', eventsTitleText);
+  eventsTitle.textContent = '';
+
+  words.forEach((word, index) => {
+    const wordSpan = document.createElement('span');
+    wordSpan.className = 'events-title__word';
+    wordSpan.style.setProperty('--events-word-index', String(index));
+    wordSpan.textContent = word;
+    eventsTitle.appendChild(wordSpan);
+
+    if (index < words.length - 1) {
+      eventsTitle.appendChild(document.createTextNode(' '));
+    }
+  });
+
+  eventsTitle.dataset.eventsReady = 'true';
 }
 
-function startEventsTitleLoop() {
-  if (!eventsTitle || eventsTitleActive || !eventsTitleText) return;
+function playEventsTitleReveal() {
+  if (!eventsTitle || !eventsTitleText) return;
 
-  eventsTitleActive = true;
-  eventsTitle.classList.remove('is-typed');
+  prepareEventsTitle();
+  eventsTitle.classList.remove('is-revealed');
+  void eventsTitle.offsetWidth;
+  eventsTitle.classList.add('is-revealed');
+}
 
-  let index = 0;
-  let deleting = false;
-  const tick = () => {
-    if (!eventsTitleActive) return;
+function resetEventsTitleReveal() {
+  if (!eventsTitle) return;
 
-    eventsTitle.textContent = eventsTitleText.slice(0, index);
-
-    if (!deleting && index < eventsTitleText.length) {
-      index += 1;
-      eventsTitleTimer = window.setTimeout(tick, index % 7 === 0 ? 130 : 78);
-    } else if (!deleting) {
-      eventsTitle.classList.add('is-typed');
-      deleting = true;
-      eventsTitleTimer = window.setTimeout(tick, 1850);
-    } else if (index > 0) {
-      eventsTitle.classList.remove('is-typed');
-      index -= 1;
-      eventsTitleTimer = window.setTimeout(tick, 34);
-    } else {
-      deleting = false;
-      eventsTitleTimer = window.setTimeout(tick, 420);
-    }
-  };
-
-  tick();
+  eventsTitle.classList.remove('is-revealed');
 }
 
 function setContactStatus(message, tone = '') {
@@ -437,9 +428,9 @@ if (!reducedMotion) {
         entries.forEach(entry => {
           const visible = entry.isIntersecting && entry.intersectionRatio >= 0.45;
           if (visible) {
-            startEventsTitleLoop();
+            playEventsTitleReveal();
           } else {
-            stopEventsTitleLoop();
+            resetEventsTitleReveal();
           }
         });
       }, { threshold: [0.2, 0.45, 0.7] });
@@ -472,7 +463,7 @@ if (!reducedMotion) {
     revealTargets.forEach(target => target.classList.add('in-view'));
     manifestoTypeTargets.forEach(target => target.classList.add('in-view'));
     if (posterSection) posterSection.classList.add('is-visible', 'is-animated');
-    stopEventsTitleLoop();
+    playEventsTitleReveal();
     setMotionPlayback(true);
     setHeroVideo(0);
   }
