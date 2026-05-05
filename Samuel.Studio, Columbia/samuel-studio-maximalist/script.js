@@ -95,7 +95,7 @@ const servicePreviewData = {
     ],
   },
   headshots: {
-    title: 'Headshots',
+    title: 'Professional Headshots',
     copy: 'LinkedIn, startup, remote worker, and environmental portraits with a clean professional edge.',
     price: '$350-$700',
     images: [
