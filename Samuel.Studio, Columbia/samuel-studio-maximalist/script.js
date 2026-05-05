@@ -75,7 +75,7 @@ function scrollToSection(hash, { pushState = true } = {}) {
 
 const servicePreviewData = {
   branding: {
-    title: 'Branding',
+    title: 'Brand Identity',
     copy: 'Personal branding, founders, creators, and expats photographed with editorial direction.',
     price: '$350-$700',
     images: [
@@ -85,7 +85,7 @@ const servicePreviewData = {
     ],
   },
   lifestyle: {
-    title: 'Lifestyle',
+    title: 'Lifestyle & Content',
     copy: 'Dating profile, social presence, and lifestyle imagery built around confidence and motion.',
     price: '$350-$700',
     images: [
@@ -115,7 +115,7 @@ const servicePreviewData = {
     ],
   },
   events: {
-    title: 'Events',
+    title: 'Event Coverage',
     copy: 'Small luxury events, networking nights, and brand activations covered with restraint.',
     price: '$350-$700',
     images: [
@@ -124,7 +124,7 @@ const servicePreviewData = {
     ],
   },
   websites: {
-    title: 'Websites',
+    title: 'Web Design',
     copy: 'Simple personal websites and image-led identity systems after the shoot.',
     price: '$300-$1000',
     images: [
@@ -567,7 +567,13 @@ if (posterCopyBlock && posterWordButtons.length) {
   posterWordButtons.forEach(button => {
     button.addEventListener('pointerenter', () => setPosterPreview(button));
     button.addEventListener('focus', () => setPosterPreview(button));
-    button.addEventListener('click', () => setPosterPreview(button));
+    button.addEventListener('click', () => {
+      setPosterPreview(button);
+      const targetId = button.dataset.sectionTarget;
+      if (targetId) {
+        scrollToSection(`#${targetId}`);
+      }
+    });
     button.addEventListener('pointermove', () => setPosterPreview(button));
     button.addEventListener('keydown', event => {
       if (event.key === 'Escape') {
