@@ -2327,6 +2327,32 @@ body.is-websites-active .website-marquee {
   opacity: 0;
   pointer-events: none;
   transition: opacity 220ms ease;
+  --pricing-backdrop: rgba(6, 30, 26, 0.72);
+  --pricing-border: rgba(244, 163, 0, 0.2);
+  --pricing-panel-top: rgba(8, 66, 58, 0.98);
+  --pricing-panel-bottom: rgba(10, 53, 47, 0.98);
+  --pricing-panel-glow-top: rgba(255, 214, 145, 0.16);
+  --pricing-panel-glow-bottom: rgba(255, 255, 255, 0.08);
+  --pricing-scroll-thumb-start: #ffd76e;
+  --pricing-scroll-thumb-end: #d28a00;
+  --pricing-scroll-thumb-hover-start: #ffe08d;
+  --pricing-scroll-thumb-hover-end: #e59e0b;
+  --pricing-close-bg: rgba(244, 163, 0, 0.18);
+  --pricing-close-text: var(--cream);
+  --pricing-kicker: var(--marigold);
+  --pricing-title: #fbf4e5;
+  --pricing-subtitle: rgba(248, 243, 230, 0.9);
+  --pricing-section-bg: rgba(255, 255, 255, 0.06);
+  --pricing-section-border: rgba(255, 220, 154, 0.12);
+  --pricing-featured-bg: rgba(244, 163, 0, 0.12);
+  --pricing-featured-border: rgba(244, 163, 0, 0.34);
+  --pricing-price: var(--marigold);
+  --pricing-copy: rgba(248, 243, 230, 0.88);
+  --pricing-list: rgba(248, 243, 230, 0.92);
+  --pricing-closing: rgba(248, 243, 230, 0.92);
+  --pricing-cta-start: #f7c44c;
+  --pricing-cta-end: #d99500;
+  --pricing-cta-text: #071712;
 }
 
 .pricing-modal.is-open {
@@ -2338,7 +2364,7 @@ body.is-websites-active .website-marquee {
   position: absolute;
   inset: 0;
   border: 0;
-  background: rgba(6, 30, 26, 0.72);
+  background: var(--pricing-backdrop);
   backdrop-filter: blur(12px) saturate(1.08);
 }
 
@@ -2349,15 +2375,15 @@ body.is-websites-active .website-marquee {
   max-height: min(88svh, 920px);
   overflow: auto;
   padding: clamp(24px, 3vw, 40px);
-  border: 1px solid rgba(244, 163, 0, 0.2);
+  border: 1px solid var(--pricing-border);
   border-radius: 28px;
   background:
-    radial-gradient(circle at top right, rgba(255, 214, 145, 0.16), transparent 36%),
-    radial-gradient(circle at bottom left, rgba(255, 255, 255, 0.08), transparent 42%),
-    linear-gradient(180deg, rgba(8, 66, 58, 0.98), rgba(10, 53, 47, 0.98));
+    radial-gradient(circle at top right, var(--pricing-panel-glow-top), transparent 36%),
+    radial-gradient(circle at bottom left, var(--pricing-panel-glow-bottom), transparent 42%),
+    linear-gradient(180deg, var(--pricing-panel-top), var(--pricing-panel-bottom));
   box-shadow: 0 30px 100px rgba(0, 0, 0, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.08);
   scrollbar-width: thin;
-  scrollbar-color: rgba(244, 163, 0, 0.8) rgba(255, 255, 255, 0.08);
+  scrollbar-color: var(--pricing-scroll-thumb-start) rgba(255, 255, 255, 0.08);
 }
 
 .pricing-modal__panel::-webkit-scrollbar {
@@ -2372,12 +2398,12 @@ body.is-websites-active .website-marquee {
 .pricing-modal__panel::-webkit-scrollbar-thumb {
   border-radius: 999px;
   border: 2px solid rgba(255, 255, 255, 0.08);
-  background: linear-gradient(180deg, #ffd76e, #d28a00);
+  background: linear-gradient(180deg, var(--pricing-scroll-thumb-start), var(--pricing-scroll-thumb-end));
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
 }
 
 .pricing-modal__panel::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #ffe08d, #e59e0b);
+  background: linear-gradient(180deg, var(--pricing-scroll-thumb-hover-start), var(--pricing-scroll-thumb-hover-end));
 }
 
 .pricing-modal__close {
@@ -2388,8 +2414,8 @@ body.is-websites-active .website-marquee {
   height: 44px;
   border: 0;
   border-radius: 50%;
-  background: rgba(244, 163, 0, 0.18);
-  color: var(--cream);
+  background: var(--pricing-close-bg);
+  color: var(--pricing-close-text);
   font-size: 1.9rem;
   line-height: 1;
   cursor: pointer;
@@ -2398,7 +2424,7 @@ body.is-websites-active .website-marquee {
 .pricing-modal__kicker,
 .pricing-modal__section-label {
   margin: 0;
-  color: var(--marigold);
+  color: var(--pricing-kicker);
   letter-spacing: 0.28em;
   text-transform: uppercase;
   font-size: 0.72rem;
@@ -2409,7 +2435,7 @@ body.is-websites-active .website-marquee {
   font-family: var(--display-font);
   font-size: clamp(2.2rem, 5vw, 4.5rem);
   line-height: 0.95;
-  color: #fbf4e5;
+  color: var(--pricing-title);
 }
 
 .pricing-modal__subtitle {
@@ -2417,32 +2443,32 @@ body.is-websites-active .website-marquee {
   margin: 0 0 1.4rem;
   font-size: clamp(1rem, 1.8vw, 1.15rem);
   line-height: 1.6;
-  color: rgba(248, 243, 230, 0.9);
+  color: var(--pricing-subtitle);
 }
 
 .pricing-modal__section {
   margin-top: 1rem;
   padding: 1rem 1rem 1.1rem;
   border-radius: 22px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 220, 154, 0.12);
+  background: var(--pricing-section-bg);
+  border: 1px solid var(--pricing-section-border);
 }
 
 .pricing-modal__section--featured {
-  background: rgba(244, 163, 0, 0.12);
-  border-color: rgba(244, 163, 0, 0.34);
+  background: var(--pricing-featured-bg);
+  border-color: var(--pricing-featured-border);
 }
 
 .pricing-modal__section h3 {
   margin: 0.2rem 0 0.35rem;
   font-family: var(--display-font);
   font-size: clamp(1.4rem, 2.4vw, 2rem);
-  color: #fbf4e5;
+  color: var(--pricing-title);
 }
 
 .pricing-modal__price {
   margin: 0 0 0.7rem;
-  color: var(--marigold);
+  color: var(--pricing-price);
   font-size: 1.05rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -2450,14 +2476,14 @@ body.is-websites-active .website-marquee {
 
 .pricing-modal__copy {
   margin: 0 0 0.8rem;
-  color: rgba(248, 243, 230, 0.88);
+  color: var(--pricing-copy);
   line-height: 1.6;
 }
 
 .pricing-modal__section ul {
   margin: 0;
   padding-left: 1.15rem;
-  color: rgba(248, 243, 230, 0.92);
+  color: var(--pricing-list);
   line-height: 1.75;
 }
 
@@ -2468,7 +2494,7 @@ body.is-websites-active .website-marquee {
 
 .pricing-modal__closing p:last-child {
   margin: 0;
-  color: rgba(248, 243, 230, 0.92);
+  color: var(--pricing-closing);
   line-height: 1.7;
 }
 
@@ -2477,11 +2503,179 @@ body.is-websites-active .website-marquee {
   margin-top: 1.15rem;
   padding: 0.9rem 1.2rem;
   border-radius: 999px;
-  background: linear-gradient(180deg, #f7c44c, #d99500);
-  color: #071712;
+  background: linear-gradient(180deg, var(--pricing-cta-start), var(--pricing-cta-end));
+  color: var(--pricing-cta-text);
   font-weight: 700;
   text-decoration: none;
   box-shadow: 0 16px 32px rgba(0, 0, 0, 0.16);
+}
+
+.pricing-modal[data-pricing-modal="branding"] {
+  --pricing-backdrop: rgba(32, 16, 14, 0.74);
+  --pricing-border: rgba(232, 118, 54, 0.28);
+  --pricing-panel-top: rgba(35, 18, 16, 0.98);
+  --pricing-panel-bottom: rgba(80, 33, 24, 0.98);
+  --pricing-panel-glow-top: rgba(255, 198, 156, 0.16);
+  --pricing-panel-glow-bottom: rgba(255, 255, 255, 0.05);
+  --pricing-scroll-thumb-start: #f6b767;
+  --pricing-scroll-thumb-end: #c75d23;
+  --pricing-scroll-thumb-hover-start: #ffd18d;
+  --pricing-scroll-thumb-hover-end: #d86c2b;
+  --pricing-close-bg: rgba(246, 183, 103, 0.16);
+  --pricing-kicker: #f6b767;
+  --pricing-title: #fff4ec;
+  --pricing-subtitle: rgba(255, 243, 236, 0.9);
+  --pricing-section-bg: rgba(255, 255, 255, 0.05);
+  --pricing-section-border: rgba(246, 183, 103, 0.14);
+  --pricing-featured-bg: rgba(246, 183, 103, 0.13);
+  --pricing-featured-border: rgba(246, 183, 103, 0.34);
+  --pricing-price: #f6b767;
+  --pricing-copy: rgba(255, 243, 236, 0.88);
+  --pricing-list: rgba(255, 243, 236, 0.92);
+  --pricing-closing: rgba(255, 243, 236, 0.94);
+  --pricing-cta-start: #f6b767;
+  --pricing-cta-end: #d86c2b;
+  --pricing-cta-text: #20120f;
+}
+
+.pricing-modal[data-pricing-modal="lifestyle"] {
+  --pricing-backdrop: rgba(8, 14, 33, 0.76);
+  --pricing-border: rgba(255, 151, 140, 0.26);
+  --pricing-panel-top: rgba(11, 20, 46, 0.98);
+  --pricing-panel-bottom: rgba(28, 42, 88, 0.98);
+  --pricing-panel-glow-top: rgba(100, 139, 255, 0.18);
+  --pricing-panel-glow-bottom: rgba(255, 140, 128, 0.08);
+  --pricing-scroll-thumb-start: #ff9f92;
+  --pricing-scroll-thumb-end: #d96c5d;
+  --pricing-scroll-thumb-hover-start: #ffb7ad;
+  --pricing-scroll-thumb-hover-end: #e07667;
+  --pricing-close-bg: rgba(255, 159, 146, 0.16);
+  --pricing-kicker: #ff9f92;
+  --pricing-title: #f9f7f1;
+  --pricing-subtitle: rgba(248, 247, 241, 0.9);
+  --pricing-section-bg: rgba(255, 255, 255, 0.05);
+  --pricing-section-border: rgba(255, 159, 146, 0.14);
+  --pricing-featured-bg: rgba(255, 159, 146, 0.12);
+  --pricing-featured-border: rgba(255, 159, 146, 0.34);
+  --pricing-price: #ffb7ad;
+  --pricing-copy: rgba(248, 247, 241, 0.88);
+  --pricing-list: rgba(248, 247, 241, 0.92);
+  --pricing-closing: rgba(248, 247, 241, 0.94);
+  --pricing-cta-start: #ff9f92;
+  --pricing-cta-end: #d96c5d;
+  --pricing-cta-text: #121825;
+}
+
+.pricing-modal[data-pricing-modal="events"] {
+  --pricing-backdrop: rgba(7, 13, 30, 0.78);
+  --pricing-border: rgba(244, 163, 0, 0.28);
+  --pricing-panel-top: rgba(10, 18, 42, 0.98);
+  --pricing-panel-bottom: rgba(18, 36, 74, 0.98);
+  --pricing-panel-glow-top: rgba(86, 146, 255, 0.16);
+  --pricing-panel-glow-bottom: rgba(244, 163, 0, 0.08);
+  --pricing-scroll-thumb-start: #ffd76e;
+  --pricing-scroll-thumb-end: #d28a00;
+  --pricing-scroll-thumb-hover-start: #ffe08d;
+  --pricing-scroll-thumb-hover-end: #e59e0b;
+  --pricing-close-bg: rgba(244, 163, 0, 0.18);
+  --pricing-kicker: #ffd76e;
+  --pricing-title: #fbf4e5;
+  --pricing-subtitle: rgba(248, 243, 230, 0.9);
+  --pricing-section-bg: rgba(255, 255, 255, 0.05);
+  --pricing-section-border: rgba(255, 220, 154, 0.12);
+  --pricing-featured-bg: rgba(244, 163, 0, 0.12);
+  --pricing-featured-border: rgba(244, 163, 0, 0.34);
+  --pricing-price: #ffd76e;
+  --pricing-copy: rgba(248, 243, 230, 0.88);
+  --pricing-list: rgba(248, 243, 230, 0.92);
+  --pricing-closing: rgba(248, 243, 230, 0.94);
+  --pricing-cta-start: #ffd76e;
+  --pricing-cta-end: #d28a00;
+  --pricing-cta-text: #071712;
+}
+
+.pricing-modal[data-pricing-modal="travel"] {
+  --pricing-backdrop: rgba(24, 18, 12, 0.76);
+  --pricing-border: rgba(216, 177, 114, 0.28);
+  --pricing-panel-top: rgba(29, 23, 17, 0.98);
+  --pricing-panel-bottom: rgba(63, 48, 33, 0.98);
+  --pricing-panel-glow-top: rgba(244, 220, 180, 0.16);
+  --pricing-panel-glow-bottom: rgba(255, 255, 255, 0.05);
+  --pricing-scroll-thumb-start: #f0d8ab;
+  --pricing-scroll-thumb-end: #d2a35f;
+  --pricing-scroll-thumb-hover-start: #f7e1bb;
+  --pricing-scroll-thumb-hover-end: #ddb06f;
+  --pricing-close-bg: rgba(240, 216, 171, 0.16);
+  --pricing-kicker: #f0d8ab;
+  --pricing-title: #fff8ee;
+  --pricing-subtitle: rgba(255, 248, 238, 0.9);
+  --pricing-section-bg: rgba(255, 255, 255, 0.05);
+  --pricing-section-border: rgba(240, 216, 171, 0.14);
+  --pricing-featured-bg: rgba(240, 216, 171, 0.12);
+  --pricing-featured-border: rgba(240, 216, 171, 0.34);
+  --pricing-price: #f0d8ab;
+  --pricing-copy: rgba(255, 248, 238, 0.88);
+  --pricing-list: rgba(255, 248, 238, 0.92);
+  --pricing-closing: rgba(255, 248, 238, 0.94);
+  --pricing-cta-start: #f0d8ab;
+  --pricing-cta-end: #d2a35f;
+  --pricing-cta-text: #1f160c;
+}
+
+.pricing-modal[data-pricing-modal="headshots"] {
+  --pricing-backdrop: rgba(7, 13, 30, 0.78);
+  --pricing-border: rgba(244, 163, 0, 0.28);
+  --pricing-panel-top: rgba(8, 20, 40, 0.98);
+  --pricing-panel-bottom: rgba(15, 36, 72, 0.98);
+  --pricing-panel-glow-top: rgba(95, 141, 255, 0.18);
+  --pricing-panel-glow-bottom: rgba(244, 163, 0, 0.06);
+  --pricing-scroll-thumb-start: #ffd76e;
+  --pricing-scroll-thumb-end: #d28a00;
+  --pricing-scroll-thumb-hover-start: #ffe08d;
+  --pricing-scroll-thumb-hover-end: #e59e0b;
+  --pricing-close-bg: rgba(244, 163, 0, 0.18);
+  --pricing-kicker: #ffd76e;
+  --pricing-title: #fbf4e5;
+  --pricing-subtitle: rgba(248, 243, 230, 0.9);
+  --pricing-section-bg: rgba(255, 255, 255, 0.05);
+  --pricing-section-border: rgba(255, 220, 154, 0.12);
+  --pricing-featured-bg: rgba(244, 163, 0, 0.12);
+  --pricing-featured-border: rgba(244, 163, 0, 0.34);
+  --pricing-price: #ffd76e;
+  --pricing-copy: rgba(248, 243, 230, 0.88);
+  --pricing-list: rgba(248, 243, 230, 0.92);
+  --pricing-closing: rgba(248, 243, 230, 0.94);
+  --pricing-cta-start: #ffd76e;
+  --pricing-cta-end: #d28a00;
+  --pricing-cta-text: #071712;
+}
+
+.pricing-modal[data-pricing-modal="websites"] {
+  --pricing-backdrop: rgba(6, 26, 18, 0.78);
+  --pricing-border: rgba(244, 163, 0, 0.24);
+  --pricing-panel-top: rgba(8, 32, 22, 0.98);
+  --pricing-panel-bottom: rgba(13, 60, 40, 0.98);
+  --pricing-panel-glow-top: rgba(244, 220, 180, 0.14);
+  --pricing-panel-glow-bottom: rgba(255, 255, 255, 0.05);
+  --pricing-scroll-thumb-start: #f0d8ab;
+  --pricing-scroll-thumb-end: #d2a35f;
+  --pricing-scroll-thumb-hover-start: #f7e1bb;
+  --pricing-scroll-thumb-hover-end: #ddb06f;
+  --pricing-close-bg: rgba(244, 163, 0, 0.16);
+  --pricing-kicker: #f0d8ab;
+  --pricing-title: #f7f4ea;
+  --pricing-subtitle: rgba(247, 244, 234, 0.9);
+  --pricing-section-bg: rgba(255, 255, 255, 0.05);
+  --pricing-section-border: rgba(240, 216, 171, 0.12);
+  --pricing-featured-bg: rgba(240, 216, 171, 0.12);
+  --pricing-featured-border: rgba(240, 216, 171, 0.34);
+  --pricing-price: #f0d8ab;
+  --pricing-copy: rgba(247, 244, 234, 0.88);
+  --pricing-list: rgba(247, 244, 234, 0.92);
+  --pricing-closing: rgba(247, 244, 234, 0.94);
+  --pricing-cta-start: #f0d8ab;
+  --pricing-cta-end: #d2a35f;
+  --pricing-cta-text: #071712;
 }
 
 .lightbox__backdrop {
