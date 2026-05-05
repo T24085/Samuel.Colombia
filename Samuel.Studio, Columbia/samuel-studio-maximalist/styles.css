@@ -2554,7 +2554,10 @@ body.is-websites-active .website-marquee {
 }
 
 .services-section {
-  background: #c84033;
+  background:
+    radial-gradient(circle at 16% 24%, rgba(255, 153, 64, 0.16), transparent 24%),
+    radial-gradient(circle at 84% 24%, rgba(0, 0, 0, 0.22), transparent 28%),
+    linear-gradient(135deg, #140b0c 0%, #8e3227 34%, #c04c2b 62%, #211010 100%);
   color: var(--cream);
 }
 
@@ -2572,8 +2575,8 @@ body.is-websites-active .website-marquee {
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
-  opacity: 0.9;
-  mix-blend-mode: screen;
+  opacity: 0.82;
+  mix-blend-mode: normal;
 }
 
 .services-blob-bg svg {
@@ -2646,6 +2649,26 @@ body.is-websites-active .website-marquee {
   text-align: center;
 }
 
+.services-section .cash-flow-center {
+  isolation: isolate;
+}
+
+.services-section .cash-flow-center::before {
+  content: '';
+  position: absolute;
+  inset: -18px auto auto 50%;
+  width: min(800px, 100%);
+  height: calc(100% + 36px);
+  transform: translateX(-50%);
+  border-radius: 40px;
+  background: linear-gradient(180deg, rgba(12, 14, 24, 0.42), rgba(12, 14, 24, 0.18));
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(18px) saturate(1.12);
+  pointer-events: none;
+  z-index: -1;
+}
+
 .cash-flow-center .eyebrow {
   margin-bottom: 16px;
   color: rgba(10, 10, 10, 0.68);
@@ -2696,8 +2719,9 @@ body.is-websites-active .website-marquee {
 }
 
 .services-section .cash-flow-word-stack .poster-word {
-  color: rgba(255, 245, 235, 0.6);
-  opacity: 0.82;
+  color: rgba(255, 248, 242, 0.78);
+  opacity: 0.92;
+  text-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
 }
 
 .cash-flow-word-stack .poster-word:nth-child(2n) {
@@ -2717,6 +2741,7 @@ body.is-websites-active .website-marquee {
 .services-section .cash-flow-word-stack .poster-word:focus-visible,
 .services-section .cash-flow-word-stack .poster-word.is-active {
   color: #fff4ec;
+  opacity: 1;
   text-shadow: 0 16px 38px rgba(255, 255, 255, 0.14);
 }
 
@@ -2738,7 +2763,7 @@ body.is-websites-active .website-marquee {
 }
 
 .services-section .cash-flow-caption {
-  color: rgba(255, 244, 236, 0.88);
+  color: rgba(255, 244, 236, 0.95);
 }
 
 .cash-flow-price {
@@ -2759,8 +2784,9 @@ body.is-websites-active .website-marquee {
 }
 
 .services-section .cash-flow-price {
-  border-color: rgba(255, 244, 236, 0.22);
-  background: rgba(255, 244, 236, 0.74);
+  border-color: rgba(255, 244, 236, 0.28);
+  background: rgba(255, 244, 236, 0.88);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.16);
 }
 
 .cash-flow-price span {
@@ -2772,7 +2798,7 @@ body.is-websites-active .website-marquee {
 }
 
 .services-section .cash-flow-price span {
-  color: rgba(64, 20, 16, 0.72);
+  color: rgba(64, 20, 16, 0.8);
 }
 
 .cash-flow-price strong {
@@ -2782,7 +2808,7 @@ body.is-websites-active .website-marquee {
 }
 
 .services-section .cash-flow-price strong {
-  color: #7a2202;
+  color: #5f1800;
 }
 
 .section-price {
@@ -2876,6 +2902,15 @@ body.is-websites-active .website-marquee {
   backdrop-filter: blur(14px);
 }
 
+.services-section .cash-flow-preview__frame {
+  border-color: rgba(255, 255, 255, 0.16);
+  background:
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.06), transparent 34%),
+    linear-gradient(180deg, rgba(18, 20, 30, 0.92), rgba(14, 16, 24, 0.82));
+  box-shadow: 0 34px 88px rgba(0, 0, 0, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(18px) saturate(1.08);
+}
+
 .cash-flow-preview__copy {
   display: grid;
   gap: 6px;
@@ -2890,6 +2925,10 @@ body.is-websites-active .website-marquee {
   text-transform: uppercase;
 }
 
+.services-section .cash-flow-preview__eyebrow {
+  color: rgba(255, 244, 236, 0.76);
+}
+
 .cash-flow-preview__title {
   margin: 0;
   color: var(--terracotta);
@@ -2899,11 +2938,20 @@ body.is-websites-active .website-marquee {
   letter-spacing: 0;
 }
 
+.services-section .cash-flow-preview__title {
+  color: #fff5ef;
+  text-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
+}
+
 .cash-flow-preview__text {
   margin: 0;
   color: rgba(10, 10, 10, 0.74);
   font-size: 0.9rem;
   line-height: 1.55;
+}
+
+.services-section .cash-flow-preview__text {
+  color: rgba(255, 244, 236, 0.9);
 }
 
 .cash-flow-preview__grid {
@@ -2919,6 +2967,11 @@ body.is-websites-active .website-marquee {
   border-radius: 20px;
   background: rgba(10, 10, 10, 0.08);
   box-shadow: 0 14px 26px rgba(10, 10, 10, 0.1);
+}
+
+.services-section .cash-flow-preview__tile {
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 14px 26px rgba(0, 0, 0, 0.24);
 }
 
 .cash-flow-preview__tile img {
