@@ -1800,6 +1800,16 @@ body.is-websites-active .website-marquee {
   }
 }
 
+@keyframes headshots-bg-scroll {
+  0% {
+    background-position: 0 0, 0 0, 0 0, center;
+  }
+
+  100% {
+    background-position: 50px 50px, 50px 50px, 50px 50px, center;
+  }
+}
+
 #branding .collage-card.texture {
   width: 40%;
   left: 14%;
@@ -2162,6 +2172,26 @@ body.is-websites-active .website-marquee {
 #headshots .collage-card.extra {
   aspect-ratio: auto;
   height: 100%;
+}
+
+#headshots {
+  background:
+    radial-gradient(circle at 75% 18%, rgba(255, 255, 255, 0.55), transparent 30%),
+    linear-gradient(135deg, #f6ecdf 0%, #efe3d3 48%, #e6d8c5 100%);
+}
+
+#headshots::before {
+  opacity: 0.42;
+  background-image:
+    url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAIAAACRXR/mAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAABnSURBVHja7M5RDYAwDEXRDgmvEocnlrQS2SwUFST9uEfBGWs9c97nbGtDcquqiKhOImLs/UpuzVzWEi1atGjRokWLFi1atGjRokWLFi1atGjRokWLFi1af7Ukz8xWp8z8AAAA//8DAJ4LoEAAlL1nAAAAAElFTkSuQmCC'),
+    linear-gradient(rgba(102, 75, 52, 0.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(102, 75, 52, 0.16) 1px, transparent 1px),
+    radial-gradient(circle at 18% 20%, rgba(255, 255, 255, 0.16), transparent 28%);
+  background-repeat: repeat, repeat, repeat, no-repeat;
+  background-size: 50px 50px, 50px 50px, 50px 50px, auto;
+  background-position: 0 0, 0 0, 0 0, center;
+  mix-blend-mode: multiply;
+  animation: headshots-bg-scroll 0.92s linear infinite;
 }
 
 .travel-title {
