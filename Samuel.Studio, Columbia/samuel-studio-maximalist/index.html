@@ -197,10 +197,10 @@
           <p class="lede narrow">
             Founder portraits, creator campaigns, and editorial identity images designed to make a business look human.
           </p>
-          <div class="section-price" aria-label="Branding pricing">
+          <button class="section-price section-price--button" type="button" aria-label="Open branding pricing details" data-pricing-modal-open="branding">
             <span>Pricing</span>
             <strong>$350-$700</strong>
-          </div>
+          </button>
           <div class="photo-tags" aria-label="Branding categories">
             <span>Founders</span>
             <span>Creators</span>
@@ -541,6 +541,77 @@
     </figure>
   </div>
 
+  <div class="pricing-modal" data-pricing-modal="branding" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="branding-pricing-title">
+    <button class="pricing-modal__backdrop" type="button" aria-label="Close branding pricing details"></button>
+    <div class="pricing-modal__panel" role="document">
+      <button class="pricing-modal__close" type="button" aria-label="Close branding pricing details">×</button>
+      <p class="pricing-modal__kicker">POP-UP TITLE</p>
+      <h2 id="branding-pricing-title" class="pricing-modal__title">Brand Identity &amp; Creative Direction</h2>
+      <p class="pricing-modal__subtitle">Visual identity systems built to make your brand feel intentional, recognizable, and impossible to ignore.</p>
+
+      <div class="pricing-modal__section">
+        <p class="pricing-modal__section-label">SECTION 1 — FOUNDATION</p>
+        <h3>Personal Brand Session</h3>
+        <p class="pricing-modal__price">$350 — $500</p>
+        <p class="pricing-modal__copy">A focused shoot designed to define your visual identity and elevate your presence online.</p>
+        <ul>
+          <li>Founder / creator portraits</li>
+          <li>Clean, editorial-style direction</li>
+          <li>2–3 retouched images</li>
+          <li>Consistent visual tone</li>
+          <li>Built for social + web</li>
+        </ul>
+      </div>
+
+      <div class="pricing-modal__section pricing-modal__section--featured">
+        <p class="pricing-modal__section-label">SECTION 2 — CORE (FEATURED)</p>
+        <h3>Brand Identity Package</h3>
+        <p class="pricing-modal__price">$500 — $900</p>
+        <p class="pricing-modal__copy">A cohesive visual system for creators, entrepreneurs, and small brands.</p>
+        <ul>
+          <li>Multiple looks / concepts</li>
+          <li>5–8 retouched images</li>
+          <li>Color + styling consistency</li>
+          <li>Brand-focused composition</li>
+          <li>Content for website + socials</li>
+        </ul>
+      </div>
+
+      <div class="pricing-modal__section">
+        <p class="pricing-modal__section-label">SECTION 3 — PREMIUM</p>
+        <h3>Campaign / Creative Direction</h3>
+        <p class="pricing-modal__price">Starting at $1,000+</p>
+        <p class="pricing-modal__copy">Full-scale visual storytelling designed for launches, products, and brand campaigns.</p>
+        <ul>
+          <li>Creative direction &amp; concepting</li>
+          <li>Multi-scene / multi-look production</li>
+          <li>Editorial + commercial quality</li>
+          <li>Designed for ads, launches, and media</li>
+          <li>High-impact, scroll-stopping visuals</li>
+        </ul>
+      </div>
+
+      <div class="pricing-modal__section">
+        <p class="pricing-modal__section-label">ADD-ONS</p>
+        <h3>Enhancements</h3>
+        <ul>
+          <li>Logo / visual identity design</li>
+          <li>Social media content kits</li>
+          <li>Campaign rollout assets</li>
+          <li>Advanced retouching</li>
+          <li>Ongoing creative direction</li>
+        </ul>
+      </div>
+
+      <div class="pricing-modal__section pricing-modal__closing">
+        <p class="pricing-modal__section-label">CLOSING LINE</p>
+        <p>Strong brands don’t just look good — they feel consistent, intentional, and alive.</p>
+      </div>
+
+      <a class="pricing-modal__cta" href="#contact">Build Your Brand →</a>
+    </div>
+  </div>
+
   <div class="pricing-modal" data-pricing-modal="websites" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="websites-pricing-title">
     <button class="pricing-modal__backdrop" type="button" aria-label="Close website pricing details"></button>
     <div class="pricing-modal__panel" role="document">
@@ -688,4 +759,3 @@
   <script src="script.js"></script>
 </body>
 </html>
-
