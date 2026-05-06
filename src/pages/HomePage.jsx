@@ -256,7 +256,7 @@ export function HomePage() {
                     key={card.title}
                     initial={{ opacity: 0, y: 18 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.3 }}
+                    viewport={{ once: false, amount: 0.3 }}
                     transition={{ duration: 0.65 }}
                     className="gold-frame p-6"
                   >
@@ -297,7 +297,7 @@ export function HomePage() {
             className="relative h-full w-full"
             initial={{ opacity: 0, x: -24 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.18 }}
+            viewport={{ once: false, amount: 0.18 }}
             transition={{ duration: 0.95, ease: 'easeOut' }}
           >
             <motion.div
@@ -333,7 +333,7 @@ export function HomePage() {
             className="relative h-full w-full"
             initial={{ opacity: 0, x: 36, scale: 0.94 }}
             whileInView={{ opacity: 1, x: 0, scale: 1 }}
-            viewport={{ once: true, amount: 0.18 }}
+            viewport={{ once: false, amount: 0.18 }}
             transition={{ duration: 1, ease: 'easeOut' }}
           >
             <motion.div

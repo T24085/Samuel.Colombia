@@ -19,7 +19,7 @@ export function SectionHeading({ eyebrow, title, description, align = 'left', to
       <motion.h2
         initial={{ opacity: 0, y: 22 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
+        viewport={{ once: false, amount: 0.3 }}
         transition={{ duration: 0.7, ease: 'easeOut' }}
         className={`mt-4 font-display text-4xl font-semibold tracking-[0.01em] md:text-5xl ${titleClass}`}
       >
@@ -28,7 +28,7 @@ export function SectionHeading({ eyebrow, title, description, align = 'left', to
       <motion.div
         initial={{ scaleX: 0 }}
         whileInView={{ scaleX: 1 }}
-        viewport={{ once: true, amount: 0.3 }}
+        viewport={{ once: false, amount: 0.3 }}
         transition={{ duration: 0.9, ease: 'easeOut' }}
         className={`mt-5 origin-left ${center ? 'mx-auto' : ''} w-36`}
       >

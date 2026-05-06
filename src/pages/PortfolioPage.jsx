@@ -13,7 +13,7 @@ const tileRatios = [0.82, 1.05, 0.92, 1.18]
 function ImageTile({ item, index }) {
   return (
     <div
-      className="group relative overflow-hidden rounded-[1.25rem] border border-white/10 bg-white/[0.03] shadow-[0_18px_60px_rgba(0,0,0,0.22)]"
+      className="media-card group relative overflow-hidden rounded-[1.25rem] border border-white/10 bg-white/[0.03] shadow-[0_18px_60px_rgba(0,0,0,0.22)]"
       style={{ aspectRatio: tileRatios[index % tileRatios.length] }}
     >
       <img
@@ -21,11 +21,12 @@ function ImageTile({ item, index }) {
         alt={item.alt}
         loading="lazy"
         decoding="async"
-        className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]"
+        className="media-card-image h-full w-full object-cover"
       />
       <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.42))] opacity-70 transition duration-500 group-hover:opacity-50" />
+      <div className="editorial-flash" aria-hidden="true" />
       <div className="absolute inset-x-0 bottom-0 px-3 py-3">
-        <p className="text-[0.58rem] uppercase tracking-[0.28em] text-ivory/74">{item.title}</p>
+        <p className="media-card-caption text-[0.58rem] uppercase tracking-[0.28em] text-ivory/74">{item.title}</p>
       </div>
     </div>
   )
@@ -36,7 +37,7 @@ function FullscreenMagazinePanel({ collection, onClose, reduceMotion }) {
 
   const panel = (
     <motion.div
-      className="fixed inset-0 z-[120] bg-black backdrop-blur-[3px]"
+      className="modal-backdrop fixed inset-0 z-[120] bg-black backdrop-blur-[3px]"
       initial={reduceMotion ? { opacity: 1 } : { opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -44,7 +45,7 @@ function FullscreenMagazinePanel({ collection, onClose, reduceMotion }) {
       onClick={onClose}
     >
       <motion.section
-        className="relative h-full w-full overflow-y-auto bg-[linear-gradient(180deg,rgba(15,14,12,0.98),rgba(5,5,5,0.98))] lg:overflow-hidden"
+        className="modal-panel relative h-full w-full overflow-y-auto bg-[linear-gradient(180deg,rgba(15,14,12,0.98),rgba(5,5,5,0.98))] lg:overflow-hidden"
         initial={reduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.98, y: 18 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={reduceMotion ? { opacity: 1 } : { opacity: 0, scale: 0.98, y: 18 }}

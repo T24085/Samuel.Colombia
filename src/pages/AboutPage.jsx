@@ -1,6 +1,6 @@
-import { useEffect, useId, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { motion, useReducedMotion } from 'framer-motion'
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { SEO } from '../components/SEO'
 import { site } from '../data/site'
 import samPortrait from '../../Sam.png'
@@ -63,6 +63,11 @@ const publicationFeatures = [
   },
 ]
 
+const manifestoLines = [
+  'Samuel Cary creates fashion, beauty, branding, and portrait imagery with a print-minded editorial point of view.',
+  'His published work brings the same calm direction, polish, and visual confidence into every client session.',
+]
+
 function SignatureWord({ className = '' }) {
   const reduceMotion = useReducedMotion()
   const gradientId = useId().replace(/:/g, '')
@@ -97,7 +102,7 @@ function SignatureWord({ className = '' }) {
               className="signature-mask-wipe"
               initial={{ width: 0 }}
               whileInView={{ width: 1600 }}
-              viewport={{ once: true, amount: 0.35 }}
+              viewport={{ once: false, amount: 0.35 }}
               transition={{ duration: 1.9, ease: [0.22, 1, 0.36, 1], delay: 0.18 }}
             />
           </mask>
@@ -110,7 +115,7 @@ function SignatureWord({ className = '' }) {
           className="signature-outline"
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 0.44, y: 0 }}
-          viewport={{ once: true, amount: 0.35 }}
+          viewport={{ once: false, amount: 0.35 }}
           transition={{ duration: 0.85, ease: 'easeOut' }}
         >
           Samuel Studio
@@ -125,7 +130,7 @@ function SignatureWord({ className = '' }) {
           className="signature-fill"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: true, amount: 0.35 }}
+          viewport={{ once: false, amount: 0.35 }}
           transition={{ duration: 0.4, delay: 0.4 }}
         >
           Samuel Studio
@@ -154,6 +159,11 @@ function SplitRailLink({ label, href, active = false }) {
 export function AboutPage() {
   const reduceMotion = useReducedMotion()
   const [activePublication, setActivePublication] = useState(0)
+  const manifestoRef = useRef(null)
+  const { scrollYProgress: manifestoScrollProgress } = useScroll({
+    target: manifestoRef,
+    offset: ['start end', 'end start'],
+  })
   const marqueeItems = [...aboutMarqueeItems, ...aboutMarqueeItems]
   const marqueeGoldStyle = {
     backgroundImage:
@@ -174,6 +184,9 @@ export function AboutPage() {
 
     return () => window.clearInterval(timer)
   }, [reduceMotion])
+
+  const coverDriftY = useTransform(manifestoScrollProgress, [0, 1], [16, -18])
+  const coverDriftScale = useTransform(manifestoScrollProgress, [0, 1], [0.985, 1.02])
 
   return (
     <>
@@ -208,7 +221,7 @@ export function AboutPage() {
                   d={d}
                   initial={reduceMotion ? false : { opacity: 0, pathLength: 0.85 }}
                   whileInView={reduceMotion ? undefined : { opacity: 1, pathLength: 1 }}
-                  viewport={{ once: true, amount: 0.1 }}
+                  viewport={{ once: false, amount: 0.1 }}
                   transition={reduceMotion ? { duration: 0 } : { duration: 1.6, ease: 'easeOut', delay: index * 0.04 }}
                 />
               ))}
@@ -232,9 +245,10 @@ export function AboutPage() {
             <motion.div
               initial={reduceMotion ? false : { opacity: 0, y: 18 }}
               whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.24 }}
+              viewport={{ once: false, amount: 0.24 }}
               transition={reduceMotion ? { duration: 0 } : { duration: 0.85, ease: 'easeOut' }}
               className="about-cover-wall"
+              style={reduceMotion ? undefined : { y: coverDriftY, scale: coverDriftScale }}
             >
               {publicationFeatures.map((item, index) => (
                 <figure
@@ -262,9 +276,10 @@ export function AboutPage() {
             <motion.div
               initial={reduceMotion ? false : { opacity: 0, y: 18 }}
               whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.24 }}
+              viewport={{ once: false, amount: 0.24 }}
               transition={reduceMotion ? { duration: 0 } : { duration: 0.85, ease: 'easeOut', delay: 0.08 }}
               className="relative"
+              ref={manifestoRef}
             >
               <div className="mb-5 h-[clamp(48px,7vh,76px)] w-[min(76vw,520px)]">
                 <SignatureWord className="h-full w-full opacity-70" />
@@ -282,9 +297,15 @@ export function AboutPage() {
 
               <div className="mt-6 grid gap-5 border-y border-white/10 py-6 lg:grid-cols-[1fr_15rem]">
                 <p className="max-w-[40rem] text-base leading-8 text-ivory/76">
-                  Samuel Cary creates fashion, beauty, branding, and portrait imagery with a print-minded editorial
-                  point of view. His published work brings the same calm direction, polish, and visual confidence into
-                  every client session.
+                  {manifestoLines.map((line, index) => (
+                    <span
+                      key={line}
+                      className="reveal block"
+                      style={{ '--reveal-delay': `${index * 120}ms`, '--reveal-distance': '0.8rem' }}
+                    >
+                      {line}
+                    </span>
+                  ))}
                 </p>
 
                 <figure className="about-author-card">

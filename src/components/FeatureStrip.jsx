@@ -7,7 +7,7 @@ function FeatureCard({ item, index }) {
     <motion.article
       initial={{ opacity: 0, y: 18 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
+      viewport={{ once: false, amount: 0.3 }}
       transition={{ duration: 0.7, delay: index * 0.08 }}
       className="group relative min-w-[17rem] flex-1 overflow-hidden rounded-[1.6rem] border border-white/10 bg-[#141414] shadow-luxury"
     >

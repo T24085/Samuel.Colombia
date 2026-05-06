@@ -5,9 +5,9 @@ export function TestimonialCard({ quote, name, role }) {
     <motion.article
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
+      viewport={{ once: false, amount: 0.3 }}
       transition={{ duration: 0.7 }}
-      className="gold-frame relative p-7"
+      className="gold-frame media-card reveal relative p-7"
     >
       <p className="font-display text-2xl leading-9 text-ivory">“{quote}”</p>
       <div className="mt-6 flex items-center gap-4">

@@ -43,7 +43,7 @@ function RevealSection({ children, reduceMotion, className = '' }) {
       initial={reduceMotion ? { opacity: 1 } : 'hidden'}
       whileInView={reduceMotion ? { opacity: 1 } : 'visible'}
       variants={sectionMotion}
-      viewport={{ once: true, amount: 0.18 }}
+      viewport={{ once: false, amount: 0.18 }}
       transition={{ duration: 0.85, ease: 'easeOut' }}
       className={className}
     >
@@ -55,19 +55,20 @@ function RevealSection({ children, reduceMotion, className = '' }) {
 function GalleryBlock({ item, image, alt, index }) {
   return (
     <div
-      className="group relative min-h-[18rem] overflow-hidden rounded-[1.8rem] border border-white/10 bg-black shadow-[0_20px_70px_rgba(0,0,0,0.28)] sm:min-h-[22rem]"
+      className="media-card group relative min-h-[18rem] overflow-hidden rounded-[1.8rem] border border-white/10 bg-black shadow-[0_20px_70px_rgba(0,0,0,0.28)] sm:min-h-[22rem]"
     >
       <img
         src={image}
         alt={alt}
-        className="absolute inset-0 h-full w-full object-cover opacity-[0.86] saturate-[0.9] transition duration-700 group-hover:scale-[1.04] group-hover:opacity-100"
+        className="media-card-image absolute inset-0 h-full w-full object-cover opacity-[0.86] saturate-[0.9]"
       />
       <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.04)_20%,rgba(0,0,0,0.72)_100%)]" />
       <div aria-hidden="true" className="services-film-grain absolute inset-0 opacity-[0.1]" />
+      <div aria-hidden="true" className="editorial-flash" />
       <div className="relative flex h-full min-h-[18rem] flex-col justify-between p-6 sm:min-h-[22rem]">
         <div className="flex items-start justify-between gap-4">
-          <span className="text-[0.62rem] uppercase tracking-[0.34em] text-gold/72">Frame {String(index + 1).padStart(2, '0')}</span>
-          <span className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[0.58rem] uppercase tracking-[0.3em] text-parchment/68">
+          <span className="media-card-caption text-[0.62rem] uppercase tracking-[0.34em] text-gold/72">Frame {String(index + 1).padStart(2, '0')}</span>
+          <span className="media-card-caption rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[0.58rem] uppercase tracking-[0.3em] text-parchment/68">
             Study
           </span>
         </div>
@@ -142,34 +143,34 @@ export function ServiceDetailPage() {
           <section className="studio-shell min-h-[92svh] pt-24 pb-14 sm:pt-28 lg:pb-18 lg:pt-32">
             <div className="grid min-h-[calc(92svh-8rem)] gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:items-end">
               <div className="max-w-4xl">
-                <p className="text-[0.7rem] font-semibold uppercase tracking-[0.42em] text-gold/70">
+                <p className="reveal text-[0.7rem] font-semibold uppercase tracking-[0.42em] text-gold/70" style={{ '--reveal-delay': '40ms' }}>
                   {service.eyebrow}
                 </p>
                 <div className="mt-6 flex items-center gap-4">
-                  <span className="font-display text-6xl leading-none tracking-[-0.06em] text-ivory/18 sm:text-7xl">
+                  <span className="reveal font-display text-6xl leading-none tracking-[-0.06em] text-ivory/18 sm:text-7xl" style={{ '--reveal-delay': '100ms' }}>
                     {serviceNumber}
                   </span>
-                  <span className="rounded-full border border-gold/20 bg-black/20 px-4 py-2 text-[0.66rem] uppercase tracking-[0.32em] text-gold/82">
+                  <span className="reveal rounded-full border border-gold/20 bg-black/20 px-4 py-2 text-[0.66rem] uppercase tracking-[0.32em] text-gold/82" style={{ '--reveal-delay': '160ms' }}>
                     {service.label}
                   </span>
                 </div>
-                <h1 className="mt-6 max-w-5xl font-display text-[3.2rem] leading-[0.86] tracking-[-0.055em] text-ivory sm:text-6xl md:text-[4.8rem] lg:text-[5.8rem] xl:text-[6.5rem]">
+                <h1 className="reveal mt-6 max-w-5xl font-display text-[3.2rem] leading-[0.86] tracking-[-0.055em] text-ivory sm:text-6xl md:text-[4.8rem] lg:text-[5.8rem] xl:text-[6.5rem]" style={{ '--reveal-delay': '220ms' }}>
                   {service.title}
                 </h1>
-                <p className="mt-8 max-w-2xl text-base leading-8 text-parchment/74 md:text-lg">
+                <p className="reveal mt-8 max-w-2xl text-base leading-8 text-parchment/74 md:text-lg" style={{ '--reveal-delay': '300ms' }}>
                   {service.subheader}
                 </p>
                 <div className="mt-8 flex flex-wrap gap-3">
                   <Link
                     to="/booking"
-                    className="studio-primary-cta group inline-flex items-center justify-between gap-4 rounded-full px-6 py-4 text-xs font-semibold uppercase tracking-[0.3em] transition duration-300"
+                    className="studio-primary-cta premium-button group inline-flex items-center justify-between gap-4 rounded-full px-6 py-4 text-xs font-semibold uppercase tracking-[0.3em] transition duration-300"
                   >
                     <span className="relative z-10">{service.cta}</span>
                     <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </Link>
                   <Link
                     to="/contact"
-                    className="studio-secondary-cta group inline-flex items-center justify-between gap-4 rounded-full px-6 py-4 text-xs uppercase tracking-[0.3em] text-parchment/86 transition duration-300"
+                    className="studio-secondary-cta premium-button group inline-flex items-center justify-between gap-4 rounded-full px-6 py-4 text-xs uppercase tracking-[0.3em] text-parchment/86 transition duration-300"
                   >
                     <span className="relative z-10">{service.secondaryCta || 'Request Details'}</span>
                     <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -204,13 +205,13 @@ export function ServiceDetailPage() {
           <RevealSection reduceMotion={reduceMotion} className="studio-shell pb-18 lg:pb-24">
             <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
               <div>
-                <p className="text-[0.68rem] font-semibold uppercase tracking-[0.42em] text-gold/70">Service overview</p>
-                <h2 className="mt-4 max-w-xl font-display text-4xl leading-[0.92] tracking-[-0.05em] text-ivory md:text-5xl xl:text-[4.6rem]">
+                <p className="reveal text-[0.68rem] font-semibold uppercase tracking-[0.42em] text-gold/70" style={{ '--reveal-delay': '40ms' }}>Service overview</p>
+                <h2 className="reveal mt-4 max-w-xl font-display text-4xl leading-[0.92] tracking-[-0.05em] text-ivory md:text-5xl xl:text-[4.6rem]" style={{ '--reveal-delay': '120ms' }}>
                   {service.subheader}
                 </h2>
               </div>
 
-              <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 shadow-[0_20px_80px_rgba(0,0,0,0.22)] sm:p-8">
+              <div className="reveal relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 shadow-[0_20px_80px_rgba(0,0,0,0.22)] sm:p-8" style={{ '--reveal-delay': '180ms' }}>
                 <div aria-hidden="true" className="absolute inset-y-8 left-6 w-px bg-gradient-to-b from-transparent via-gold/35 to-transparent" />
                 <div className="relative space-y-5 pl-5 text-sm leading-8 text-parchment/74 md:text-base">
                   {service.description.map((paragraph) => (
@@ -242,11 +243,11 @@ export function ServiceDetailPage() {
             <div className="rounded-[2.45rem] border border-white/10 bg-white/[0.03] p-7 shadow-[0_24px_90px_rgba(0,0,0,0.22)] sm:p-10 lg:p-12">
               <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr]">
                 <div>
-                  <p className="text-[0.68rem] font-semibold uppercase tracking-[0.42em] text-gold/70">Who this is for</p>
-                  <h2 className="mt-4 font-display text-4xl leading-[0.92] tracking-[-0.05em] text-ivory md:text-5xl">
-                    The right fit for this service.
-                  </h2>
-                </div>
+                <p className="reveal text-[0.68rem] font-semibold uppercase tracking-[0.42em] text-gold/70" style={{ '--reveal-delay': '40ms' }}>Who this is for</p>
+                <h2 className="reveal mt-4 font-display text-4xl leading-[0.92] tracking-[-0.05em] text-ivory md:text-5xl" style={{ '--reveal-delay': '120ms' }}>
+                  The right fit for this service.
+                </h2>
+              </div>
 
                 <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
                   {service.whoFor.map((item) => (
@@ -291,12 +292,12 @@ export function ServiceDetailPage() {
             <div className="grid gap-6">
               <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
                 <div>
-                  <p className="text-[0.68rem] font-semibold uppercase tracking-[0.42em] text-gold/70">Planning process</p>
-                  <h2 className="mt-4 font-display text-4xl leading-[0.92] tracking-[-0.05em] text-ivory md:text-5xl">
+                  <p className="reveal text-[0.68rem] font-semibold uppercase tracking-[0.42em] text-gold/70" style={{ '--reveal-delay': '40ms' }}>Planning process</p>
+                  <h2 className="reveal mt-4 font-display text-4xl leading-[0.92] tracking-[-0.05em] text-ivory md:text-5xl" style={{ '--reveal-delay': '120ms' }}>
                     Four steps, one clear direction.
                   </h2>
                 </div>
-                <p className="max-w-xl text-sm leading-8 text-parchment/72 md:text-base">
+                <p className="reveal max-w-xl text-sm leading-8 text-parchment/72 md:text-base" style={{ '--reveal-delay': '180ms' }}>
                   Every booking moves through the same practical checkpoints: direction, production planning, guided
                   shooting, and a polished final gallery.
                 </p>
@@ -328,12 +329,12 @@ export function ServiceDetailPage() {
             <div className="rounded-[2.45rem] border border-white/10 bg-[#040404] p-7 shadow-[0_28px_100px_rgba(0,0,0,0.34)] sm:p-10 lg:p-12">
               <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
                 <div>
-                  <p className="text-[0.68rem] font-semibold uppercase tracking-[0.42em] text-gold/70">Visual references</p>
-                  <h2 className="mt-4 font-display text-4xl leading-[0.92] tracking-[-0.05em] text-ivory md:text-5xl">
+                  <p className="reveal text-[0.68rem] font-semibold uppercase tracking-[0.42em] text-gold/70" style={{ '--reveal-delay': '40ms' }}>Visual references</p>
+                  <h2 className="reveal mt-4 font-display text-4xl leading-[0.92] tracking-[-0.05em] text-ivory md:text-5xl" style={{ '--reveal-delay': '120ms' }}>
                     Image studies for the final direction.
                   </h2>
                 </div>
-                <p className="max-w-xl text-sm leading-8 text-parchment/72 md:text-base">
+                <p className="reveal max-w-xl text-sm leading-8 text-parchment/72 md:text-base" style={{ '--reveal-delay': '180ms' }}>
                   These frames show the lighting, pacing, and mood range that can guide the final direction for this
                   type of commission.
                 </p>
@@ -356,11 +357,11 @@ export function ServiceDetailPage() {
           <RevealSection reduceMotion={reduceMotion} className="studio-shell pb-24 lg:pb-28">
             <div className="grid gap-8 rounded-[2.5rem] border border-gold/14 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(17,17,17,0.92))] p-7 shadow-[0_28px_100px_rgba(0,0,0,0.34)] sm:p-10 lg:grid-cols-[1.08fr_0.92fr] lg:p-12">
               <div>
-                <p className="text-[0.68rem] font-semibold uppercase tracking-[0.42em] text-gold/70">Start planning</p>
-                <h2 className="mt-4 max-w-3xl font-display text-4xl leading-[0.92] tracking-[-0.04em] text-ivory md:text-5xl xl:text-[4.5rem]">
+                <p className="reveal text-[0.68rem] font-semibold uppercase tracking-[0.42em] text-gold/70" style={{ '--reveal-delay': '40ms' }}>Start planning</p>
+                <h2 className="reveal mt-4 max-w-3xl font-display text-4xl leading-[0.92] tracking-[-0.04em] text-ivory md:text-5xl xl:text-[4.5rem]" style={{ '--reveal-delay': '120ms' }}>
                   {service.cta}
                 </h2>
-                <p className="mt-6 max-w-2xl text-sm leading-8 text-parchment/72 md:text-base">
+                <p className="reveal mt-6 max-w-2xl text-sm leading-8 text-parchment/72 md:text-base" style={{ '--reveal-delay': '200ms' }}>
                   If this service fits your project, move into booking or send a direct inquiry for details and
                   availability.
                 </p>
@@ -369,14 +370,14 @@ export function ServiceDetailPage() {
               <div className="flex flex-col justify-end gap-4">
                 <Link
                   to="/booking"
-                  className="studio-primary-cta group inline-flex items-center justify-between gap-4 rounded-full px-6 py-4 text-xs font-semibold uppercase tracking-[0.3em] transition duration-300"
+                  className="studio-primary-cta premium-button group inline-flex items-center justify-between gap-4 rounded-full px-6 py-4 text-xs font-semibold uppercase tracking-[0.3em] transition duration-300"
                 >
                   <span className="relative z-10">{service.cta}</span>
                   <ArrowUpRight className="relative h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </Link>
                 <Link
                   to="/contact"
-                  className="studio-secondary-cta group inline-flex items-center justify-between gap-4 rounded-full px-6 py-4 text-xs uppercase tracking-[0.3em] text-parchment/86 transition duration-300"
+                  className="studio-secondary-cta premium-button group inline-flex items-center justify-between gap-4 rounded-full px-6 py-4 text-xs uppercase tracking-[0.3em] text-parchment/86 transition duration-300"
                 >
                   <span className="relative z-10">{service.secondaryCta || 'Request Details'}</span>
                   <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

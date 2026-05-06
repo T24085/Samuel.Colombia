@@ -1,5 +1,6 @@
-import { motion, useReducedMotion } from 'framer-motion'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { ArrowUpRight, Check, Sparkles } from 'lucide-react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { SEO } from '../components/SEO'
 import { services } from '../data/services'
@@ -39,13 +40,21 @@ const serviceLooks = [
   { name: 'Soft intimacy', value: 'Portrait session' },
 ]
 
-function ServicesContactSheet({ reduceMotion }) {
+function getServiceTone(serviceSlug) {
+  if (serviceSlug === 'editorial-campaign') return 'motion-fast'
+  if (serviceSlug === 'visual-story-projects' || serviceSlug === 'private-portraits') return 'motion-cinematic'
+  return ''
+}
+
+function ServicesContactSheet({ reduceMotion, activeService, activeServiceIndex }) {
+  const activeFrames = serviceFrames.map((_, index) => serviceFrames[(index + activeServiceIndex) % serviceFrames.length])
+
   return (
     <motion.div
       initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 22, rotate: -1.5 }}
       animate={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, rotate: 0 }}
       transition={{ duration: 1, ease: 'easeOut', delay: 0.18 }}
-      className="relative min-h-[31rem] overflow-hidden rounded-[2.4rem] border border-white/10 bg-[#0b0a08] shadow-[0_42px_140px_rgba(0,0,0,0.55)] sm:min-h-[35rem] lg:min-h-[39rem]"
+      className={`relative min-h-[31rem] overflow-hidden rounded-[2.4rem] border border-white/10 bg-[#0b0a08] shadow-[0_42px_140px_rgba(0,0,0,0.55)] sm:min-h-[35rem] lg:min-h-[39rem] ${getServiceTone(activeService.slug)}`}
     >
       <div
         aria-hidden="true"
@@ -63,23 +72,48 @@ function ServicesContactSheet({ reduceMotion }) {
         ))}
       </div>
 
-      <div className="absolute inset-8 sm:inset-10">
-        {serviceFrames.map((frame, index) => (
-          <motion.figure
-            key={frame.src}
-            initial={reduceMotion ? { opacity: 1 } : { opacity: 0, scale: 0.94 }}
-            animate={reduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
-            transition={{ duration: 0.9, ease: 'easeOut', delay: 0.28 + index * 0.08 }}
-            className={`absolute aspect-[4/5] overflow-hidden rounded-[1rem] border border-ivory/18 bg-black shadow-[0_24px_70px_rgba(0,0,0,0.52)] ${frame.className}`}
-          >
-            <img src={frame.src} alt={frame.alt} className="h-full w-full object-cover grayscale-[18%] saturate-[0.88]" />
-            <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(180deg,transparent_45%,rgba(0,0,0,0.54))]" />
-            <figcaption className="absolute bottom-3 left-3 rounded-full border border-white/12 bg-black/38 px-3 py-1.5 text-[0.55rem] uppercase tracking-[0.28em] text-ivory/82 backdrop-blur-md">
-              {frame.label}
-            </figcaption>
-          </motion.figure>
-        ))}
-      </div>
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={activeService.slug}
+          className="absolute inset-8 sm:inset-10"
+          initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 14 }}
+          animate={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+          exit={reduceMotion ? { opacity: 1 } : { opacity: 0, y: -10 }}
+          transition={{ duration: 0.45, ease: 'easeOut' }}
+        >
+          {activeFrames.map((frame, index) => (
+            <motion.figure
+              key={`${activeService.slug}-${frame.src}-${index}`}
+              initial={reduceMotion ? { opacity: 1 } : { opacity: 0, scale: 0.94 }}
+              animate={reduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
+              transition={{ duration: 0.82, ease: 'easeOut', delay: 0.08 + index * 0.06 }}
+              className={`absolute aspect-[4/5] overflow-hidden rounded-[1rem] border border-ivory/18 bg-black shadow-[0_24px_70px_rgba(0,0,0,0.52)] ${frame.className}`}
+            >
+              <img src={frame.src} alt={frame.alt} className="media-card-image h-full w-full object-cover grayscale-[18%] saturate-[0.88]" />
+              <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(180deg,transparent_45%,rgba(0,0,0,0.54))]" />
+              <div className="editorial-flash" aria-hidden="true" />
+              <figcaption className="media-card-caption absolute bottom-3 left-3 rounded-full border border-white/12 bg-black/38 px-3 py-1.5 text-[0.55rem] uppercase tracking-[0.28em] text-ivory/82 backdrop-blur-md">
+                {frame.label}
+              </figcaption>
+            </motion.figure>
+          ))}
+
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeService.slug}
+              initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 14 }}
+              animate={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+              exit={reduceMotion ? { opacity: 1 } : { opacity: 0, y: -10 }}
+              transition={{ duration: 0.38, ease: 'easeOut' }}
+              className="absolute left-0 top-0 max-w-[19rem] rounded-[1.25rem] border border-white/10 bg-black/42 p-4 backdrop-blur-md"
+            >
+              <p className="text-[0.62rem] uppercase tracking-[0.32em] text-gold/72">Selected service</p>
+              <p className="mt-2 font-display text-2xl leading-[0.96] text-ivory">{activeService.title}</p>
+              <p className="mt-2 text-sm leading-6 text-parchment/72">{activeService.subheader}</p>
+            </motion.div>
+          </AnimatePresence>
+        </motion.div>
+      </AnimatePresence>
 
       <div className="absolute bottom-10 left-7 right-7 rounded-[1.2rem] border border-white/10 bg-black/42 p-4 backdrop-blur-md sm:left-10 sm:right-10">
         <div className="grid gap-2 sm:grid-cols-2">
@@ -95,19 +129,23 @@ function ServicesContactSheet({ reduceMotion }) {
   )
 }
 
-function ServiceGatewayCard({ service, index, reduceMotion }) {
+function ServiceGatewayCard({ service, index, reduceMotion, active, onActivate }) {
   const preview = service.included.slice(0, 3)
   const frame = serviceFrames[index % serviceFrames.length]
+  const toneClass = getServiceTone(service.slug)
 
   return (
     <motion.article
       initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 28 }}
       whileInView={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: false, amount: 0.2 }}
       transition={{ duration: 0.85, ease: 'easeOut', delay: index * 0.06 }}
       whileHover={reduceMotion ? undefined : { y: -6 }}
-      className="group relative overflow-hidden rounded-[2.2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02)_28%,rgba(0,0,0,0.28))] shadow-[0_24px_90px_rgba(0,0,0,0.28)]"
+      onMouseEnter={() => onActivate(service.slug)}
+      onFocus={() => onActivate(service.slug)}
+      className={`group relative overflow-hidden rounded-[2.2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02)_28%,rgba(0,0,0,0.28))] shadow-[0_24px_90px_rgba(0,0,0,0.28)] ${toneClass} ${active ? 'ring-1 ring-gold/35' : ''}`}
     >
+      <div aria-hidden="true" className="editorial-flash" />
       <div
         aria-hidden="true"
         className="absolute inset-0 opacity-90 transition-opacity duration-700 group-hover:opacity-100"
@@ -123,11 +161,11 @@ function ServiceGatewayCard({ service, index, reduceMotion }) {
           <img
             src={frame.src}
             alt={frame.alt}
-            className="absolute inset-0 h-full w-full object-cover opacity-[0.82] grayscale-[10%] saturate-[0.9] transition duration-700 group-hover:scale-[1.035] group-hover:opacity-95"
+            className="media-card-image absolute inset-0 h-full w-full object-cover opacity-[0.82] grayscale-[10%] saturate-[0.9]"
           />
           <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08),rgba(0,0,0,0.66)),linear-gradient(90deg,rgba(0,0,0,0.2),transparent)]" />
           <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between gap-4">
-            <span className="text-[0.62rem] uppercase tracking-[0.32em] text-ivory/72">Look {String(index + 1).padStart(2, '0')}</span>
+            <span className="media-card-caption text-[0.62rem] uppercase tracking-[0.32em] text-ivory/72">Look {String(index + 1).padStart(2, '0')}</span>
             <span className="h-px flex-1 bg-gradient-to-r from-gold/45 to-transparent" />
           </div>
         </div>
@@ -142,21 +180,21 @@ function ServiceGatewayCard({ service, index, reduceMotion }) {
             </span>
           </div>
 
-          <p className="mt-6 text-[0.64rem] uppercase tracking-[0.36em] text-gold/65">{service.eyebrow}</p>
-          <h2 className="mt-4 max-w-3xl font-display text-[2.5rem] leading-[0.92] tracking-[-0.055em] text-ivory sm:text-[3.2rem] lg:text-[3.8rem]">
+          <p className="reveal mt-6 text-[0.64rem] uppercase tracking-[0.36em] text-gold/65" style={{ '--reveal-delay': '100ms' }}>{service.eyebrow}</p>
+          <h2 className="reveal mt-4 max-w-3xl font-display text-[2.5rem] leading-[0.92] tracking-[-0.055em] text-ivory sm:text-[3.2rem] lg:text-[3.8rem]" style={{ '--reveal-delay': '160ms' }}>
             {service.title}
           </h2>
-          <p className="mt-5 max-w-2xl text-[1rem] leading-8 text-parchment/74">{service.subheader}</p>
+          <p className="reveal mt-5 max-w-2xl text-[1rem] leading-8 text-parchment/74" style={{ '--reveal-delay': '220ms' }}>{service.subheader}</p>
 
-          <p className="mt-7 max-w-2xl text-sm leading-7 text-parchment/68 sm:text-[0.98rem]">
+          <p className="reveal mt-7 max-w-2xl text-sm leading-7 text-parchment/68 sm:text-[0.98rem]" style={{ '--reveal-delay': '280ms' }}>
             {service.description[0]}
           </p>
 
           <div className="mt-8 flex flex-wrap gap-2">
-            <span className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-[0.62rem] uppercase tracking-[0.3em] text-parchment/72">
+            <span className="reveal rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-[0.62rem] uppercase tracking-[0.3em] text-parchment/72" style={{ '--reveal-delay': '340ms' }}>
               {service.mood}
             </span>
-            <span className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-[0.62rem] uppercase tracking-[0.3em] text-parchment/72">
+            <span className="reveal rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-[0.62rem] uppercase tracking-[0.3em] text-parchment/72" style={{ '--reveal-delay': '400ms' }}>
               {service.audience}
             </span>
           </div>
@@ -191,12 +229,12 @@ function ServiceGatewayCard({ service, index, reduceMotion }) {
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link
-              to={`/services/${service.slug}`}
-              className="studio-primary-cta group inline-flex items-center justify-between gap-4 rounded-full px-6 py-4 text-xs font-semibold uppercase tracking-[0.3em] transition duration-300"
-            >
-              <span className="relative z-10">{service.cta}</span>
-              <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              <Link
+                to={`/services/${service.slug}`}
+                className="studio-primary-cta premium-button group inline-flex items-center justify-between gap-4 rounded-full px-6 py-4 text-xs font-semibold uppercase tracking-[0.3em] transition duration-300"
+              >
+                <span className="relative z-10">{service.cta}</span>
+                <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
             <div className="hidden rounded-full border border-white/10 bg-white/[0.03] px-5 py-4 text-[0.62rem] uppercase tracking-[0.3em] text-parchment/72 sm:block">
               View full details
@@ -210,6 +248,9 @@ function ServiceGatewayCard({ service, index, reduceMotion }) {
 
 export function ServicesPage() {
   const reduceMotion = useReducedMotion()
+  const [activeServiceSlug, setActiveServiceSlug] = useState(services[0].slug)
+  const activeServiceIndex = Math.max(0, services.findIndex((service) => service.slug === activeServiceSlug))
+  const activeService = services[activeServiceIndex] ?? services[0]
 
   return (
     <>
@@ -257,28 +298,34 @@ export function ServicesPage() {
           <section className="studio-shell pt-24 pb-12 sm:pt-28 lg:pb-16 lg:pt-32">
             <div className="grid gap-10 lg:grid-cols-[1.02fr_0.98fr] lg:items-end">
               <div className="max-w-5xl">
-                <p className="text-[0.7rem] font-semibold uppercase tracking-[0.42em] text-gold/70">Services</p>
-                <h1 className="mt-6 max-w-5xl font-display text-[3.2rem] leading-[0.86] tracking-[-0.055em] text-ivory sm:text-6xl md:text-[4.6rem] lg:text-[5.7rem] xl:text-[6.5rem]">
+                <p className="reveal text-[0.7rem] font-semibold uppercase tracking-[0.42em] text-gold/70" style={{ '--reveal-delay': '40ms' }}>Services</p>
+                <h1 className="reveal mt-6 max-w-5xl font-display text-[3.2rem] leading-[0.86] tracking-[-0.055em] text-ivory sm:text-6xl md:text-[4.6rem] lg:text-[5.7rem] xl:text-[6.5rem]" style={{ '--reveal-delay': '120ms' }}>
                   Cinematic services <span className="italic text-gold/90">built as gateways</span>
                   <span className="block">into bespoke image-making.</span>
                 </h1>
-                <p className="mt-8 max-w-2xl text-base leading-8 text-parchment/74 md:text-lg">
+                <p className="reveal mt-8 max-w-2xl text-base leading-8 text-parchment/74 md:text-lg" style={{ '--reveal-delay': '200ms' }}>
                   Four distinct commissions, each shaped with the same editorial discipline: clear direction, refined
                   atmosphere, and final imagery that feels considered from first frame to delivery.
                 </p>
                 <div className="mt-10 flex flex-wrap gap-3">
-                  {services.map((service) => (
-                    <span
+                  {services.map((service, index) => (
+                    <button
                       key={service.slug}
-                      className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-3 text-[0.64rem] uppercase tracking-[0.3em] text-parchment/76"
+                      type="button"
+                      onClick={() => setActiveServiceSlug(service.slug)}
+                      onMouseEnter={() => setActiveServiceSlug(service.slug)}
+                      onFocus={() => setActiveServiceSlug(service.slug)}
+                      aria-pressed={activeService.slug === service.slug}
+                      className={`reveal rounded-full border px-4 py-3 text-[0.64rem] uppercase tracking-[0.3em] transition hover:-translate-y-0.5 ${activeService.slug === service.slug ? 'border-gold/45 bg-gold/10 text-ivory' : 'border-white/10 bg-white/[0.03] text-parchment/76'}`}
+                      style={{ '--reveal-delay': `${280 + index * 60}ms` }}
                     >
                       {service.label}
-                    </span>
+                    </button>
                   ))}
                 </div>
               </div>
 
-              <ServicesContactSheet reduceMotion={reduceMotion} />
+              <ServicesContactSheet reduceMotion={reduceMotion} activeService={activeService} activeServiceIndex={activeServiceIndex} />
             </div>
           </section>
 
@@ -309,7 +356,14 @@ export function ServicesPage() {
           <section className="studio-shell pb-18 lg:pb-24">
             <div className="space-y-6 lg:space-y-8">
               {services.map((service, index) => (
-                <ServiceGatewayCard key={service.slug} service={service} index={index} reduceMotion={reduceMotion} />
+                <ServiceGatewayCard
+                  key={service.slug}
+                  service={service}
+                  index={index}
+                  reduceMotion={reduceMotion}
+                  active={activeService.slug === service.slug}
+                  onActivate={setActiveServiceSlug}
+                />
               ))}
             </div>
           </section>
@@ -318,7 +372,7 @@ export function ServicesPage() {
             <motion.div
               initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 24 }}
               whileInView={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
+              viewport={{ once: false, amount: 0.2 }}
               transition={{ duration: 0.9, ease: 'easeOut' }}
               className="relative overflow-hidden rounded-[2.6rem] border border-white/10 bg-[#040404] px-7 py-16 sm:px-10 sm:py-20 lg:min-h-[28rem] lg:px-16 lg:py-24"
             >
