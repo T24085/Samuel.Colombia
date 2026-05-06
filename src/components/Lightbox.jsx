@@ -29,17 +29,17 @@ export function Lightbox({ item, items, index, onClose, onNext, onPrev }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[80] flex items-center justify-center bg-ink/90 px-4 py-6 backdrop-blur-xl"
+          className="modal-backdrop fixed inset-0 z-[80] flex items-center justify-center bg-ink/90 px-4 py-6 backdrop-blur-xl"
           onClick={onClose}
           role="presentation"
         >
           <motion.div
-            initial={{ scale: 0.96, y: 20 }}
-            animate={{ scale: 1, y: 0 }}
-            exit={{ scale: 0.96, y: 20 }}
-            transition={{ duration: 0.3 }}
+            initial={{ scale: 0.96, y: 16, opacity: 0 }}
+            animate={{ scale: 1, y: 0, opacity: 1 }}
+            exit={{ scale: 0.96, y: 16, opacity: 0 }}
+            transition={{ duration: 0.32, ease: 'easeOut' }}
             onClick={(event) => event.stopPropagation()}
-            className="relative w-full max-w-6xl overflow-hidden rounded-[2rem] border border-gold/20 bg-charcoal shadow-luxury"
+            className="modal-panel relative w-full max-w-6xl overflow-hidden rounded-[2rem] border border-gold/20 bg-charcoal shadow-luxury"
             role="dialog"
             aria-modal="true"
             aria-label={item.title}

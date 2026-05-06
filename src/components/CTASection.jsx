@@ -20,13 +20,13 @@ export function CTASection() {
           <div className="flex flex-wrap gap-4">
             <Link
               to="/booking"
-              className="inline-flex items-center justify-center rounded-full border border-gold/80 bg-[linear-gradient(180deg,rgba(198,161,91,0.98),rgba(168,132,67,0.92))] px-6 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-ink shadow-[0_0_0_1px_rgba(198,161,91,0.32),0_10px_28px_rgba(198,161,91,0.18)] transition hover:-translate-y-px hover:border-gold hover:bg-[linear-gradient(180deg,rgba(212,177,105,1),rgba(184,145,75,0.96))] hover:text-ink"
+              className="premium-button inline-flex items-center justify-center rounded-full border border-gold/80 bg-[linear-gradient(180deg,rgba(198,161,91,0.98),rgba(168,132,67,0.92))] px-6 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-ink shadow-[0_0_0_1px_rgba(198,161,91,0.32),0_10px_28px_rgba(198,161,91,0.18)] transition hover:border-gold hover:bg-[linear-gradient(180deg,rgba(212,177,105,1),rgba(184,145,75,0.96))] hover:text-ink"
             >
               Book a Session
             </Link>
             <Link
               to="/portfolio"
-              className="inline-flex items-center justify-center rounded-full border border-gold/70 bg-ink/45 px-6 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-ivory shadow-[0_0_0_1px_rgba(198,161,91,0.18)] transition hover:-translate-y-px hover:border-gold hover:bg-ink/65 hover:text-gold/95"
+              className="premium-button inline-flex items-center justify-center rounded-full border border-gold/70 bg-ink/45 px-6 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-ivory shadow-[0_0_0_1px_rgba(198,161,91,0.18)] transition hover:border-gold hover:bg-ink/65 hover:text-gold/95"
             >
               View Portfolio
             </Link>

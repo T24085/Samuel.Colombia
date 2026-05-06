@@ -49,7 +49,7 @@ function MotionDeckCard({ card, reduceMotion, index, hoveredIndex, onHoverStart,
     <motion.div
       initial={reduceMotion ? false : { opacity: 0, y: 12, scale: 0.96 }}
       whileInView={reduceMotion ? undefined : { opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: false, amount: 0.2 }}
       transition={{ duration: 0.7, ease: 'easeOut', delay: index * 0.05 }}
       onHoverStart={onHoverStart}
       onHoverEnd={onHoverEnd}
@@ -104,7 +104,7 @@ export function MotionDeckSection() {
           <motion.p
             initial={reduceMotion ? false : { opacity: 0, y: 8 }}
             whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
+            viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
             className="text-[0.7rem] font-semibold uppercase tracking-[0.48em] text-black/55"
           >
@@ -113,7 +113,7 @@ export function MotionDeckSection() {
           <motion.h2
             initial={reduceMotion ? false : { opacity: 0, y: 12 }}
             whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
+            viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.75, ease: 'easeOut', delay: 0.06 }}
             className="deck-title-gold mt-4 text-[clamp(2.6rem,5.2vw,5.2rem)] leading-[0.92] tracking-[-0.06em]"
           >
@@ -144,7 +144,7 @@ export function MotionDeckSection() {
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 12 }}
           whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.25 }}
+          viewport={{ once: false, amount: 0.25 }}
           transition={{ duration: 0.65, ease: 'easeOut', delay: 0.12 }}
           className="publication-marquee-wrap relative -mx-4 mt-4 overflow-hidden border-y border-black/10 bg-[#111111]/[0.035] py-5 sm:-mx-6 lg:-mx-10 lg:mt-0"
         >

@@ -14,7 +14,7 @@ function AlbumTile({ item, index, onOpen }) {
     <button
       type="button"
       onClick={onOpen}
-      className="group relative overflow-hidden rounded-[1.3rem] border border-white/10 bg-white/[0.03] text-left shadow-[0_18px_60px_rgba(0,0,0,0.22)]"
+      className="media-card group relative overflow-hidden rounded-[1.3rem] border border-white/10 bg-white/[0.03] text-left shadow-[0_18px_60px_rgba(0,0,0,0.22)]"
       style={{ aspectRatio: tileRatios[index % tileRatios.length] }}
       aria-label={`Open ${item.title}`}
     >
@@ -23,11 +23,12 @@ function AlbumTile({ item, index, onOpen }) {
         alt={item.alt}
         loading="lazy"
         decoding="async"
-        className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.05]"
+        className="media-card-image h-full w-full object-cover"
       />
       <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.42))] opacity-70 transition duration-500 group-hover:opacity-45" />
+      <div className="editorial-flash" aria-hidden="true" />
       <div className="absolute inset-x-0 bottom-0 px-3 py-3">
-        <p className="text-[0.58rem] uppercase tracking-[0.28em] text-ivory/74">{item.title}</p>
+        <p className="media-card-caption text-[0.58rem] uppercase tracking-[0.28em] text-ivory/74">{item.title}</p>
       </div>
     </button>
   )
@@ -83,11 +84,11 @@ export function PortfolioAlbumPage() {
           <section className="studio-shell pb-16 pt-24 sm:pt-28 lg:pb-20 lg:pt-32">
             <div className="grid gap-10 lg:grid-cols-[1.06fr_0.94fr] lg:items-end">
               <div className="max-w-5xl">
-                <p className="text-[0.7rem] font-semibold uppercase tracking-[0.42em] text-gold/72">{album.eyebrow}</p>
-                <h1 className="mt-6 max-w-5xl font-display text-[3rem] leading-[0.88] tracking-[-0.055em] text-ivory sm:text-6xl md:text-[4.6rem] lg:text-[5.8rem] xl:text-[6.4rem]">
+                <p className="reveal text-[0.7rem] font-semibold uppercase tracking-[0.42em] text-gold/72" style={{ '--reveal-delay': '40ms' }}>{album.eyebrow}</p>
+                <h1 className="reveal mt-6 max-w-5xl font-display text-[3rem] leading-[0.88] tracking-[-0.055em] text-ivory sm:text-6xl md:text-[4.6rem] lg:text-[5.8rem] xl:text-[6.4rem]" style={{ '--reveal-delay': '120ms' }}>
                   {album.title}
                 </h1>
-                <p className="mt-8 max-w-2xl text-base leading-8 text-parchment/74 md:text-lg">{album.body}</p>
+                <p className="reveal mt-8 max-w-2xl text-base leading-8 text-parchment/74 md:text-lg" style={{ '--reveal-delay': '200ms' }}>{album.body}</p>
 
                 <div className="mt-10 flex flex-wrap gap-3">
                   <Link
@@ -97,13 +98,14 @@ export function PortfolioAlbumPage() {
                     <span>Back to portfolio</span>
                     <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </Link>
-                  {album.sourceCollections.map((slug) => {
+                  {album.sourceCollections.map((slug, index) => {
                     const collection = portfolioCollections.find((entry) => entry.slug === slug)
 
                     return (
                       <span
                         key={slug}
-                        className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-3 text-[0.64rem] uppercase tracking-[0.3em] text-parchment/76"
+                        className="reveal rounded-full border border-white/10 bg-white/[0.03] px-4 py-3 text-[0.64rem] uppercase tracking-[0.3em] text-parchment/76"
+                        style={{ '--reveal-delay': `${240 + index * 60}ms` }}
                       >
                         {collection?.title ?? slug}
                       </span>
@@ -122,8 +124,8 @@ export function PortfolioAlbumPage() {
                   }}
                 />
                 <div className="relative">
-                  <p className="text-[0.67rem] uppercase tracking-[0.38em] text-gold/72">Album house</p>
-                  <p className="mt-5 max-w-sm font-display text-3xl leading-[0.92] tracking-[-0.04em] text-ivory">
+                  <p className="reveal text-[0.67rem] uppercase tracking-[0.38em] text-gold/72" style={{ '--reveal-delay': '80ms' }}>Album house</p>
+                  <p className="reveal mt-5 max-w-sm font-display text-3xl leading-[0.92] tracking-[-0.04em] text-ivory" style={{ '--reveal-delay': '140ms' }}>
                     {album.description}
                   </p>
 
@@ -155,12 +157,12 @@ export function PortfolioAlbumPage() {
           <section className="studio-shell pb-16 lg:pb-20">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
               <div>
-                <p className="text-[0.68rem] font-semibold uppercase tracking-[0.42em] text-gold/72">Full archive</p>
-                <h2 className="mt-4 font-display text-4xl leading-[0.92] tracking-[-0.05em] text-ivory md:text-5xl xl:text-[5rem]">
+                <p className="reveal text-[0.68rem] font-semibold uppercase tracking-[0.42em] text-gold/72" style={{ '--reveal-delay': '40ms' }}>Full archive</p>
+                <h2 className="reveal mt-4 font-display text-4xl leading-[0.92] tracking-[-0.05em] text-ivory md:text-5xl xl:text-[5rem]" style={{ '--reveal-delay': '120ms' }}>
                   The album house in full.
                 </h2>
               </div>
-              <p className="max-w-xl text-sm leading-8 text-parchment/72 md:text-base">
+              <p className="reveal max-w-xl text-sm leading-8 text-parchment/72 md:text-base" style={{ '--reveal-delay': '180ms' }}>
                 This grid is where the larger set lives. It is intentionally dense, so the page reads like a real
                 archive instead of a teaser.
               </p>
@@ -178,25 +180,26 @@ export function PortfolioAlbumPage() {
           <section className="studio-shell pb-24 lg:pb-28">
             <div className="grid gap-8 rounded-[2.5rem] border border-gold/14 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(17,17,17,0.92))] p-7 shadow-[0_28px_100px_rgba(0,0,0,0.34)] sm:p-10 lg:grid-cols-[1.08fr_0.92fr] lg:p-12">
               <div>
-                <p className="text-[0.68rem] font-semibold uppercase tracking-[0.42em] text-gold/70">Archive note</p>
-                <h2 className="mt-4 max-w-3xl font-display text-4xl leading-[0.92] tracking-[-0.04em] text-ivory md:text-5xl xl:text-[4.5rem]">
+                <p className="reveal text-[0.68rem] font-semibold uppercase tracking-[0.42em] text-gold/70" style={{ '--reveal-delay': '40ms' }}>Archive note</p>
+                <h2 className="reveal mt-4 max-w-3xl font-display text-4xl leading-[0.92] tracking-[-0.04em] text-ivory md:text-5xl xl:text-[4.5rem]" style={{ '--reveal-delay': '120ms' }}>
                   {album.title} is designed to expand as the collections grow.
                 </h2>
-                <p className="mt-6 max-w-2xl text-sm leading-8 text-parchment/72 md:text-base">
+                <p className="reveal mt-6 max-w-2xl text-sm leading-8 text-parchment/72 md:text-base" style={{ '--reveal-delay': '200ms' }}>
                   Each album page can hold the real finished sets, supporting text, and any future sub-albums that need
                   to sit under the same editorial umbrella.
                 </p>
               </div>
 
               <div className="flex flex-col justify-end gap-4">
-                {album.sourceCollections.map((slug) => {
+                {album.sourceCollections.map((slug, index) => {
                   const collection = portfolioCollections.find((entry) => entry.slug === slug)
 
                   return (
                     <Link
                       key={slug}
                       to={`/portfolio/${slug}`}
-                      className="group inline-flex items-center justify-between gap-4 rounded-full border border-white/12 bg-white/[0.03] px-6 py-4 text-xs uppercase tracking-[0.3em] text-parchment/82 transition duration-300 hover:border-gold/35 hover:bg-white/[0.05] hover:text-ivory"
+                      className="reveal group inline-flex items-center justify-between gap-4 rounded-full border border-white/12 bg-white/[0.03] px-6 py-4 text-xs uppercase tracking-[0.3em] text-parchment/82 transition duration-300 hover:border-gold/35 hover:bg-white/[0.05] hover:text-ivory"
+                      style={{ '--reveal-delay': `${240 + index * 60}ms` }}
                     >
                       <span>{collection?.title ?? slug}</span>
                       <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

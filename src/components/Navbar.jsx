@@ -7,7 +7,7 @@ import { Logo } from './Logo'
 
 function linkClass({ isActive }) {
   return [
-    'nav-draw-gold inline-flex items-center justify-center rounded-none border border-transparent px-4 py-2 text-sm uppercase tracking-[0.24em] transition-colors duration-300',
+    'nav-draw-gold page-intro inline-flex items-center justify-center rounded-none border border-transparent px-4 py-2 text-sm uppercase tracking-[0.24em] transition-colors duration-300',
     isActive
       ? 'text-gold'
       : 'text-ivory/78 hover:text-gold',
@@ -45,10 +45,15 @@ export function Navbar() {
       ].join(' ')}
     >
       <div className="studio-shell flex items-center justify-between py-3 sm:py-4">
-        <Logo compact />
+        <Logo compact className="hero-logo" />
         <nav className="hidden items-center gap-8 lg:flex">
-          {navLinks.map((link) => (
-            <NavLink key={link.href} to={link.href} className={linkClass}>
+          {navLinks.map((link, index) => (
+            <NavLink
+              key={link.href}
+              to={link.href}
+              className={linkClass}
+              style={{ '--enter-delay': `${index * 90}ms` }}
+            >
               {link.label}
             </NavLink>
           ))}
@@ -74,18 +79,19 @@ export function Navbar() {
             className="border-t border-gold/10 bg-ink/95 px-6 py-8 backdrop-blur-xl lg:hidden"
           >
             <div className="studio-shell flex flex-col gap-4">
-              {navLinks.map((link) => (
+              {navLinks.map((link, index) => (
                 <NavLink
                   key={link.href}
                   to={link.href}
                   className={({ isActive }) =>
                     [
-                      'nav-draw-gold rounded-none border border-transparent px-4 py-4 text-sm uppercase tracking-[0.28em] transition-colors duration-300',
+                      'nav-draw-gold page-intro rounded-none border border-transparent px-4 py-4 text-sm uppercase tracking-[0.28em] transition-colors duration-300',
                       isActive
                         ? 'text-gold'
                         : 'bg-white/5 text-ivory/80 hover:text-gold',
                     ].join(' ')
                   }
+                  style={{ '--enter-delay': `${index * 70}ms` }}
                   onClick={() => setOpen(false)}
                 >
                   {link.label}
