@@ -7,7 +7,9 @@ const sceneTitle = document.querySelector('.scene-title');
 const sceneCount = document.querySelector('.scene-count');
 const navLinks = [...document.querySelectorAll('.scene-nav a')];
 const panels = [...document.querySelectorAll('.panel')];
-const revealTargets = [...document.querySelectorAll('.reveal, .split-reveal')];
+const motionSelector = '.reveal, .reveal-left, .reveal-right, .reveal-scale, .reveal-soft, .split-reveal';
+let revealTargets = [...document.querySelectorAll(motionSelector)];
+const staggerGroups = [...document.querySelectorAll('.stagger')];
 const heroVideos = [...document.querySelectorAll('#hero [data-hero-video]')];
 const manifestoSection = document.querySelector('#manifesto');
 const manifestoTypeTargets = [...document.querySelectorAll('#manifesto .manifesto-type')];
@@ -46,6 +48,12 @@ const emailServiceId = 'service_p55qfka';
 const emailTemplateId = 'template_gxa8uvc';
 const emailPublicKey = 'IFJYlgeXzSgqsFRBS';
 const contactEmail = 'studiodefiant@gmail.com';
+const closeMotionMs = 520;
+
+let posterPreviewSwapTimer = null;
+let lightboxCloseTimer = null;
+let pricingModalCloseTimer = null;
+let serviceCardSwapTimer = null;
 
 function syncHeaderOffset() {
   if (!siteHeader) return;
@@ -71,6 +79,30 @@ function scrollToSection(hash, { pushState = true } = {}) {
   if (pushState) {
     history.pushState(null, '', hash);
   }
+}
+
+function prepareStaggerGroups() {
+  staggerGroups.forEach(group => {
+    [...group.children].forEach((child, index) => {
+      child.style.setProperty('--stagger-index', index);
+
+      if (
+        child.matches(motionSelector)
+      ) {
+        return;
+      }
+
+      child.classList.add('reveal-soft');
+      if (!revealTargets.includes(child)) {
+        revealTargets.push(child);
+      }
+    });
+  });
+}
+
+function setVisibleState(target, visible) {
+  target.classList.toggle('is-visible', visible);
+  target.classList.toggle('in-view', visible);
 }
 
 const servicePreviewData = {
@@ -205,15 +237,16 @@ function renderServicePreviewImages(images) {
   posterPreviewGrid.replaceChildren(...tiles);
 }
 
-function setPosterPreview(word) {
+function applyPosterPreviewSelection(word) {
   if (!posterPreview || !posterPreviewTitle || !posterPreviewCopy || !posterPreviewGrid || !word) return;
 
   const key = word.dataset.serviceKey;
   const service = servicePreviewData[key] || servicePreviewData.branding;
 
   posterWordButtons.forEach(button => {
-    button.classList.toggle('is-active', button === word);
-    button.setAttribute('aria-pressed', String(button === word));
+    const active = button === word;
+    button.classList.toggle('is-active', active);
+    button.setAttribute('aria-pressed', String(active));
   });
 
   posterPreviewTitle.textContent = service.title;
@@ -233,9 +266,24 @@ function setPosterPreview(word) {
   posterPreview.classList.add('is-active');
 }
 
+function setPosterPreview(word) {
+  if (!posterPreview || !posterPreviewTitle || !posterPreviewCopy || !posterPreviewGrid || !word) return;
+
+  window.clearTimeout(posterPreviewSwapTimer);
+  posterPreview.classList.add('is-changing');
+  posterPreviewSwapTimer = window.setTimeout(() => {
+    applyPosterPreviewSelection(word);
+    requestAnimationFrame(() => {
+      posterPreview.classList.remove('is-changing');
+    });
+  }, 180);
+}
+
 function clearPosterPreview() {
   if (!posterPreview || !posterPreviewTitle || !posterPreviewCopy || !posterPreviewGrid) return;
 
+  window.clearTimeout(posterPreviewSwapTimer);
+  posterPreview.classList.remove('is-changing');
   posterPreview.classList.remove('is-active');
   posterWordButtons.forEach(button => {
     const active = button === posterDefault;
@@ -299,6 +347,8 @@ function startHeroRotation() {
 
 function openLightbox(src, alt) {
   if (!lightbox || !lightboxImage) return;
+  window.clearTimeout(lightboxCloseTimer);
+  lightbox.classList.remove('is-closing');
   lightboxImage.src = src;
   lightboxImage.alt = alt || '';
   lightbox.classList.add('is-open');
@@ -308,16 +358,26 @@ function openLightbox(src, alt) {
 
 function closeLightbox() {
   if (!lightbox || !lightboxImage) return;
-  lightbox.classList.remove('is-open');
-  lightbox.setAttribute('aria-hidden', 'true');
-  body.classList.remove('lightbox-open');
-  lightboxImage.src = '';
-  lightboxImage.alt = '';
+  if (!lightbox.classList.contains('is-open') || lightbox.classList.contains('is-closing')) return;
+
+  lightbox.classList.add('is-closing');
+  window.clearTimeout(lightboxCloseTimer);
+  lightboxCloseTimer = window.setTimeout(() => {
+    lightbox.classList.remove('is-open', 'is-closing');
+    lightbox.setAttribute('aria-hidden', 'true');
+    lightboxImage.src = '';
+    lightboxImage.alt = '';
+    if (!document.querySelector('.pricing-modal.is-open')) {
+      body.classList.remove('lightbox-open');
+    }
+  }, closeMotionMs);
 }
 
 function openPricingModal(modalName) {
   const modal = pricingModals.find(item => item.dataset.pricingModal === modalName);
   if (!modal) return;
+  window.clearTimeout(modal._closeTimer);
+  modal.classList.remove('is-closing');
   modal.classList.add('is-open');
   modal.setAttribute('aria-hidden', 'false');
   body.classList.add('lightbox-open');
@@ -325,9 +385,17 @@ function openPricingModal(modalName) {
 
 function closePricingModal(modal) {
   if (!modal) return;
-  modal.classList.remove('is-open');
-  modal.setAttribute('aria-hidden', 'true');
-  body.classList.remove('lightbox-open');
+  if (!modal.classList.contains('is-open') || modal.classList.contains('is-closing')) return;
+
+  modal.classList.add('is-closing');
+  window.clearTimeout(modal._closeTimer);
+  modal._closeTimer = window.setTimeout(() => {
+    modal.classList.remove('is-open', 'is-closing');
+    modal.setAttribute('aria-hidden', 'true');
+    if (!document.querySelector('.lightbox.is-open, .pricing-modal.is-open')) {
+      body.classList.remove('lightbox-open');
+    }
+  }, closeMotionMs);
 }
 
 function setServicesParallax() {
@@ -387,47 +455,37 @@ function setScene(panel) {
   }
 }
 
+prepareStaggerGroups();
+
 if (!reducedMotion) {
   const revealObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in-view');
-      } else if (entry.target === brandingCollage) {
-        entry.target.classList.remove('in-view');
-      }
+      if (!entry.isIntersecting) return;
+
+      setVisibleState(entry.target, true);
+      revealObserver.unobserve(entry.target);
     });
-  }, { threshold: 0.18 });
+  }, { threshold: 0.14, rootMargin: '0px 0px -8% 0px' });
 
   revealTargets.forEach(target => revealObserver.observe(target));
-
-  let manifestoVisible = false;
-  const playManifestoType = () => {
-    manifestoTypeTargets.forEach(target => {
-      target.classList.remove('in-view');
-      void target.offsetWidth;
-      target.classList.add('in-view');
-    });
-  };
 
   if (manifestoSection) {
     const manifestoObserver = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         const visible = entry.isIntersecting && entry.intersectionRatio >= 0.45;
 
-        if (visible && !manifestoVisible) {
+        if (visible) {
           if (manifestoArt) {
             manifestoArt.classList.remove('in-view');
             void manifestoArt.offsetWidth;
-          }
-          playManifestoType();
-          if (manifestoArt) {
             manifestoArt.classList.add('in-view');
           }
-          manifestoVisible = true;
-        } else if (!visible && manifestoVisible) {
-          manifestoTypeTargets.forEach(target => target.classList.remove('in-view'));
-          if (manifestoArt) manifestoArt.classList.remove('in-view');
-          manifestoVisible = false;
+          manifestoTypeTargets.forEach(target => {
+            target.classList.remove('in-view');
+            void target.offsetWidth;
+            target.classList.add('in-view');
+          });
+          manifestoObserver.unobserve(entry.target);
         }
       });
     }, { threshold: [0, 0.25, 0.45, 0.65, 0.85] });
@@ -435,10 +493,10 @@ if (!reducedMotion) {
     manifestoObserver.observe(manifestoSection);
   }
 
-    if (posterSection) {
-      const posterObserver = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting && entry.intersectionRatio >= 0.35) {
+  if (posterSection) {
+    const posterObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.35) {
           posterSection.classList.add('is-visible', 'is-animated');
         } else if (!entry.isIntersecting || entry.intersectionRatio < 0.2) {
           posterSection.classList.remove('is-visible');
@@ -448,26 +506,25 @@ if (!reducedMotion) {
       });
     }, { threshold: [0.15, 0.35, 0.55, 0.75] });
 
-      posterObserver.observe(posterSection);
-    }
+    posterObserver.observe(posterSection);
+  }
 
-    if (eventsSection && eventsTitle) {
-      const eventsObserver = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          const visible = entry.isIntersecting && entry.intersectionRatio >= 0.45;
-          if (visible) {
-            playEventsTitleReveal();
-          } else {
-            resetEventsTitleReveal();
-          }
-        });
-      }, { threshold: [0.2, 0.45, 0.7] });
+  if (eventsSection && eventsTitle) {
+    const eventsObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const visible = entry.isIntersecting && entry.intersectionRatio >= 0.45;
+        if (visible) {
+          playEventsTitleReveal();
+          eventsObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: [0.2, 0.45, 0.7] });
 
-      eventsObserver.observe(eventsSection);
-    }
+    eventsObserver.observe(eventsSection);
+  }
 
-    if (motionSection && motionVideos.length) {
-      let motionVisible = false;
+  if (motionSection && motionVideos.length) {
+    let motionVisible = false;
     const motionObserver = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         const visible = entry.isIntersecting && entry.intersectionRatio >= 0.35;
@@ -487,14 +544,14 @@ if (!reducedMotion) {
 
   setHeroVideo(0);
   startHeroRotation();
-  } else {
-    revealTargets.forEach(target => target.classList.add('in-view'));
-    manifestoTypeTargets.forEach(target => target.classList.add('in-view'));
-    if (posterSection) posterSection.classList.add('is-visible', 'is-animated');
-    playEventsTitleReveal();
-    setMotionPlayback(true);
-    setHeroVideo(0);
-  }
+} else {
+  revealTargets.forEach(target => setVisibleState(target, true));
+  manifestoTypeTargets.forEach(target => target.classList.add('in-view', 'is-visible'));
+  if (posterSection) posterSection.classList.add('is-visible', 'is-animated');
+  playEventsTitleReveal();
+  setMotionPlayback(true);
+  setHeroVideo(0);
+}
 
 if (window.emailjs && emailPublicKey) {
   emailjs.init({ publicKey: emailPublicKey });
@@ -544,11 +601,19 @@ if (location.hash) {
 
 const serviceStack = document.querySelector('.service-menu, .service-stack');
 function activateServiceCard(card) {
-  serviceCards.forEach(item => {
-    const active = item === card;
-    item.classList.toggle('active', active);
-    item.setAttribute('aria-pressed', String(active));
-  });
+  const nextCard = card || serviceCards[0];
+  if (!nextCard) return;
+
+  window.clearTimeout(serviceCardSwapTimer);
+  serviceCards.forEach(item => item.classList.add('is-changing'));
+  serviceCardSwapTimer = window.setTimeout(() => {
+    serviceCards.forEach(item => {
+      const active = item === nextCard;
+      item.classList.toggle('active', active);
+      item.setAttribute('aria-pressed', String(active));
+      item.classList.remove('is-changing');
+    });
+  }, 180);
 }
 
 serviceCards.forEach(card => {
