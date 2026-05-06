@@ -111,7 +111,7 @@ export function ContactForm() {
               setErrors({})
               setFeedback('')
             }}
-            className="mt-8 inline-flex items-center justify-center rounded-full border border-gold/40 bg-gold/10 px-5 py-3 text-xs uppercase tracking-[0.3em] text-gold transition hover:border-gold/70"
+            className="premium-button mt-8 inline-flex items-center justify-center rounded-full border border-gold/40 bg-gold/10 px-5 py-3 text-xs uppercase tracking-[0.3em] text-gold"
           >
             Send another inquiry
           </button>
@@ -119,7 +119,7 @@ export function ContactForm() {
       ) : (
         <form id="booking-form" onSubmit={onSubmit}>
           <div className="grid gap-5 md:grid-cols-2">
-            <Field label="Name" error={errors.name}>
+            <Field label="Name" error={errors.name} delay={0}>
               <input
                 name="name"
                 value={values.name}
@@ -129,7 +129,7 @@ export function ContactForm() {
                 className="input-field"
               />
             </Field>
-            <Field label="Email" error={errors.email}>
+            <Field label="Email" error={errors.email} delay={60}>
               <input
                 name="email"
                 type="email"
@@ -140,7 +140,7 @@ export function ContactForm() {
                 className="input-field"
               />
             </Field>
-            <Field label="Phone" error={errors.phone}>
+            <Field label="Phone" error={errors.phone} delay={120}>
               <input
                 name="phone"
                 value={values.phone}
@@ -150,7 +150,7 @@ export function ContactForm() {
                 className="input-field"
               />
             </Field>
-            <Field label="Service" error={errors.service}>
+            <Field label="Service" error={errors.service} delay={180}>
               <select
                 name="service"
                 value={values.service}
@@ -168,7 +168,7 @@ export function ContactForm() {
                 ))}
               </select>
             </Field>
-            <Field label="Preferred Date" error={errors.preferredDate}>
+            <Field label="Preferred Date" error={errors.preferredDate} delay={240}>
               <input
                 name="preferredDate"
                 type="date"
@@ -179,7 +179,7 @@ export function ContactForm() {
               />
             </Field>
           </div>
-          <Field label="Message" error={errors.message} className="mt-5">
+          <Field label="Message" error={errors.message} className="mt-5" delay={300}>
             <textarea
               name="message"
               rows={6}
@@ -194,7 +194,7 @@ export function ContactForm() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="inline-flex items-center justify-center rounded-full border border-gold/70 bg-gold/12 px-6 py-3 text-xs uppercase tracking-[0.3em] text-ivory transition hover:translate-y-[-1px] hover:border-gold hover:bg-gold/20 hover:text-gold-100 disabled:cursor-not-allowed disabled:opacity-60"
+              className="premium-button inline-flex items-center justify-center rounded-full border border-gold/70 bg-gold/12 px-6 py-3 text-xs uppercase tracking-[0.3em] text-ivory disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isSubmitting ? 'Sending...' : 'Submit inquiry'}
             </button>
@@ -213,9 +213,9 @@ export function ContactForm() {
   )
 }
 
-function Field({ label, error, children, className = '' }) {
+function Field({ label, error, children, className = '', delay = 0 }) {
   return (
-    <label className={`block ${className}`}>
+    <label className={`reveal block ${className}`} style={{ '--reveal-delay': `${delay}ms` }}>
       <span className="mb-2 block text-[0.68rem] uppercase tracking-[0.34em] text-gold/80">{label}</span>
       {children}
       {error ? <span className="mt-2 block text-xs text-red-300">{error}</span> : null}

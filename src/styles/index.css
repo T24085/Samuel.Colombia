@@ -6,6 +6,13 @@
   --font-display: 'Cormorant Garamond', serif;
   --font-body: 'Manrope', sans-serif;
   --font-script: 'Parisienne', cursive;
+  --motion-duration-fast: 220ms;
+  --motion-duration-base: 520ms;
+  --motion-duration-slow: 920ms;
+  --motion-ease-luxury: cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-sharp: cubic-bezier(0.2, 1, 0.2, 1);
+  --motion-distance: 1rem;
   color-scheme: dark;
 }
 
@@ -84,6 +91,212 @@
 @layer components {
   .studio-shell {
     @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10;
+  }
+
+  .reveal {
+    --reveal-distance: var(--motion-distance);
+    --reveal-duration: var(--motion-duration-base);
+    opacity: 0;
+    transform: translate3d(0, var(--reveal-distance), 0) scale(var(--reveal-scale, 1));
+    transition:
+      opacity var(--reveal-duration) var(--motion-ease-luxury),
+      transform var(--reveal-duration) var(--motion-ease-luxury);
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: transform, opacity;
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  .reveal[data-reveal-tone='fast'] {
+    --reveal-distance: 0.7rem;
+    --reveal-duration: 360ms;
+    transition-timing-function: var(--motion-ease-sharp);
+  }
+
+  .reveal[data-reveal-tone='slow'] {
+    --reveal-distance: 1.35rem;
+    --reveal-duration: 760ms;
+  }
+
+  .reveal[data-reveal-tone='hero'] {
+    --reveal-distance: 0.9rem;
+    --reveal-duration: 760ms;
+    --reveal-scale: 0.98;
+  }
+
+  .page-intro {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0) scale(0.985);
+    animation: page-intro 860ms var(--motion-ease-luxury) forwards;
+    animation-delay: var(--enter-delay, 0ms);
+    will-change: transform, opacity;
+  }
+
+  .hero-drift {
+    animation: hero-drift 18s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+
+  .hero-drift-slow {
+    animation-duration: 24s;
+  }
+
+  .hero-drift-fast {
+    animation-duration: 14s;
+  }
+
+  .media-card {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    transition:
+      transform 280ms var(--motion-ease-luxury),
+      box-shadow 280ms var(--motion-ease-luxury),
+      border-color 280ms var(--motion-ease-luxury);
+    will-change: transform;
+  }
+
+  .media-card:hover,
+  .media-card:focus-visible {
+    transform: translateY(-6px);
+  }
+
+  .media-card-image {
+    transition:
+      transform 700ms var(--motion-ease-luxury),
+      opacity 520ms var(--motion-ease-luxury);
+    will-change: transform, opacity;
+  }
+
+  .media-card:hover .media-card-image,
+  .media-card:focus-visible .media-card-image {
+    transform: scale(1.045);
+  }
+
+  .media-card-caption {
+    opacity: 0;
+    transform: translateY(10px);
+    transition:
+      opacity 280ms var(--motion-ease-luxury),
+      transform 280ms var(--motion-ease-luxury);
+    will-change: transform, opacity;
+  }
+
+  .media-card:hover .media-card-caption,
+  .media-card:focus-visible .media-card-caption {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .premium-button {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    transition:
+      transform 220ms var(--motion-ease-luxury),
+      border-color 220ms var(--motion-ease-luxury),
+      background-color 220ms var(--motion-ease-luxury),
+      color 220ms var(--motion-ease-luxury),
+      box-shadow 220ms var(--motion-ease-luxury);
+  }
+
+  .premium-button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(110deg, transparent 14%, rgba(255, 255, 255, 0.3) 38%, transparent 62%);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-120%);
+    transition:
+      transform 560ms var(--motion-ease-luxury),
+      opacity 240ms var(--motion-ease-luxury);
+    z-index: -1;
+  }
+
+  .premium-button:hover,
+  .premium-button:focus-visible {
+    transform: translateY(-2px);
+  }
+
+  .premium-button:hover::before,
+  .premium-button:focus-visible::before {
+    opacity: 1;
+    transform: translateX(120%);
+  }
+
+  .modal-backdrop {
+    opacity: 0;
+    transition: opacity 320ms var(--motion-ease-soft);
+  }
+
+  .modal-backdrop.is-visible {
+    opacity: 1;
+  }
+
+  .modal-panel {
+    opacity: 0;
+    transform: scale(0.96) translate3d(0, 14px, 0);
+    transition:
+      opacity 320ms var(--motion-ease-luxury),
+      transform 320ms var(--motion-ease-luxury);
+  }
+
+  .modal-panel.is-visible {
+    opacity: 1;
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+
+  .editorial-flash {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateX(-32%);
+    background: linear-gradient(115deg, transparent 18%, rgba(245, 240, 230, 0.18) 44%, transparent 68%);
+    transition:
+      opacity 220ms var(--motion-ease-luxury),
+      transform 520ms var(--motion-ease-luxury);
+  }
+
+  .media-card:hover .editorial-flash,
+  .media-card:focus-visible .editorial-flash {
+    opacity: 1;
+    transform: translateX(32%);
+  }
+
+  .motion-fast {
+    --reveal-distance: 0.6rem;
+    --reveal-duration: 320ms;
+  }
+
+  .motion-cinematic {
+    --reveal-distance: 1.4rem;
+    --reveal-duration: 780ms;
+  }
+
+  .motion-fast .media-card-image {
+    transition-duration: 420ms;
+  }
+
+  .motion-cinematic .media-card-image {
+    transition-duration: 860ms;
+  }
+
+  .hero-logo .logo-script {
+    animation:
+      page-intro 780ms var(--motion-ease-luxury) forwards,
+      gold-shimmer 10s ease-in-out infinite 780ms,
+      logo-float 7s ease-in-out infinite 780ms;
+  }
+
+  .hero-logo > span:last-child {
+    animation: page-intro 780ms var(--motion-ease-luxury) forwards;
+    animation-delay: 140ms;
   }
 
   .home-snap-scroll {
@@ -869,6 +1082,28 @@
   }
 }
 
+@keyframes page-intro {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0) scale(0.985);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes hero-drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  100% {
+    transform: translate3d(0, -10px, 0) scale(1.02);
+  }
+}
+
 @keyframes logo-float {
   0%,
   100% {
@@ -1050,7 +1285,10 @@
   .floating-booking-link::after,
   .services-film-grain,
   .studio-primary-cta::before,
-  .studio-primary-cta::after {
+  .studio-primary-cta::after,
+  .hero-drift,
+  .page-intro,
+  .premium-button::before {
     animation: none !important;
     transition: none !important;
   }

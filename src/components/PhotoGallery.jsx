@@ -25,7 +25,8 @@ export function PhotoGallery({
                   onClick: () => onSelect(index),
                 }
               : {})}
-            className="portfolio-frame group mb-5 block w-full break-inside-avoid overflow-hidden rounded-[1.6rem] border border-gold/40 bg-white/5 text-left shadow-luxury focus:outline-none focus:ring-2 focus:ring-gold/60"
+            className="portfolio-frame media-card reveal group mb-5 block w-full break-inside-avoid overflow-hidden rounded-[1.6rem] border border-gold/40 bg-white/5 text-left shadow-luxury focus:outline-none focus:ring-2 focus:ring-gold/60"
+            style={{ '--reveal-delay': `${index * 80}ms` }}
             aria-label={interactive ? `Open ${item.title}` : undefined}
           >
             <div className="relative overflow-hidden">
@@ -37,21 +38,22 @@ export function PhotoGallery({
                 onError={(event) => {
                   event.currentTarget.src = withBase('photos/self-port.jpg')
                 }}
-                className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]"
+                className="media-card-image h-full w-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/10 to-transparent opacity-70 transition duration-500 group-hover:opacity-45" />
+              <div className="editorial-flash" aria-hidden="true" />
               <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-5">
                 <div>
                   <h3 className="font-display text-2xl font-medium text-ivory transition group-hover:text-gold">
                     {item.title}
                   </h3>
                   {showTags ? (
-                    <p className="mt-1 text-[0.68rem] uppercase tracking-[0.28em] text-parchment/66">
+                    <p className="media-card-caption mt-1 text-[0.68rem] uppercase tracking-[0.28em] text-parchment/66">
                       {item.categories.join(' / ')}
                     </p>
                   ) : null}
                 </div>
-                <span className="rounded-full border border-gold/30 bg-ink/55 px-3 py-2 text-[0.62rem] uppercase tracking-[0.32em] text-gold/85">
+                <span className="media-card-caption rounded-full border border-gold/30 bg-ink/55 px-3 py-2 text-[0.62rem] uppercase tracking-[0.32em] text-gold/85">
                   View
                 </span>
               </div>

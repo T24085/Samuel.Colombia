@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
 
-export function Logo({ compact = false }) {
+export function Logo({ compact = false, className = '' }) {
   return (
-    <Link to="/" className="group inline-flex flex-col leading-none">
+    <Link to="/" className={`group inline-flex flex-col leading-none ${className}`}>
       <span className={`logo-script ${compact ? 'text-[1.9rem]' : 'text-[2.3rem] md:text-[3rem]'}`}>
         Samuel Studio
       </span>

@@ -155,17 +155,17 @@ export function PortfolioHero({ activeSlug = null, onMagazineSelect }) {
             animate={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
             transition={{ duration: 0.85, ease: 'easeOut' }}
           >
-            <p className="mb-5 text-xs uppercase tracking-[0.45em] text-[#c9a14a]">
+            <p className="page-intro mb-5 text-xs uppercase tracking-[0.45em] text-[#c9a14a]" style={{ '--enter-delay': '40ms' }}>
               Portfolio / Editorial Archive
             </p>
 
-            <h1 className="max-w-3xl font-display text-[clamp(4.25rem,7vw,8.5rem)] font-medium uppercase leading-[0.86] tracking-[-0.05em] text-white">
+            <h1 className="page-intro max-w-3xl font-display text-[clamp(4.25rem,7vw,8.5rem)] font-medium uppercase leading-[0.86] tracking-[-0.05em] text-white" style={{ '--enter-delay': '120ms' }}>
               Visuals That
               <br />
               <span className="text-[#c9a14a]">Define Presence.</span>
             </h1>
 
-            <p className="mt-7 max-w-2xl text-base leading-7 text-white/75 md:text-lg">
+            <p className="page-intro mt-7 max-w-2xl text-base leading-7 text-white/75 md:text-lg" style={{ '--enter-delay': '200ms' }}>
               A curated collection of editorial, identity, and portrait work crafted to inspire, elevate, and leave a
               lasting impression.
             </p>
@@ -173,7 +173,8 @@ export function PortfolioHero({ activeSlug = null, onMagazineSelect }) {
             <div className="mt-9 flex flex-wrap items-center gap-8">
               <a
                 href="#portfolio-gallery"
-                className="border border-[#c9a14a] px-7 py-4 text-xs font-medium uppercase tracking-[0.28em] text-[#c9a14a] transition hover:bg-[#c9a14a] hover:text-black"
+                className="page-intro border border-[#c9a14a] px-7 py-4 text-xs font-medium uppercase tracking-[0.28em] text-[#c9a14a] transition hover:bg-[#c9a14a] hover:text-black"
+                style={{ '--enter-delay': '260ms' }}
               >
                 Explore the Portfolio
               </a>
