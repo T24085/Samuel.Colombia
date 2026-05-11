@@ -131,6 +131,7 @@ const servicePreviewData = {
       { src: 'assets/Websites/samuel-studio-website2.png', alt: 'Samuel Studio website preview screenshot' },
       { src: 'assets/Websites/samuel-studio-colombia-website.png', alt: 'Samuel Studio Colombia website preview screenshot' },
       { src: 'assets/Websites/defiant-boudoir-website.png', alt: 'Defiant Boudoir website preview screenshot' },
+      { src: 'assets/Websites/nova-riven-website.png', alt: 'Nova Riven website preview screenshot' },
     ],
   },
 };
