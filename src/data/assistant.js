@@ -19,7 +19,7 @@ function normalizeModelCandidates(raw) {
 
 export const ollamaModelCandidates = normalizeModelCandidates(import.meta.env.VITE_OLLAMA_MODEL_CANDIDATES)
 
-const publicChatBaseUrl = import.meta.env.VITE_PUBLIC_CHAT_BASE_URL?.trim() || 'https://chat.samuel.studio'
+const publicChatBaseUrl = import.meta.env.VITE_PUBLIC_CHAT_BASE_URL?.trim() || 'https://chat.novatec.casa'
 const assistantChatFallback = import.meta.env.PROD ? `${publicChatBaseUrl}/api/assistant-chat` : '/api/assistant-chat'
 const chatLogFallback = import.meta.env.PROD ? `${publicChatBaseUrl}/api/chat-log` : '/api/chat-log'
 
