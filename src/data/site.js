@@ -22,6 +22,9 @@ export const site = {
   ],
 }
 
+export const siteKey = 'samuel-studio-colombia'
+export const intakeFormUrl = '/booking#booking-form'
+
 export const navLinks = [
   { label: 'Home', href: '/' },
   { label: 'Portfolio', href: '/portfolio' },
