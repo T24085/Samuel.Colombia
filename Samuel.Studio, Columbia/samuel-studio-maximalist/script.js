@@ -51,7 +51,7 @@ const chatSiteKey = 'samuel-studio-colombia';
 const chatContactEmail = 'capture@samuel.studio';
 const chatBookingUrl = 'https://docs.google.com/forms/d/e/1FAIpQLScCqxvBZ6NTmwh-qyphZyjKzdhz3-jouihSZjAXhRMkBaRpxw/viewform?usp=header';
 const chatModelCandidates = ['gemma4:12b', 'gemma3:12b', 'llama3.1:8b', 'qwen2.5:7b'];
-const chatBaseUrl = ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname) ? '' : 'https://chat.samuel.studio';
+const chatBaseUrl = ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname) ? '' : 'https://chat.novatec.casa';
 const assistantChatUrl = chatBaseUrl ? `${chatBaseUrl}/api/assistant-chat` : '/api/assistant-chat';
 const chatLogEndpoint = chatBaseUrl ? `${chatBaseUrl}/api/chat-log` : '/api/chat-log';
 const assistantSystemPrompt = `
@@ -776,7 +776,11 @@ function loadChatState() {
 }
 
 function saveChatState(state) {
-  window.localStorage.setItem(chatStorageKey, JSON.stringify(state));
+  try {
+    window.localStorage.setItem(chatStorageKey, JSON.stringify(state));
+  } catch {
+    // Keep the chat usable even when storage is blocked or full.
+  }
 }
 
 function buildChatFallbackReply(userText) {
