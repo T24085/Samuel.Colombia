@@ -1155,6 +1155,8 @@ function initChatWidget() {
     const hasProfile = Boolean(clientProfile);
     chatIntakeView.hidden = hasProfile;
     chatConversationView.hidden = !hasProfile;
+    chatIntakeView.style.display = hasProfile ? 'none' : '';
+    chatConversationView.style.display = hasProfile ? '' : 'none';
 
     if (intakeInputs.name) intakeInputs.name.value = intakeDraft.name;
     if (intakeInputs.email) intakeInputs.email.value = intakeDraft.email;
