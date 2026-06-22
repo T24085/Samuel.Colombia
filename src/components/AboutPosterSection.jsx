@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
+import { useMediaQuery } from '../hooks/useMediaQuery'
 import motionDeckVideo01 from '../../Screen Recording 2026-04-20 005001.mp4'
 import motionDeckVideo02 from '../../Recording 2026-04-20 092454.mp4'
 import motionDeckVideo03 from '../../Recording 2026-04-20 092911.mp4'
@@ -81,7 +82,7 @@ function MotionDeckCard({ card, reduceMotion, index, hoveredIndex, onHoverStart,
             autoPlay
             preload="auto"
             className="absolute inset-0 h-full w-full object-cover"
-            style={{ objectPosition: '50% 45%' }}
+            style={{ objectPosition: isNarrowViewport ? '50% 50%' : '50% 45%' }}
           />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.02)_0%,rgba(255,255,255,0)_38%,rgba(0,0,0,0.36)_100%)]" />
         </div>
@@ -92,6 +93,7 @@ function MotionDeckCard({ card, reduceMotion, index, hoveredIndex, onHoverStart,
 
 export function MotionDeckSection() {
   const reduceMotion = useReducedMotion()
+  const isNarrowViewport = useMediaQuery('(max-width: 1023px)')
   const [hoveredIndex, setHoveredIndex] = useState(null)
 
   return (

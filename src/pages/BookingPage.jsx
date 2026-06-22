@@ -6,10 +6,12 @@ import { ContactForm } from '../components/ContactForm'
 import { site } from '../data/site'
 import { galleryItems } from '../data/gallery'
 import { GoldFrame } from '../components/DecorativeElements'
+import { useMediaQuery } from '../hooks/useMediaQuery'
 import { withBase } from '../utils/paths'
 
 function BookingBackdrop() {
   const reducedMotion = useReducedMotion()
+  const isNarrowViewport = useMediaQuery('(max-width: 767px)')
   const [imageIndex, setImageIndex] = useState(0)
 
   useEffect(() => {
@@ -38,13 +40,14 @@ function BookingBackdrop() {
           <motion.img
             src={activeItem.src}
             alt=""
-            className="h-full w-full object-cover object-center"
+            className="h-full w-full object-cover"
+            style={{ objectPosition: isNarrowViewport ? '50% 30%' : '50% 50%' }}
             initial={false}
-            animate={reducedMotion ? { scale: 1 } : { scale: [1.04, 1.08] }}
+            animate={reducedMotion ? { scale: 1 } : { scale: isNarrowViewport ? 1.01 : [1.04, 1.08] }}
             transition={
               reducedMotion
                 ? undefined
-                : { duration: 8.5, ease: 'easeInOut', repeat: Infinity, repeatType: 'mirror' }
+                : { duration: isNarrowViewport ? 0 : 8.5, ease: 'easeInOut', repeat: isNarrowViewport ? 0 : Infinity, repeatType: 'mirror' }
             }
             onError={(event) => {
               event.currentTarget.src = withBase('photos/self-port.jpg')
@@ -69,7 +72,7 @@ export function BookingPage() {
         description="Book an inquiry with Samuel Studio for editorial campaigns, personal brand identity, visual story projects, or private portrait sessions."
         path="/booking"
       />
-      <section className="relative isolate min-h-screen overflow-hidden bg-ink py-24 text-ivory">
+      <section className="relative isolate min-h-screen overflow-hidden bg-ink py-[4.5rem] text-ivory sm:py-24">
         <BookingBackdrop />
 
         <div className="relative z-10">
@@ -80,10 +83,10 @@ export function BookingPage() {
               description="Use the form to share your goals, timing, and the service you want. The studio will respond with next steps and availability."
             />
 
-            <div className="mt-14 grid gap-8 lg:grid-cols-[1.1fr_0.6fr]">
+            <div className="mt-12 grid gap-6 lg:grid-cols-[1.1fr_0.6fr] lg:gap-8">
               <ContactForm />
               <div className="space-y-5">
-                <GoldFrame className="p-7">
+                <GoldFrame className="p-5 sm:p-7">
                   <p className="text-xs uppercase tracking-[0.34em] text-gold/80">Studio details</p>
                   <div className="mt-6 space-y-5 text-sm leading-7 text-parchment/74">
                     <div>
@@ -101,7 +104,7 @@ export function BookingPage() {
                   </div>
                 </GoldFrame>
 
-                <GoldFrame className="p-7">
+                <GoldFrame className="p-5 sm:p-7">
                   <p className="text-xs uppercase tracking-[0.34em] text-gold/80">Social links</p>
                   <div className="mt-5 flex flex-wrap gap-3">
                     {site.socials.map((social) => (

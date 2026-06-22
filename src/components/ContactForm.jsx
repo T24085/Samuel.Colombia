@@ -95,7 +95,7 @@ export function ContactForm() {
   }
 
   return (
-    <div className="gold-frame scroll-mt-32 p-8">
+    <div className="gold-frame scroll-mt-32 p-5 sm:p-8">
       {status === 'success' ? (
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <p className="text-xs uppercase tracking-[0.36em] text-gold/80">Inquiry received</p>
@@ -182,7 +182,7 @@ export function ContactForm() {
           <Field label="Message" error={errors.message} className="mt-5" delay={300}>
             <textarea
               name="message"
-              rows={6}
+              rows={5}
               value={values.message}
               onChange={onChange}
               disabled={isSubmitting}
@@ -190,7 +190,7 @@ export function ContactForm() {
               placeholder="Tell us about your vision, wardrobe, timeline, and any details you want to preserve."
             />
           </Field>
-          <div className="mt-7 flex flex-wrap items-center gap-4">
+          <div className="mt-7 flex flex-col items-start gap-4 sm:flex-row sm:flex-wrap sm:items-center">
             <button
               type="submit"
               disabled={isSubmitting}

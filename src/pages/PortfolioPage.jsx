@@ -7,6 +7,7 @@ import { PortfolioBackdrop } from '../components/PortfolioBackdrop'
 import { PortfolioHero } from '../components/PortfolioHero'
 import { SEO } from '../components/SEO'
 import { portfolioCollections } from '../data/portfolio'
+import { useMediaQuery } from '../hooks/useMediaQuery'
 
 const tileRatios = [0.82, 1.05, 0.92, 1.18]
 
@@ -32,7 +33,7 @@ function ImageTile({ item, index }) {
   )
 }
 
-function FullscreenMagazinePanel({ collection, onClose, reduceMotion }) {
+function FullscreenMagazinePanel({ collection, onClose, reduceMotion, isNarrowViewport }) {
   const preview = collection.previewItems.slice(0, 8)
 
   const panel = (
@@ -62,13 +63,13 @@ function FullscreenMagazinePanel({ collection, onClose, reduceMotion }) {
         </button>
 
         <div className="grid min-h-full gap-0 lg:grid-cols-[0.78fr_1.22fr]">
-          <motion.div
+            <motion.div
             className="relative min-h-[40svh] overflow-hidden border-b border-white/10 bg-[#080706] lg:min-h-0 lg:h-full lg:border-b-0 lg:border-r"
           >
             <img
               src={collection.coverSrc}
               alt={collection.coverAlt}
-              className="absolute inset-0 h-full w-full object-contain object-center"
+              className={`absolute inset-0 h-full w-full ${isNarrowViewport ? 'object-cover' : 'object-contain object-center'}`}
               loading="eager"
               decoding="async"
             />
@@ -170,6 +171,7 @@ function FullscreenMagazinePanel({ collection, onClose, reduceMotion }) {
 
 export function PortfolioPage() {
   const reduceMotion = useReducedMotion()
+  const isNarrowViewport = useMediaQuery('(max-width: 767px)')
   const [searchParams, setSearchParams] = useSearchParams()
 
   const activeSlug = searchParams.get('magazine')
@@ -254,6 +256,7 @@ export function PortfolioPage() {
                   collection={selectedCollection}
                   onClose={closeCollection}
                   reduceMotion={reduceMotion}
+                  isNarrowViewport={isNarrowViewport}
                 />
               ) : null}
             </AnimatePresence>

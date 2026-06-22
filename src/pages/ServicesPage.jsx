@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { SEO } from '../components/SEO'
 import { services } from '../data/services'
+import { useMediaQuery } from '../hooks/useMediaQuery'
 import { withBase } from '../utils/paths'
 
 const serviceFrames = [
@@ -47,7 +48,62 @@ function getServiceTone(serviceSlug) {
 }
 
 function ServicesContactSheet({ reduceMotion, activeService, activeServiceIndex }) {
+  const isNarrowViewport = useMediaQuery('(max-width: 1023px)')
   const activeFrames = serviceFrames.map((_, index) => serviceFrames[(index + activeServiceIndex) % serviceFrames.length])
+  const leadFrame = activeFrames[0]
+
+  if (isNarrowViewport) {
+    return (
+      <motion.div
+        initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 16 }}
+        animate={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+        transition={{ duration: 0.9, ease: 'easeOut', delay: 0.12 }}
+        className="relative overflow-hidden rounded-[2.4rem] border border-white/10 bg-[#0b0a08] shadow-[0_42px_140px_rgba(0,0,0,0.55)] min-h-[34rem]"
+      >
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-[linear-gradient(135deg,rgba(198,161,91,0.18),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.06),rgba(0,0,0,0.22))]"
+        />
+        <div aria-hidden="true" className="services-film-grain absolute inset-0 opacity-[0.12]" />
+
+        <div className="relative flex min-h-[34rem] flex-col">
+          <div className="relative min-h-[18rem] flex-1 overflow-hidden border-b border-white/10 bg-black/30">
+            <img
+              src={leadFrame.src}
+              alt={leadFrame.alt}
+              className="absolute inset-0 h-full w-full object-cover opacity-[0.84] grayscale-[10%] saturate-[0.92]"
+              style={{ objectPosition: '50% 42%' }}
+            />
+            <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08),rgba(0,0,0,0.66)),linear-gradient(90deg,rgba(0,0,0,0.2),transparent)]" />
+            <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between gap-4">
+              <span className="media-card-caption text-[0.62rem] uppercase tracking-[0.32em] text-ivory/72">
+                Look {String(activeServiceIndex + 1).padStart(2, '0')}
+              </span>
+              <span className="h-px flex-1 bg-gradient-to-r from-gold/45 to-transparent" />
+            </div>
+            <div className="absolute left-5 top-5 max-w-[18rem] rounded-[1.25rem] border border-white/10 bg-black/46 p-4 backdrop-blur-md">
+              <p className="text-[0.62rem] uppercase tracking-[0.32em] text-gold/72">Selected service</p>
+              <p className="mt-2 font-display text-2xl leading-[0.96] text-ivory">{activeService.title}</p>
+              <p className="mt-2 text-sm leading-6 text-parchment/72">{activeService.subheader}</p>
+            </div>
+          </div>
+
+          <div className="relative grid gap-4 p-5 sm:grid-cols-2">
+            <div className="rounded-[1.2rem] border border-white/10 bg-black/42 p-4 backdrop-blur-md sm:col-span-2">
+              <p className="text-[0.62rem] uppercase tracking-[0.32em] text-gold/72">Service mood</p>
+              <p className="mt-2 text-sm leading-6 text-parchment/76">{activeService.description[0]}</p>
+            </div>
+            {serviceLooks.map((look) => (
+              <div key={look.name} className="flex items-center justify-between gap-3 rounded-[1.1rem] border border-white/10 bg-black/30 px-4 py-3">
+                <span className="text-[0.58rem] uppercase tracking-[0.28em] text-gold/70">{look.name}</span>
+                <span className="text-right text-[0.72rem] text-parchment/76">{look.value}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </motion.div>
+    )
+  }
 
   return (
     <motion.div

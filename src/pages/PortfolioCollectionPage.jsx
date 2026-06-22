@@ -6,16 +6,17 @@ import { PortfolioBackdrop } from '../components/PortfolioBackdrop'
 import { Lightbox } from '../components/Lightbox'
 import { SEO } from '../components/SEO'
 import { portfolioAlbums, portfolioCollectionsBySlug } from '../data/portfolio'
+import { useMediaQuery } from '../hooks/useMediaQuery'
 
 const tileRatios = [0.84, 1.08, 0.92, 1.18, 0.96, 1.12]
 
-function CollectionTile({ item, index, onOpen }) {
+function CollectionTile({ item, index, onOpen, isCompactViewport }) {
   return (
     <button
       type="button"
       onClick={onOpen}
       className="media-card group relative overflow-hidden rounded-[1.3rem] border border-white/10 bg-white/[0.03] text-left shadow-[0_18px_60px_rgba(0,0,0,0.22)]"
-      style={{ aspectRatio: tileRatios[index % tileRatios.length] }}
+      style={{ aspectRatio: isCompactViewport ? 0.94 : tileRatios[index % tileRatios.length] }}
       aria-label={`Open ${item.title}`}
     >
       <img
@@ -37,6 +38,7 @@ function CollectionTile({ item, index, onOpen }) {
 export function PortfolioCollectionPage() {
   const { slug } = useParams()
   const reduceMotion = useReducedMotion()
+  const isCompactViewport = useMediaQuery('(max-width: 639px)')
   const collection = portfolioCollectionsBySlug.get(slug)
   const [activeIndex, setActiveIndex] = useState(null)
 
@@ -188,6 +190,7 @@ export function PortfolioCollectionPage() {
                   item={item}
                   index={index}
                   onOpen={() => setActiveIndex(index)}
+                  isCompactViewport={isCompactViewport}
                 />
               ))}
             </div>

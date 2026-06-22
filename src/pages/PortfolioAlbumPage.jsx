@@ -6,16 +6,17 @@ import { PortfolioBackdrop } from '../components/PortfolioBackdrop'
 import { Lightbox } from '../components/Lightbox'
 import { SEO } from '../components/SEO'
 import { portfolioAlbumsBySlug, portfolioCollections } from '../data/portfolio'
+import { useMediaQuery } from '../hooks/useMediaQuery'
 
 const tileRatios = [0.86, 1.1, 0.94, 1.16, 0.98, 1.08]
 
-function AlbumTile({ item, index, onOpen }) {
+function AlbumTile({ item, index, onOpen, isCompactViewport }) {
   return (
     <button
       type="button"
       onClick={onOpen}
       className="media-card group relative overflow-hidden rounded-[1.3rem] border border-white/10 bg-white/[0.03] text-left shadow-[0_18px_60px_rgba(0,0,0,0.22)]"
-      style={{ aspectRatio: tileRatios[index % tileRatios.length] }}
+      style={{ aspectRatio: isCompactViewport ? 0.94 : tileRatios[index % tileRatios.length] }}
       aria-label={`Open ${item.title}`}
     >
       <img
@@ -37,6 +38,7 @@ function AlbumTile({ item, index, onOpen }) {
 export function PortfolioAlbumPage() {
   const { albumSlug } = useParams()
   const reduceMotion = useReducedMotion()
+  const isCompactViewport = useMediaQuery('(max-width: 639px)')
   const album = portfolioAlbumsBySlug.get(albumSlug)
   const [activeIndex, setActiveIndex] = useState(null)
 
@@ -172,7 +174,7 @@ export function PortfolioAlbumPage() {
           <section className="studio-shell pb-18 lg:pb-24">
             <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
               {album.previewItems.map((item, index) => (
-                <AlbumTile key={item.id} item={item} index={index} onOpen={() => setActiveIndex(index)} />
+                <AlbumTile key={item.id} item={item} index={index} onOpen={() => setActiveIndex(index)} isCompactViewport={isCompactViewport} />
               ))}
             </div>
           </section>

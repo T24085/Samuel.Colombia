@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { SEO } from '../components/SEO'
 import { site } from '../data/site'
+import { useMediaQuery } from '../hooks/useMediaQuery'
 import samPortrait from '../../Sam.png'
 
 export const aboutMarqueeItems = [
@@ -158,6 +159,7 @@ function SplitRailLink({ label, href, active = false }) {
 
 export function AboutPage() {
   const reduceMotion = useReducedMotion()
+  const isNarrowViewport = useMediaQuery('(max-width: 1023px)')
   const [activePublication, setActivePublication] = useState(0)
   const manifestoRef = useRef(null)
   const { scrollYProgress: manifestoScrollProgress } = useScroll({
@@ -248,7 +250,7 @@ export function AboutPage() {
               viewport={{ once: false, amount: 0.24 }}
               transition={reduceMotion ? { duration: 0 } : { duration: 0.85, ease: 'easeOut' }}
               className="about-cover-wall"
-              style={reduceMotion ? undefined : { y: coverDriftY, scale: coverDriftScale }}
+              style={reduceMotion || isNarrowViewport ? undefined : { y: coverDriftY, scale: coverDriftScale }}
             >
               {publicationFeatures.map((item, index) => (
                 <figure
