@@ -22,10 +22,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Build Pages staging directory
+        run: node scripts/build-colombia-pages.mjs
+
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
-          path: './Samuel.Studio, Columbia/samuel-studio-maximalist'
+          path: './.pages-build'
 
   deploy:
     environment:
