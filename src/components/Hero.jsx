@@ -2,11 +2,13 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowRight, Camera } from 'lucide-react'
 import { galleryItems } from '../data/gallery'
+import { useMediaQuery } from '../hooks/useMediaQuery'
 import { FlowFieldBackdrop } from './FlowFieldBackdrop'
 import { FanArcBackdrop, GoldFrame, InkWashBackground } from './DecorativeElements'
 
 export function Hero() {
   const heroImage = galleryItems.find((item) => item.id === 'women-6') ?? galleryItems[0]
+  const isNarrowViewport = useMediaQuery('(max-width: 767px)')
 
   return (
     <section className="home-snap-section relative min-h-[100svh] overflow-hidden bg-ink text-ivory">
@@ -15,6 +17,7 @@ export function Hero() {
           src={heroImage.src}
           alt={heroImage.alt}
           className="hero-drift hero-drift-slow h-full w-full object-cover object-center"
+          style={{ objectPosition: isNarrowViewport ? '50% 26%' : '50% 50%' }}
         />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,51,45,0.86)_0%,rgba(17,17,17,0.62)_42%,rgba(17,17,17,0.84)_100%)]" />
         <InkWashBackground />
@@ -65,7 +68,12 @@ export function Hero() {
           >
             <GoldFrame className="p-4 shadow-[0_18px_90px_rgba(0,0,0,0.44)]">
               <div className="relative overflow-hidden rounded-[1.35rem]">
-                <img src={heroImage.src} alt={heroImage.alt} className="hero-drift hero-drift-fast h-[34rem] w-full object-cover object-center md:h-[41rem]" />
+                <img
+                  src={heroImage.src}
+                  alt={heroImage.alt}
+                  className="hero-drift hero-drift-fast h-[26rem] w-full object-cover object-center sm:h-[34rem] md:h-[41rem]"
+                  style={{ objectPosition: isNarrowViewport ? '50% 28%' : '50% 50%' }}
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-ink/72 via-transparent to-transparent" />
                 <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between gap-4">
                   <div>

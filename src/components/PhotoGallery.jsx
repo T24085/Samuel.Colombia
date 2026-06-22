@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { withBase } from '../utils/paths'
+import { useMediaQuery } from '../hooks/useMediaQuery'
 
 export function PhotoGallery({
   items,
@@ -9,6 +10,7 @@ export function PhotoGallery({
   compact = false,
   interactive = true,
 }) {
+  const isNarrowViewport = useMediaQuery('(max-width: 767px)')
   const Card = interactive ? motion.button : motion.div
 
   return (
@@ -39,6 +41,7 @@ export function PhotoGallery({
                   event.currentTarget.src = withBase('photos/self-port.jpg')
                 }}
                 className="media-card-image h-full w-full object-cover"
+                style={{ objectPosition: isNarrowViewport ? '50% 24%' : '50% 50%' }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/10 to-transparent opacity-70 transition duration-500 group-hover:opacity-45" />
               <div className="editorial-flash" aria-hidden="true" />

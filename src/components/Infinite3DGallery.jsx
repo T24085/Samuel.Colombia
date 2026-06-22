@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
+import { useMediaQuery } from '../hooks/useMediaQuery'
 import { withBase } from '../utils/paths'
 
 const tileVariants = [
@@ -80,7 +81,7 @@ const modeConfig = {
   },
 }
 
-function GalleryCard({ item, variant, onSelect }) {
+function GalleryCard({ item, variant, onSelect, isNarrowViewport }) {
   return (
     <motion.button
       type="button"
@@ -99,6 +100,7 @@ function GalleryCard({ item, variant, onSelect }) {
           event.currentTarget.src = withBase('photos/self-port.jpg')
         }}
         className="h-full w-full object-cover object-center transition duration-700 group-hover:scale-[1.04]"
+        style={{ objectPosition: isNarrowViewport ? '50% 24%' : '50% 50%' }}
       />
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02),transparent_28%,rgba(0,0,0,0.76))]" />
       <div className="absolute inset-x-0 bottom-0 p-4">
@@ -114,7 +116,7 @@ function GalleryCard({ item, variant, onSelect }) {
   )
 }
 
-function GalleryLane({ items, onSelect, config, laneIndex, reducedMotion }) {
+function GalleryLane({ items, onSelect, config, laneIndex, reducedMotion, isNarrowViewport }) {
   const laneItems = useMemo(() => {
     const base = items.filter((_, index) => index % config.lanes === laneIndex)
     return [...base, ...base]
@@ -160,6 +162,7 @@ function GalleryLane({ items, onSelect, config, laneIndex, reducedMotion }) {
                 item={item}
                 variant={variant}
                 onSelect={onSelect}
+                isNarrowViewport={isNarrowViewport}
               />
             )
           })}
@@ -171,6 +174,7 @@ function GalleryLane({ items, onSelect, config, laneIndex, reducedMotion }) {
 
 export function Infinite3DGallery({ items, mode, onSelect }) {
   const reducedMotion = useReducedMotion()
+  const isNarrowViewport = useMediaQuery('(max-width: 767px)')
 
   const config = modeConfig[mode] ?? modeConfig.Gallery
   const stageRotateX = config.rotateX
@@ -206,6 +210,7 @@ export function Infinite3DGallery({ items, mode, onSelect }) {
                 config={config}
                 laneIndex={laneIndex}
                 reducedMotion={reducedMotion}
+                isNarrowViewport={isNarrowViewport}
               />
             </motion.div>
           ))}

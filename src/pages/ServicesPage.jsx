@@ -72,7 +72,7 @@ function ServicesContactSheet({ reduceMotion, activeService, activeServiceIndex 
               src={leadFrame.src}
               alt={leadFrame.alt}
               className="absolute inset-0 h-full w-full object-cover opacity-[0.84] grayscale-[10%] saturate-[0.92]"
-              style={{ objectPosition: '50% 42%' }}
+              style={{ objectPosition: isNarrowViewport ? '50% 28%' : '50% 42%' }}
             />
             <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08),rgba(0,0,0,0.66)),linear-gradient(90deg,rgba(0,0,0,0.2),transparent)]" />
             <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between gap-4">
@@ -186,6 +186,7 @@ function ServicesContactSheet({ reduceMotion, activeService, activeServiceIndex 
 }
 
 function ServiceGatewayCard({ service, index, reduceMotion, active, onActivate }) {
+  const isCompactViewport = useMediaQuery('(max-width: 767px)')
   const preview = service.included.slice(0, 3)
   const frame = serviceFrames[index % serviceFrames.length]
   const toneClass = getServiceTone(service.slug)
@@ -218,6 +219,7 @@ function ServiceGatewayCard({ service, index, reduceMotion, active, onActivate }
             src={frame.src}
             alt={frame.alt}
             className="media-card-image absolute inset-0 h-full w-full object-cover opacity-[0.82] grayscale-[10%] saturate-[0.9]"
+            style={{ objectPosition: isCompactViewport ? '50% 25%' : '50% 50%' }}
           />
           <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08),rgba(0,0,0,0.66)),linear-gradient(90deg,rgba(0,0,0,0.2),transparent)]" />
           <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between gap-4">
@@ -285,12 +287,12 @@ function ServiceGatewayCard({ service, index, reduceMotion, active, onActivate }
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link
-                to={`/services/${service.slug}`}
-                className="studio-primary-cta premium-button group inline-flex items-center justify-between gap-4 rounded-full px-6 py-4 text-xs font-semibold uppercase tracking-[0.3em] transition duration-300"
-              >
-                <span className="relative z-10">{service.cta}</span>
-                <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            <Link
+              to={`/services/${service.slug}`}
+              className="studio-primary-cta premium-button group inline-flex items-center justify-between gap-4 rounded-full px-6 py-4 text-xs font-semibold uppercase tracking-[0.3em] transition duration-300"
+            >
+              <span className="relative z-10">{service.cta}</span>
+              <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
             <div className="hidden rounded-full border border-white/10 bg-white/[0.03] px-5 py-4 text-[0.62rem] uppercase tracking-[0.3em] text-parchment/72 sm:block">
               View full details

@@ -1,6 +1,7 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { portfolioCollections } from '../data/portfolio'
+import { useMediaQuery } from '../hooks/useMediaQuery'
 
 const coverPositions = {
   'defiant-models': {
@@ -113,6 +114,8 @@ function MagazineCover({ collection, activeSlug, onSelect, reduceMotion }) {
 }
 
 function MobileCover({ collection, index, onSelect }) {
+  const isNarrowViewport = useMediaQuery('(max-width: 767px)')
+
   return (
     <motion.button
       type="button"
@@ -131,6 +134,7 @@ function MobileCover({ collection, index, onSelect }) {
         loading={index === 0 ? 'eager' : 'lazy'}
         decoding="async"
         className="h-full w-full object-cover"
+        style={{ objectPosition: isNarrowViewport ? '50% 24%' : '50% 50%' }}
       />
     </motion.button>
   )
