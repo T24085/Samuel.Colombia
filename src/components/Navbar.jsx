@@ -35,6 +35,10 @@ export function Navbar() {
     }
   }, [open])
 
+  useEffect(() => {
+    setOpen(false)
+  }, [location.pathname])
+
   return (
     <header
       className={[
@@ -76,7 +80,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.25 }}
-            className="border-t border-gold/10 bg-ink/95 px-6 py-8 backdrop-blur-xl lg:hidden"
+            className="max-h-[calc(100dvh-4.75rem)] overflow-y-auto border-t border-gold/10 bg-ink/95 px-5 py-6 pb-[calc(1.25rem+env(safe-area-inset-bottom))] backdrop-blur-xl lg:hidden sm:px-6"
           >
             <div className="studio-shell flex flex-col gap-4">
               {navLinks.map((link, index) => (

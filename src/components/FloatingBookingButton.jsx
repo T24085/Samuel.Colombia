@@ -13,12 +13,12 @@ export function FloatingBookingButton() {
       initial={reducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
       animate={reducedMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
       transition={{ duration: 0.45, ease: 'easeOut' }}
-      className="floating-booking-button fixed bottom-5 right-5 z-40 sm:bottom-6 sm:right-6"
+      className="floating-booking-button fixed bottom-[calc(0.9rem+env(safe-area-inset-bottom))] right-4 z-40 sm:bottom-6 sm:right-6"
     >
       <Link
         to={bookingTarget}
         aria-label="Book now"
-        className="floating-booking-link premium-button group relative isolate inline-flex items-center gap-3 rounded-full border border-gold/40 bg-[linear-gradient(180deg,rgba(245,240,230,0.14),rgba(198,161,91,0.18)),linear-gradient(135deg,rgba(17,17,17,0.92),rgba(10,51,45,0.88))] px-4 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-ivory shadow-[0_18px_50px_rgba(0,0,0,0.34),0_0_0_1px_rgba(198,161,91,0.12)] backdrop-blur-xl transition duration-300 hover:border-gold/70 hover:text-gold-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/55 focus-visible:ring-offset-2 focus-visible:ring-offset-ink sm:px-5"
+        className="floating-booking-link premium-button group relative isolate inline-flex items-center gap-2 rounded-full border border-gold/40 bg-[linear-gradient(180deg,rgba(245,240,230,0.14),rgba(198,161,91,0.18)),linear-gradient(135deg,rgba(17,17,17,0.92),rgba(10,51,45,0.88))] px-3 py-2.5 text-[0.62rem] font-semibold uppercase tracking-[0.28em] text-ivory shadow-[0_18px_50px_rgba(0,0,0,0.34),0_0_0_1px_rgba(198,161,91,0.12)] backdrop-blur-xl transition duration-300 hover:border-gold/70 hover:text-gold-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/55 focus-visible:ring-offset-2 focus-visible:ring-offset-ink sm:gap-3 sm:px-5 sm:py-3 sm:text-xs"
       >
         <span className="relative z-10 flex h-3 w-3">
           <span className="absolute inline-flex h-full w-full rounded-full bg-gold/60 opacity-75 transition group-hover:opacity-100" />

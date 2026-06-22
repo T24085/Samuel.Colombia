@@ -507,13 +507,13 @@ export function ChatAssistant() {
   }
 
   return (
-    <div className="fixed bottom-5 left-5 z-40 sm:bottom-6 sm:left-6">
+    <div className="fixed bottom-[calc(0.9rem+env(safe-area-inset-bottom))] left-4 z-40 sm:bottom-6 sm:left-6">
       <motion.button
         type="button"
         initial={reducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
         animate={reducedMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
         transition={{ duration: 0.45, ease: 'easeOut' }}
-        className="group inline-flex items-center gap-3 rounded-full border border-gold/20 bg-[linear-gradient(180deg,rgba(245,240,230,0.16),rgba(198,161,91,0.14)),linear-gradient(135deg,rgba(17,17,17,0.96),rgba(10,51,45,0.88))] px-4 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-ivory shadow-[0_18px_50px_rgba(0,0,0,0.34),0_0_0_1px_rgba(198,161,91,0.12)] backdrop-blur-xl transition duration-300 hover:border-gold/55 hover:text-gold-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/55 focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
+        className="group inline-flex items-center gap-2 rounded-full border border-gold/20 bg-[linear-gradient(180deg,rgba(245,240,230,0.16),rgba(198,161,91,0.14)),linear-gradient(135deg,rgba(17,17,17,0.96),rgba(10,51,45,0.88))] px-3 py-2.5 text-[0.62rem] font-semibold uppercase tracking-[0.26em] text-ivory shadow-[0_18px_50px_rgba(0,0,0,0.34),0_0_0_1px_rgba(198,161,91,0.12)] backdrop-blur-xl transition duration-300 hover:border-gold/55 hover:text-gold-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/55 focus-visible:ring-offset-2 focus-visible:ring-offset-ink sm:gap-3 sm:px-4 sm:py-3 sm:text-xs"
         aria-expanded={open}
         aria-controls={panelId}
         aria-label={open ? 'Close chat with Nova' : 'Chat with Nova'}
@@ -538,7 +538,7 @@ export function ChatAssistant() {
             animate={reducedMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
             exit={reducedMotion ? { opacity: 1 } : { opacity: 0, y: 16 }}
             transition={{ duration: 0.28, ease: 'easeOut' }}
-            className="absolute bottom-[4.75rem] left-0 w-[min(92vw,26rem)] overflow-hidden rounded-[1.75rem] border border-gold/14 bg-[linear-gradient(180deg,rgba(17,17,17,0.98),rgba(10,10,10,0.95))] text-ivory shadow-[0_34px_120px_rgba(0,0,0,0.52)] backdrop-blur-2xl sm:bottom-[5.1rem]"
+            className="absolute bottom-[4.35rem] left-0 w-[min(94vw,26rem)] overflow-hidden rounded-[1.75rem] border border-gold/14 bg-[linear-gradient(180deg,rgba(17,17,17,0.98),rgba(10,10,10,0.95))] text-ivory shadow-[0_34px_120px_rgba(0,0,0,0.52)] backdrop-blur-2xl sm:bottom-[5.1rem] sm:w-[min(92vw,26rem)]"
           >
             <header className="flex items-start justify-between gap-4 border-b border-white/10 px-5 py-4">
               <div className="flex items-center gap-3">
@@ -646,7 +646,7 @@ export function ChatAssistant() {
                   role="log"
                   aria-live="polite"
                   aria-relevant="additions text"
-                  className="max-h-[35vh] space-y-4 overflow-y-auto px-5 py-5 sm:max-h-[36rem]"
+                  className="max-h-[31vh] space-y-4 overflow-y-auto px-5 py-5 sm:max-h-[36rem]"
                 >
                   {transcriptMessages.map((message) => (
                     <article

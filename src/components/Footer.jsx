@@ -4,9 +4,9 @@ import { Logo } from './Logo'
 
 export function Footer() {
   return (
-    <footer className="border-t border-gold/10 bg-ink text-ivory">
-      <div className="studio-shell grid gap-12 py-14 lg:grid-cols-[1.2fr_0.8fr_0.8fr]">
-        <div className="space-y-4">
+    <footer className="border-t border-gold/10 bg-ink pb-[calc(5.5rem+env(safe-area-inset-bottom))] text-ivory sm:pb-0">
+      <div className="studio-shell grid gap-10 py-14 text-center lg:grid-cols-[1.2fr_0.8fr_0.8fr] lg:text-left">
+        <div className="mx-auto space-y-4 lg:mx-0">
           <Logo compact />
           <p className="max-w-md text-sm leading-7 text-parchment/72">
             {site.tagline}
@@ -14,7 +14,7 @@ export function Footer() {
         </div>
         <div>
           <h2 className="text-xs uppercase tracking-[0.35em] text-gold/80">Navigate</h2>
-          <div className="mt-4 flex flex-col gap-3">
+          <div className="mt-4 flex flex-col gap-3 lg:items-start">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -28,7 +28,7 @@ export function Footer() {
         </div>
         <div>
           <h2 className="text-xs uppercase tracking-[0.35em] text-gold/80">Contact</h2>
-          <div className="mt-4 space-y-2 text-sm text-parchment/72">
+          <div className="mt-4 space-y-2 text-sm text-parchment/72 lg:space-y-2.5">
             <a href={`mailto:${site.email}`} className="block transition hover:text-ivory">
               {site.email}
             </a>
