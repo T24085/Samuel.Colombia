@@ -46,6 +46,27 @@ const emailServiceId = 'service_p55qfka';
 const emailTemplateId = 'template_gxa8uvc';
 const emailPublicKey = 'IFJYlgeXzSgqsFRBS';
 const contactEmail = 'studiodefiant@gmail.com';
+const chatAssistantName = 'Nova';
+const chatSiteKey = 'samuel-studio-colombia';
+const chatContactEmail = 'capture@samuel.studio';
+const chatBookingUrl = 'https://docs.google.com/forms/d/e/1FAIpQLScCqxvBZ6NTmwh-qyphZyjKzdhz3-jouihSZjAXhRMkBaRpxw/viewform?usp=header';
+const chatModelCandidates = ['gemma4:12b', 'gemma3:12b', 'llama3.1:8b', 'qwen2.5:7b'];
+const chatBaseUrl = ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname) ? '' : 'https://chat.samuel.studio';
+const assistantChatUrl = chatBaseUrl ? `${chatBaseUrl}/api/assistant-chat` : '/api/assistant-chat';
+const chatLogEndpoint = chatBaseUrl ? `${chatBaseUrl}/api/chat-log` : '/api/chat-log';
+const assistantSystemPrompt = `
+You are ${chatAssistantName}, the website assistant for Samuel Studio Colombia.
+Keep replies concise, direct, and photography-focused.
+Use the booking form or email when the user wants to book.
+`.trim();
+const chatStarterPrompts = [
+  'Which service fits an editorial campaign?',
+  'What should I send for a custom quote?',
+  'How do I book a session?',
+  'Do you do personal branding portraits?',
+];
+const chatStorageKey = `samuel-studio-assistant-chat:${chatSiteKey}`;
+const chatRequestTimeoutMs = 45000;
 
 function syncHeaderOffset() {
   if (!siteHeader) return;
@@ -680,3 +701,703 @@ if (contactForm) {
     }
   });
 }
+
+function createChatId() {
+  if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {
+    return crypto.randomUUID();
+  }
+
+  return `chat_${Date.now()}_${Math.random().toString(16).slice(2)}`;
+}
+
+function normalizeChatProfile(profile) {
+  if (!profile) {
+    return null;
+  }
+
+  const name = typeof profile.name === 'string' ? profile.name.trim() : '';
+  const email = typeof profile.email === 'string' ? profile.email.trim() : '';
+  const phone = typeof profile.phone === 'string' ? profile.phone.trim() : '';
+
+  if (!name || !email || !phone) {
+    return null;
+  }
+
+  return { name, email, phone };
+}
+
+function createChatGreeting(profile) {
+  const greetingName = profile?.name?.trim();
+
+  return {
+    id: createChatId(),
+    role: 'assistant',
+    content: greetingName
+      ? `${chatAssistantName} is ready, ${greetingName}. Tell me what kind of session you need, what the images are for, and when you want to shoot.`
+      : `${chatAssistantName} is ready. Tell me what kind of session you need, what the images are for, and when you want to shoot.`,
+    createdAt: Date.now(),
+    source: 'seed',
+  };
+}
+
+function loadChatState() {
+  if (typeof window === 'undefined') {
+    return {
+      sessionId: createChatId(),
+      messages: [createChatGreeting()],
+      clientProfile: null,
+    };
+  }
+
+  try {
+    const raw = window.localStorage.getItem(chatStorageKey);
+
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      const clientProfile = normalizeChatProfile(parsed.clientProfile);
+
+      if (typeof parsed.sessionId === 'string' && Array.isArray(parsed.messages) && parsed.messages.length > 0) {
+        return {
+          sessionId: parsed.sessionId,
+          messages: parsed.messages,
+          clientProfile,
+        };
+      }
+    }
+  } catch {
+    // Start a fresh session when storage is missing or corrupt.
+  }
+
+  return {
+    sessionId: createChatId(),
+    messages: [createChatGreeting()],
+    clientProfile: null,
+  };
+}
+
+function saveChatState(state) {
+  window.localStorage.setItem(chatStorageKey, JSON.stringify(state));
+}
+
+function buildChatFallbackReply(userText) {
+  const query = userText.toLowerCase();
+
+  if (query.includes('price') || query.includes('pricing') || query.includes('cost') || query.includes('quote') || query.includes('rate') || query.includes('budget')) {
+    return [
+      'Samuel Studio Colombia uses custom quotes instead of fixed pricing.',
+      'Send the session type, use case, location, and timing through the booking form or by email.',
+      `Booking form: ${chatBookingUrl}. Email: ${chatContactEmail}.`,
+    ].join(' ');
+  }
+
+  if (query.includes('book') || query.includes('booking') || query.includes('schedule') || query.includes('availability') || query.includes('date')) {
+    return [
+      'Use the booking form to request a session.',
+      'Include the session type, preferred date, location, and any reference images so the studio has enough context.',
+      `Booking form: ${chatBookingUrl}. Email: ${chatContactEmail}.`,
+    ].join(' ');
+  }
+
+  if (query.includes('editorial') || query.includes('campaign') || query.includes('brand') || query.includes('launch') || query.includes('fashion') || query.includes('commercial')) {
+    return [
+      'Editorial & Campaign Work is the best fit.',
+      'It is built for launch visuals, brand imagery, and a more controlled editorial look.',
+      'What is the launch date and what will the images be used for?',
+    ].join(' ');
+  }
+
+  if (query.includes('identity') || query.includes('personal brand') || query.includes('founder') || query.includes('speaker') || query.includes('professional') || query.includes('headshot') || query.includes('portrait')) {
+    return [
+      'Personal Identity is the best fit.',
+      'It works well for founders, creatives, speakers, and visible professionals who need a polished portrait library.',
+      'What platform or website will the images support?',
+    ].join(' ');
+  }
+
+  if (query.includes('story') || query.includes('lifestyle') || query.includes('concept') || query.includes('narrative') || query.includes('launch visuals')) {
+    return [
+      'Visual Story Projects is the best fit.',
+      'It is the route for narrative ideas, concept-led shoots, and image sequences that need pacing.',
+      'What story are you trying to tell?',
+    ].join(' ');
+  }
+
+  if (query.includes('family') || query.includes('couple') || query.includes('private') || query.includes('milestone')) {
+    return [
+      'Private Portraits is the best fit.',
+      'It is built for individuals, couples, families, and milestone sessions that need a calm, guided approach.',
+      'What is the occasion and where would you like to shoot?',
+    ].join(' ');
+  }
+
+  return 'Tell me what kind of session you need, what the images are for, and when you want to shoot.';
+}
+
+function buildChatTranscriptMessages(conversation) {
+  return conversation
+    .filter(message => message.source !== 'seed')
+    .map(message => ({
+      id: message.id,
+      role: message.role,
+      content: message.content,
+      createdAt: message.createdAt,
+      source: message.source,
+      model: message.model,
+    }));
+}
+
+function appendFormattedText(parent, text) {
+  const parts = String(text || '').split(/(https?:\/\/[^\s<]+)|(\n)/g);
+
+  parts.forEach(part => {
+    if (!part) return;
+
+    if (part === '\n') {
+      parent.appendChild(document.createElement('br'));
+      return;
+    }
+
+    if (/^https?:\/\//.test(part)) {
+      const link = document.createElement('a');
+      link.href = part;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.textContent = part;
+      parent.appendChild(link);
+      return;
+    }
+
+    parent.appendChild(document.createTextNode(part));
+  });
+}
+
+async function requestChatReply(payload) {
+  let lastError = null;
+
+  for (const model of chatModelCandidates) {
+    const controller = new AbortController();
+    const timeoutId = window.setTimeout(() => controller.abort(), chatRequestTimeoutMs);
+
+    try {
+      const response = await fetch(assistantChatUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        signal: controller.signal,
+        body: JSON.stringify({
+          assistant: chatAssistantName,
+          sessionId: payload.sessionId,
+          pageUrl: payload.pageUrl,
+          siteKey: payload.siteKey,
+          clientProfile: payload.clientProfile,
+          systemPrompt: assistantSystemPrompt,
+          modelCandidates: chatModelCandidates,
+          model,
+          messages: payload.messages,
+          userText: payload.userText,
+        }),
+      });
+
+      if (!response.ok) {
+        lastError = new Error(`Assistant request failed with status ${response.status}`);
+        continue;
+      }
+
+      const data = await response.json();
+      const content = typeof data.content === 'string' ? data.content.trim() : '';
+
+      if (content) {
+        return {
+          content,
+          model: typeof data.model === 'string' && data.model.trim() ? data.model.trim() : model,
+          usedFallback: Boolean(data.usedFallback),
+        };
+      }
+    } catch (error) {
+      lastError = error;
+    } finally {
+      window.clearTimeout(timeoutId);
+    }
+  }
+
+  return {
+    content: buildChatFallbackReply(payload.userText),
+    model: 'fallback',
+    usedFallback: true,
+    error: lastError instanceof Error ? lastError.message : 'Assistant request failed.',
+  };
+}
+
+async function persistChatTranscript(payload) {
+  if (!chatLogEndpoint) {
+    return;
+  }
+
+  const body = JSON.stringify({
+    assistant: chatAssistantName,
+    sessionId: payload.sessionId,
+    pageUrl: payload.pageUrl,
+    siteKey: payload.siteKey,
+    model: payload.model,
+    clientProfile: payload.clientProfile,
+    loggedAt: new Date().toISOString(),
+    sendEmail: payload.sendEmail ?? false,
+    messages: payload.messages,
+  });
+
+  if (typeof navigator !== 'undefined' && navigator.sendBeacon) {
+    const sent = navigator.sendBeacon(chatLogEndpoint, new Blob([body], { type: 'application/json' }));
+
+    if (sent) {
+      return;
+    }
+  }
+
+  await fetch(chatLogEndpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body,
+    keepalive: true,
+  });
+}
+
+function initChatWidget() {
+  const initialState = loadChatState();
+  let sessionId = initialState.sessionId;
+  let messages = initialState.messages;
+  let clientProfile = initialState.clientProfile;
+  let intakeDraft = {
+    name: initialState.clientProfile?.name || '',
+    email: initialState.clientProfile?.email || '',
+    phone: initialState.clientProfile?.phone || '',
+  };
+  let open = false;
+  let sending = false;
+  let showSuggestions = false;
+  let chatRoot = null;
+
+  const chatWidget = document.createElement('div');
+  chatWidget.className = 'chat-widget';
+  chatWidget.innerHTML = `
+    <button class="chat-widget__launcher" type="button" data-chat-launcher aria-expanded="false" aria-controls="samuel-chat-panel" aria-label="Chat with Nova">
+      <span class="chat-widget__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" role="img" aria-hidden="true" focusable="false">
+          <path d="M4 5h16v10H8.75L5 18.5V5Z" fill="currentColor"></path>
+          <path d="M7.5 9h9M7.5 12h6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.6"></path>
+        </svg>
+      </span>
+      <span class="chat-widget__copy">
+        <strong>Chat with Nova</strong>
+        <span>Ask about a session</span>
+      </span>
+    </button>
+
+    <section class="chat-widget__panel" id="samuel-chat-panel" data-chat-panel aria-label="Website assistant" hidden>
+      <header class="chat-widget__header">
+        <div class="chat-widget__brand">
+          <p>Local assistant</p>
+          <h2>${chatAssistantName}</h2>
+        </div>
+        <button class="chat-widget__close" type="button" data-chat-close aria-label="Close chat assistant">×</button>
+      </header>
+
+      <div class="chat-widget__status">
+        <span data-chat-status>Need details</span>
+        <span>Samuel Studio Colombia</span>
+      </div>
+
+      <div class="chat-widget__intake" data-chat-intake-view>
+        <p class="chat-widget__lede">Before we start, tell me who this session is for.</p>
+        <p class="chat-widget__sublede">I need a name, email, and phone number so the conversation can be saved and forwarded later if needed.</p>
+
+        <form class="chat-widget__intake-form" data-chat-intake-form>
+          <label class="chat-widget__field">
+            <span>Name</span>
+            <input type="text" name="name" placeholder="Client name" autocomplete="name" required />
+          </label>
+
+          <label class="chat-widget__field">
+            <span>Email</span>
+            <input type="email" name="email" placeholder="client@example.com" autocomplete="email" required />
+          </label>
+
+          <label class="chat-widget__field">
+            <span>Phone</span>
+            <input type="tel" name="phone" placeholder="(555) 123-4567" autocomplete="tel" required />
+          </label>
+
+          <p class="chat-widget__error" data-chat-intake-error aria-live="polite"></p>
+
+          <div class="chat-widget__actions">
+            <button class="chat-widget__button chat-widget__button--ghost" type="button" data-chat-reset>Reset</button>
+            <button class="chat-widget__button" type="submit">Start chat</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="chat-widget__conversation" data-chat-conversation hidden>
+        <div class="chat-widget__log" data-chat-log role="log" aria-live="polite"></div>
+
+        <button class="chat-widget__toggle" type="button" data-chat-toggle-suggestions aria-expanded="false">
+          <span>Suggested questions</span>
+          <span data-chat-toggle-label>Show</span>
+        </button>
+
+        <div class="chat-widget__suggestions" data-chat-suggestions hidden>
+          ${chatStarterPrompts.map(prompt => `<button class="chat-widget__suggestion" type="button" data-chat-suggestion>${prompt}</button>`).join('')}
+        </div>
+
+        <form class="chat-widget__composer" data-chat-form>
+          <label class="sr-only" for="samuel-chat-input">Message Nova</label>
+          <textarea id="samuel-chat-input" class="chat-widget__input" data-chat-input rows="3" placeholder="Ask about pricing, services, or booking..."></textarea>
+
+          <div class="chat-widget__composer-footer">
+            <p class="chat-widget__error" data-chat-error aria-live="polite"></p>
+            <div class="chat-widget__actions">
+              <button class="chat-widget__button chat-widget__button--ghost" type="button" data-chat-reset>Reset</button>
+              <button class="chat-widget__button" type="submit" data-chat-send>Send</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+  `;
+
+  body.appendChild(chatWidget);
+
+  chatRoot = chatWidget;
+
+  const chatLauncher = chatWidget.querySelector('[data-chat-launcher]');
+  const chatPanel = chatWidget.querySelector('[data-chat-panel]');
+  const chatStatus = chatWidget.querySelector('[data-chat-status]');
+  const chatClose = chatWidget.querySelector('[data-chat-close]');
+  const chatIntakeView = chatWidget.querySelector('[data-chat-intake-view]');
+  const chatConversationView = chatWidget.querySelector('[data-chat-conversation]');
+  const chatIntakeForm = chatWidget.querySelector('[data-chat-intake-form]');
+  const chatIntakeError = chatWidget.querySelector('[data-chat-intake-error]');
+  const chatLog = chatWidget.querySelector('[data-chat-log]');
+  const chatForm = chatWidget.querySelector('[data-chat-form]');
+  const chatInput = chatWidget.querySelector('[data-chat-input]');
+  const chatError = chatWidget.querySelector('[data-chat-error]');
+  const chatSend = chatWidget.querySelector('[data-chat-send]');
+  const chatToggleSuggestions = chatWidget.querySelector('[data-chat-toggle-suggestions]');
+  const chatToggleLabel = chatWidget.querySelector('[data-chat-toggle-label]');
+  const chatSuggestions = [...chatWidget.querySelectorAll('[data-chat-suggestion]')];
+  const chatResets = [...chatWidget.querySelectorAll('[data-chat-reset]')];
+  const intakeInputs = {
+    name: chatIntakeForm?.querySelector('input[name="name"]'),
+    email: chatIntakeForm?.querySelector('input[name="email"]'),
+    phone: chatIntakeForm?.querySelector('input[name="phone"]'),
+  };
+
+  function renderMessages() {
+    if (!chatLog) return;
+
+    chatLog.replaceChildren();
+
+    messages.forEach(message => {
+      const article = document.createElement('article');
+      article.className = `chat-widget__message ${message.role === 'user' ? 'chat-widget__message--user' : 'chat-widget__message--assistant'}`;
+
+      const meta = document.createElement('div');
+      meta.className = 'chat-widget__message-meta';
+      const label = document.createElement('span');
+      label.textContent = message.role === 'user' ? 'Client' : message.source === 'fallback' ? 'Fallback' : chatAssistantName;
+      const siteLabel = document.createElement('span');
+      siteLabel.textContent = 'Samuel Studio Colombia';
+      meta.append(label, siteLabel);
+
+      const content = document.createElement('div');
+      content.className = 'chat-widget__message-copy';
+      appendFormattedText(content, message.content);
+
+      article.append(meta, content);
+      chatLog.appendChild(article);
+    });
+
+    if (sending) {
+      const typing = document.createElement('article');
+      typing.className = 'chat-widget__message chat-widget__message--assistant';
+      const meta = document.createElement('div');
+      meta.className = 'chat-widget__message-meta';
+      const label = document.createElement('span');
+      label.textContent = `${chatAssistantName} is thinking`;
+      const siteLabel = document.createElement('span');
+      siteLabel.textContent = 'Samuel Studio Colombia';
+      meta.append(label, siteLabel);
+      const content = document.createElement('div');
+      content.className = 'chat-widget__message-copy chat-widget__message-copy--typing';
+      content.textContent = '•••';
+      typing.append(meta, content);
+      chatLog.appendChild(typing);
+    }
+
+    chatLog.scrollTop = chatLog.scrollHeight;
+  }
+
+  function renderWidget() {
+    if (!chatRoot || !chatPanel || !chatLauncher || !chatStatus || !chatIntakeView || !chatConversationView) {
+      return;
+    }
+
+    chatRoot.classList.toggle('is-open', open);
+    chatPanel.hidden = !open;
+    chatLauncher.setAttribute('aria-expanded', String(open));
+    chatStatus.textContent = sending ? 'Thinking' : clientProfile ? 'Ready' : 'Need details';
+
+    const hasProfile = Boolean(clientProfile);
+    chatIntakeView.hidden = hasProfile;
+    chatConversationView.hidden = !hasProfile;
+
+    if (intakeInputs.name) intakeInputs.name.value = intakeDraft.name;
+    if (intakeInputs.email) intakeInputs.email.value = intakeDraft.email;
+    if (intakeInputs.phone) intakeInputs.phone.value = intakeDraft.phone;
+
+    if (chatIntakeError && !chatIntakeView.hidden) {
+      chatIntakeError.textContent = '';
+    }
+
+    if (chatToggleSuggestions && chatToggleLabel) {
+      chatToggleSuggestions.setAttribute('aria-expanded', String(showSuggestions));
+      chatToggleLabel.textContent = showSuggestions ? 'Hide' : 'Show';
+    }
+
+    if (chatSend) {
+      chatSend.disabled = sending;
+      chatSend.textContent = sending ? 'Sending' : 'Send';
+    }
+
+    chatSuggestions.forEach(button => {
+      button.hidden = !showSuggestions;
+    });
+
+    renderMessages();
+  }
+
+  function openChat() {
+    open = true;
+    renderWidget();
+
+    window.setTimeout(() => {
+      if (clientProfile) {
+        chatInput?.focus();
+      } else {
+        intakeInputs.name?.focus();
+      }
+    }, 0);
+  }
+
+  function closeChat() {
+    open = false;
+    renderWidget();
+  }
+
+  function resetChat() {
+    const nextSessionId = createChatId();
+    sessionId = nextSessionId;
+    messages = [createChatGreeting()];
+    clientProfile = null;
+    intakeDraft = { name: '', email: '', phone: '' };
+    sending = false;
+    showSuggestions = false;
+    saveChatState({
+      sessionId,
+      messages,
+      clientProfile,
+    });
+    renderWidget();
+    closeChat();
+  }
+
+  function syncAndPersist() {
+    saveChatState({
+      sessionId,
+      messages,
+      clientProfile,
+    });
+
+    void persistChatTranscript({
+      sessionId,
+      pageUrl: window.location.href,
+      siteKey: chatSiteKey,
+      model: chatModelCandidates[0] || 'unknown-model',
+      clientProfile,
+      messages,
+      sendEmail: false,
+    }).catch(() => undefined);
+  }
+
+  async function submitIntake(event) {
+    event.preventDefault();
+
+    const nextProfile = normalizeChatProfile(intakeDraft);
+
+    if (!nextProfile) {
+      if (chatIntakeError) {
+        chatIntakeError.textContent = 'Please add your name, email, and phone before starting the chat.';
+      }
+      return;
+    }
+
+    clientProfile = nextProfile;
+    messages = [createChatGreeting(nextProfile)];
+    open = true;
+    showSuggestions = false;
+    syncAndPersist();
+    renderWidget();
+
+    window.setTimeout(() => {
+      chatInput?.focus();
+    }, 0);
+  }
+
+  async function submitMessage(messageText) {
+    const content = String(messageText || '').trim();
+
+    if (!content || sending || !clientProfile) {
+      return;
+    }
+
+    if (chatError) {
+      chatError.textContent = '';
+    }
+
+    sending = true;
+
+    const userMessage = {
+      id: createChatId(),
+      role: 'user',
+      content,
+      createdAt: Date.now(),
+    };
+
+    const conversation = [...messages, userMessage];
+    messages = conversation;
+    if (chatInput) {
+      chatInput.value = '';
+    }
+    renderWidget();
+
+    try {
+      const reply = await requestChatReply({
+        assistant: chatAssistantName,
+        sessionId,
+        pageUrl: window.location.href,
+        siteKey: chatSiteKey,
+        clientProfile,
+        messages: buildChatTranscriptMessages(conversation),
+        userText: content,
+      });
+
+      const assistantMessage = {
+        id: createChatId(),
+        role: 'assistant',
+        content: reply.content || 'I can help plan a session, match the right service, or capture your booking details. Try asking about pricing, scheduling, or which service fits your project.',
+        createdAt: Date.now(),
+        source: reply.usedFallback ? 'fallback' : 'ollama',
+        model: reply.model,
+      };
+
+      messages = [...conversation, assistantMessage];
+      syncAndPersist();
+    } catch (requestError) {
+      const message = requestError instanceof Error ? requestError.message : 'The assistant is temporarily unavailable.';
+      if (chatError) {
+        chatError.textContent = message;
+      }
+
+      const fallbackMessage = {
+        id: createChatId(),
+        role: 'assistant',
+        content: 'I am having trouble reaching the local model right now. Check that Ollama is running, then share the session type, date, location, and use case so I can still capture the brief.',
+        createdAt: Date.now(),
+        source: 'fallback',
+        model: chatModelCandidates[0] || 'unknown-model',
+      };
+
+      messages = [...conversation, fallbackMessage];
+      syncAndPersist();
+    } finally {
+      sending = false;
+      renderWidget();
+    }
+  }
+
+  chatLauncher?.addEventListener('click', () => {
+    open = !open;
+    renderWidget();
+
+    if (open) {
+      window.setTimeout(() => {
+        if (clientProfile) {
+          chatInput?.focus();
+        } else {
+          intakeInputs.name?.focus();
+        }
+      }, 0);
+    }
+  });
+
+  chatClose?.addEventListener('click', closeChat);
+
+  chatIntakeForm?.addEventListener('submit', submitIntake);
+  chatForm?.addEventListener('submit', event => {
+    event.preventDefault();
+    void submitMessage(chatInput?.value || '');
+  });
+
+  chatInput?.addEventListener('keydown', event => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      void submitMessage(chatInput.value);
+    }
+  });
+
+  if (chatIntakeForm) {
+    chatIntakeForm.querySelectorAll('input').forEach(input => {
+      input.addEventListener('input', () => {
+        intakeDraft = {
+          name: String(intakeInputs.name?.value || '').trim(),
+          email: String(intakeInputs.email?.value || '').trim(),
+          phone: String(intakeInputs.phone?.value || '').trim(),
+        };
+        if (chatIntakeError) {
+          chatIntakeError.textContent = '';
+        }
+      });
+    });
+  }
+
+  chatToggleSuggestions?.addEventListener('click', () => {
+    showSuggestions = !showSuggestions;
+    renderWidget();
+  });
+
+  chatSuggestions.forEach(button => {
+    button.addEventListener('click', () => {
+      if (!clientProfile) {
+        openChat();
+        return;
+      }
+
+      void submitMessage(button.textContent || '');
+    });
+  });
+
+  chatResets.forEach(button => {
+    button.addEventListener('click', resetChat);
+  });
+
+  window.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && open) {
+      closeChat();
+    }
+  });
+
+  renderWidget();
+}
+
+initChatWidget();
