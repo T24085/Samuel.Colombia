@@ -1233,7 +1233,12 @@ function initChatWidget() {
   async function submitIntake(event) {
     event.preventDefault();
 
-    const nextProfile = normalizeChatProfile(intakeDraft);
+    const formData = new FormData(chatIntakeForm);
+    const nextProfile = normalizeChatProfile({
+      name: String(formData.get('name') || '').trim(),
+      email: String(formData.get('email') || '').trim(),
+      phone: String(formData.get('phone') || '').trim(),
+    });
 
     if (!nextProfile) {
       if (chatIntakeError) {
@@ -1242,6 +1247,11 @@ function initChatWidget() {
       return;
     }
 
+    intakeDraft = {
+      name: nextProfile.name,
+      email: nextProfile.email,
+      phone: nextProfile.phone,
+    };
     clientProfile = nextProfile;
     messages = [createChatGreeting(nextProfile)];
     open = true;
